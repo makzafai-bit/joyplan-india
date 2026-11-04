@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="JoyPlan India: create a joyful home design. Generate 3D floor plans, capture photo notes, render, and export quotes.">
-<link rel="icon" href="assets/logo.webp">
+<link rel="icon" type="image/svg+xml" href="assets/joyplan-mark.svg">
 <title>Joyplan India</title>
 <style>
 html,body{margin:0}
@@ -21,7 +21,7 @@ html,body{margin:0}
   --dark:#181818;
   --foot:#111111;
   --serif:"Times New Roman", Times, "Liberation Serif", serif;
-  --max:1240px;
+  --max:1288px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -43,27 +43,31 @@ h1,h2,h3,p{margin:0}
 .btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 
 /* nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg)}
+.nav{position:-webkit-sticky;position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg)}
 .nav .wrap{display:flex;align-items:center;height:100px;max-width:1220px}
-.logo img{height:38px;width:auto}
-.nav ul{list-style:none;display:flex;gap:40px;margin:0 0 0 140px;padding:0;font-weight:700;font-size:17px}
+.logo{flex:none;width:261px}.logo img{height:34px;width:auto}
+.nav ul{list-style:none;display:flex;gap:40px;margin:0;padding:0;font-weight:700;font-size:17px}
 .nav ul a{color:var(--grey)}
 .nav ul a.on,.nav ul a:hover{color:var(--red)}
 .nav .sp{flex:1}
-.dl{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;margin-right:32px;color:#222}
+.dl{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;margin-right:44px;color:#222}
 .dl svg{width:20px;height:20px}
 .nav .btn{height:40px;padding:0 35px;font-size:15px;border-radius:20px}
-@media (max-width:900px){.nav ul{margin-left:40px;gap:24px}}
-@media (max-width:640px){.nav ul{display:none}.dl{margin-right:12px}.nav .btn{padding:0 18px}.nav .wrap{height:72px}}
+@media (max-width:900px){.logo{width:auto;margin-right:32px}.nav ul{gap:24px}}
+@media (max-width:640px){.logo{margin-right:0}.logo img{height:28px}.nav ul{display:none}.dl{margin-right:12px}.nav .btn{padding:0 18px}.nav .wrap{height:72px}}
 
 /* hero */
 .hero{position:relative;overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,700px) 1fr;align-items:center;min-height:540px;padding-block:20px 60px}
-.hero h1{font-size:48px;line-height:1.5;font-weight:700;max-width:700px;position:relative;z-index:1}
-.hero .sub{margin-top:16px;color:#555;font-size:18px;line-height:1.5;position:relative;z-index:1}
-.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:44px;position:relative;z-index:1}
-.hero .art{justify-self:end;width:min(620px,46vw);margin-left:-80px;margin-right:calc(-1 * max(24px,(100vw - var(--max))/2 + 24px));min-width:0}
-@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;min-height:0}.hero .art{margin-left:0}.hero h1{font-size:36px}.hero .art{justify-self:center;width:100%;margin-right:0;margin-top:24px}}
+.hero .wrap{position:relative;padding-block:110px 85px}
+.hero .copy{position:relative;z-index:1;max-width:700px}
+.hero h1{font-size:48px;line-height:1.5;font-weight:700}
+.hero .sub{margin-top:12px;color:#555;font-size:18px;line-height:1.5}
+.hero .ctas{display:flex;gap:16px;flex-wrap:wrap;margin-top:45px}
+.hero .art{position:absolute;top:0;left:calc(50% + 25px);width:685px;max-width:calc(50% - 25px);pointer-events:none}
+.hero .art img{width:100%;height:auto}
+@media (min-width:1441px){.hero .art{max-width:none}}
+@media (max-width:1100px){.hero h1{font-size:40px}.hero .copy{max-width:560px}}
+@media (max-width:900px){.hero .wrap{padding-block:24px 48px}.hero h1{font-size:34px}.hero .art{position:static;width:100%;max-width:592px;margin:28px auto 0;padding:0 16px}}
 
 /* section heads */
 .sec{padding-block:70px}
@@ -175,7 +179,7 @@ footer .wrap{max-width:1220px;padding-block:52px 70px}
 
 <header class="nav">
   <div class="wrap">
-    <a class="logo" href="#top" aria-label="JoyPlan home"><img src="assets/logo.webp" alt="JoyPlan"></a>
+    <a class="logo" href="#top" aria-label="Joyplan India home"><img src="assets/joyplan-india-logo.svg" alt="Joyplan India"></a>
     <ul>
       <li><a class="on" href="#top">Home</a></li>
       <li><a href="#learn">Learn</a></li>
@@ -190,7 +194,7 @@ footer .wrap{max-width:1220px;padding-block:52px 70px}
 <main id="top">
   <section class="hero">
     <div class="wrap">
-      <div>
+      <div class="copy">
         <h1>3D Design Create a Joyful Home Design</h1>
         <p class="sub">Design perfection unleashed!<br>Generate 3D floor plans, capture photo notes, render, and export quotes.</p>
         <div class="ctas">
@@ -198,8 +202,8 @@ footer .wrap{max-width:1220px;padding-block:52px 70px}
           <a class="btn line" href="#footer">Business free demo</a>
         </div>
       </div>
-      <div class="art"><img src="assets/hero.webp" alt="3D render of a two-storey home with garden"></div>
     </div>
+    <div class="art"><img src="assets/hero.webp" alt="3D render of a two-storey home with garden"></div>
   </section>
 
   <section class="sec" id="how">
@@ -296,7 +300,7 @@ footer .wrap{max-width:1220px;padding-block:52px 70px}
 <footer id="footer">
   <div class="wrap">
     <div class="f-top">
-      <img src="assets/logo_w.webp" alt="JoyPlan">
+      <img src="assets/joyplan-india-logo-white.svg" alt="Joyplan India">
       <div class="family">FAMILY SITE <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
     </div>
     <div class="f-cols">
