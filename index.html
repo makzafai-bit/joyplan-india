@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="JoyPlan India: create a joyful home design. Generate 3D floor plans, capture photo notes, render, and export quotes.">
+<link rel="icon" href="assets/logo.webp">
+<title>Joyplan India</title>
+<style>
+html,body{margin:0}
+/* Layout: mirrors joyplan.com — white sticky nav, split hero, step tabs, dark feature carousel, document tabs, render viewer, grey sharing band, learning grid, black footer. Single light theme like the original. */
+:root{
+  color-scheme:light;
+  --red:#fd4100;
+  --ink:#000000;
+  --text:#333333;
+  --grey:#999999;
+  --line:#d9d9d9;
+  --bg:#fdfdfd;
+  --band:#f3f3f3;
+  --dark:#181818;
+  --foot:#111111;
+  --serif:"Times New Roman", Times, "Liberation Serif", serif;
+  --max:1240px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+h1,h2,h3,p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+@media (max-width:600px){.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 16px;border-radius:25px;font-family:var(--serif);font-weight:700;font-size:16px;border:1.5px solid var(--red);cursor:pointer;white-space:nowrap;transition:filter .15s, background .15s, color .15s}
+.btn svg{width:22px;height:22px;flex:none}
+.btn.fill{background:var(--red);color:#fff}
+.btn.fill:hover{filter:brightness(1.08)}
+.btn.line{background:var(--bg);color:var(--red)}
+.btn.line:hover{background:#fff4ef}
+.btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg)}
+.nav .wrap{display:flex;align-items:center;height:100px;max-width:1220px}
+.logo img{height:38px;width:auto}
+.nav ul{list-style:none;display:flex;gap:40px;margin:0 0 0 140px;padding:0;font-weight:700;font-size:17px}
+.nav ul a{color:var(--grey)}
+.nav ul a.on,.nav ul a:hover{color:var(--red)}
+.nav .sp{flex:1}
+.dl{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;margin-right:32px;color:#222}
+.dl svg{width:20px;height:20px}
+.nav .btn{height:40px;padding:0 35px;font-size:15px;border-radius:20px}
+@media (max-width:900px){.nav ul{margin-left:40px;gap:24px}}
+@media (max-width:640px){.nav ul{display:none}.dl{margin-right:12px}.nav .btn{padding:0 18px}.nav .wrap{height:72px}}
+
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,700px) 1fr;align-items:center;min-height:540px;padding-block:20px 60px}
+.hero h1{font-size:48px;line-height:1.5;font-weight:700;max-width:700px;position:relative;z-index:1}
+.hero .sub{margin-top:16px;color:#555;font-size:18px;line-height:1.5;position:relative;z-index:1}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:44px;position:relative;z-index:1}
+.hero .art{justify-self:end;width:min(620px,46vw);margin-left:-80px;margin-right:calc(-1 * max(24px,(100vw - var(--max))/2 + 24px));min-width:0}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;min-height:0}.hero .art{margin-left:0}.hero h1{font-size:36px}.hero .art{justify-self:center;width:100%;margin-right:0;margin-top:24px}}
+
+/* section heads */
+.sec{padding-block:70px}
+.sec-title{font-size:48px;font-weight:700;text-align:center;line-height:1.3}
+@media (max-width:640px){.sec-title{font-size:34px}}
+
+/* tabs shared (steps + make) */
+.tabs-grid{display:grid;grid-template-columns:540px 1fr;gap:56px;align-items:center;margin-top:72px}
+.tabs-media{min-width:0;position:relative}
+.tabs-media img{width:100%;height:auto;transition:opacity .35s}
+.rail{position:relative;padding-left:24px}
+.rail::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:#bfbfbf}
+.tab{display:block;position:relative;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer;font-family:var(--serif);color:var(--grey)}
+.tab::before{content:"";position:absolute;left:-24px;top:0;bottom:0;width:4px;background:transparent;transition:background .2s}
+.tab.on::before{background:linear-gradient(to bottom,var(--red) 0 40%,var(--ink) 40% 100%)}
+.desc{display:none}
+.tab.on .desc{display:block}
+
+.step{display:grid;grid-template-columns:96px 1fr;align-items:baseline;padding-block:6px}
+.step .n{font-size:12px}
+.step .t{font-size:22px}
+.step.on{padding-block:4px 30px}
+.step.on .n{font-size:22px;font-weight:700;color:var(--ink)}
+.step.on .t{font-size:36px;font-weight:700;color:var(--ink);line-height:1.2}
+.step .desc{grid-column:2;font-size:13px;line-height:1.6;color:var(--text);margin-top:10px;max-width:480px}
+.rail-cta{margin-top:24px;margin-left:24px}
+
+.make-lede{font-size:26px;font-weight:700;line-height:1.55;color:#222;max-width:560px;margin-bottom:56px}
+.mk{padding-block:10px;font-size:22px}
+.mk.on{font-size:34px;font-weight:700;color:var(--ink);padding-block:4px 46px;line-height:1.2}
+@media (max-width:980px){.tabs-grid{grid-template-columns:1fr;gap:36px;margin-top:40px}.tabs-media{max-width:560px;margin:0 auto;width:100%}.make-lede{font-size:21px;margin-bottom:28px}.step.on .t{font-size:30px}.mk.on{font-size:28px}}
+
+/* features */
+.feat{background:var(--dark);color:#fff;padding-block:76px 110px}
+.feat .sec-title{color:#fff}
+.track{display:flex;gap:220px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:62px;padding-left:max(24px,calc((100vw - var(--max))/2 + 24px));padding-right:max(24px,env(safe-area-inset-right,0px));scrollbar-width:none;scroll-behavior:smooth;scroll-padding-left:max(24px,calc((100vw - var(--max))/2 + 24px))}
+.track::-webkit-scrollbar{display:none}
+.card{flex:0 0 372px;scroll-snap-align:start;min-width:0}
+.card .pic{height:254px;display:flex;align-items:center}
+.card img{width:100%;height:auto;max-height:254px;object-fit:contain;object-position:left center}
+.card h3{font-size:22px;font-weight:700;margin-top:28px}
+.card p{color:var(--grey);font-size:15px;line-height:1.55;margin-top:6px;max-width:372px}
+.dots{display:flex;gap:8px;justify-content:center;margin-top:40px}
+.dots button{width:8px;height:8px;border-radius:4px;border:0;background:#555;padding:0;cursor:pointer;transition:width .2s,background .2s}
+.dots button.on{width:24px;background:var(--red)}
+@media (max-width:640px){.track{gap:40px}.card{flex-basis:84%}}
+
+/* render */
+.render-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.render-top p{font-size:18px;font-weight:700}
+.pills{display:flex;gap:6px}
+.pill{height:34px;padding:0 12px;border-radius:17px;border:1px solid #222;background:#fff;color:#222;font-family:var(--serif);font-weight:700;font-size:13px;cursor:pointer}
+.pill.on{background:#000;color:#fff}
+.viewer{margin-top:20px;border-radius:8px;overflow:hidden;position:relative;aspect-ratio:2476/914;max-width:100%}
+.viewer img{width:100%;height:100%;object-fit:cover}
+.pano-note{position:absolute;left:16px;bottom:14px;background:rgba(0,0,0,.6);color:#fff;font-size:13px;padding:4px 10px;border-radius:12px}
+
+/* sharing */
+.share{background:var(--band);padding-block:56px 70px}
+.share-grid{display:grid;grid-template-columns:360px 1fr;align-items:center;gap:24px;margin-top:48px}
+.share-grid h3{font-size:22px;font-weight:700;line-height:1.6;color:#222}
+.share-grid .btn{margin-top:36px}
+.share-grid img{width:100%;min-width:0}
+@media (max-width:900px){.share-grid{grid-template-columns:1fr}}
+
+/* learning */
+.learn{display:grid;grid-template-columns:524px 1fr;gap:90px;padding-block:80px 96px}
+.learn .big{border-radius:0 150px 0 30px;overflow:hidden;align-self:end;min-width:0}
+.learn .big img{width:100%;height:auto}
+.learn-r{display:flex;flex-direction:column;min-width:0}
+.learn-r h2{font-size:48px;font-weight:700;line-height:1.2}
+.learn-r p{color:#666;font-size:16px;line-height:1.5;margin-top:44px;max-width:620px}
+.learn-r .btn{align-self:flex-end;margin-top:60px}
+.learn-pics{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:78px}
+.learn-pics img{border-radius:16px;width:100%;aspect-ratio:285/279;object-fit:cover}
+@media (max-width:980px){.learn{grid-template-columns:1fr;gap:40px}.learn-r h2{font-size:36px}.learn-r .btn{align-self:flex-start;margin-top:28px}.learn-pics{gap:16px;margin-top:32px}}
+
+/* footer */
+footer{background:var(--foot);color:#fff}
+footer .wrap{max-width:1220px;padding-block:52px 70px}
+.f-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.f-top img{height:48px;width:auto}
+.family{height:40px;min-width:160px;border:1px solid #fff;background:transparent;color:#fff;font-family:var(--serif);font-size:14px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:16px;letter-spacing:.02em}
+.f-cols{display:grid;grid-template-columns:377px 138px 160px 220px 1fr;margin-top:50px;font-size:13px;line-height:1.4}
+.f-cols h4{font-size:16px;font-weight:700;margin:0 0 18px}
+.f-cols ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.f-cols address{font-style:normal;display:grid;gap:4px}
+.f-cols address a{text-decoration:underline}
+.social{display:flex;gap:16px}
+.social span{width:26px;height:26px;border:1px solid #fff;border-radius:50%;display:grid;place-items:center}
+.social svg{width:13px;height:13px;fill:#fff}
+.store{align-self:end}
+.store h4{margin-bottom:12px}
+.store .b{display:flex}
+.store a{display:flex;align-items:center;justify-content:center;gap:8px;height:34px;width:132px;border:1px solid #fff;font-size:14px}
+.store a + a{border-left:0}
+.store svg{width:16px;height:16px;fill:#fff}
+@media (max-width:980px){.f-cols{grid-template-columns:1fr 1fr;gap:32px}.f-cols>div:first-child{grid-column:1/-1}.store{grid-column:1/-1}}
+
+/* scroll indicator like the original */
+.scroll-ind{position:fixed;right:env(safe-area-inset-right,0px);top:0;width:6px;height:100px;background:var(--red);border-radius:3px;z-index:70;pointer-events:none}
+@media (max-width:640px){.scroll-ind{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.track{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="scroll-ind" id="ind" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="JoyPlan home"><img src="assets/logo.webp" alt="JoyPlan"></a>
+    <ul>
+      <li><a class="on" href="#top">Home</a></li>
+      <li><a href="#learn">Learn</a></li>
+      <li><a href="#learn">Shop</a></li>
+    </ul>
+    <span class="sp"></span>
+    <a class="dl" href="#footer" aria-label="Download the app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M4 17v3h16v-3"/></svg></a>
+    <a class="btn fill" href="#footer">Get Started</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>3D Design Create a Joyful Home Design</h1>
+        <p class="sub">Design perfection unleashed!<br>Generate 3D floor plans, capture photo notes, render, and export quotes.</p>
+        <div class="ctas">
+          <a class="btn fill" href="#footer">Install App For Free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
+          <a class="btn line" href="#footer">Business free demo</a>
+        </div>
+      </div>
+      <div class="art"><img src="assets/hero.webp" alt="3D render of a two-storey home with garden"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="wrap">
+      <h2 class="sec-title">How is Work</h2>
+      <div class="tabs-grid">
+        <div class="tabs-media"><img id="stepImg" src="assets/step1.webp" alt="JoyPlan app on a tablet"></div>
+        <div>
+          <div class="rail" id="steps">
+            <button class="tab step on" data-img="assets/step1.webp"><span class="n">Step1</span><span class="t">Draw</span><span class="desc">Create your 2D floor plan, and we'll present it to you in immersive 3D. Measure walls, place doors and windows – even complex building structures are no problem.</span></button>
+            <button class="tab step" data-img="assets/step2.webp"><span class="n">Step2</span><span class="t">Hard-surface</span><span class="desc">Customize walls, floors, ceilings, and tiles with our extensive library of over 300,000+ models.</span></button>
+            <button class="tab step" data-img="assets/step3.webp"><span class="n">Step3</span><span class="t">Furniture</span><span class="desc">Choose from over 300,000+ models in our library and easily drag and drop furniture and appliances onto your floor plan to decorate your home.</span></button>
+            <button class="tab step" data-img="assets/step4.webp"><span class="n">Step4</span><span class="t">View</span><span class="desc">Choose from over 300,000+ models in our library and easily drag and drop furniture and appliances onto your floor plan to decorate your home.</span></button>
+          </div>
+          <a class="btn line rail-cta" href="#footer">Install App For Free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feat" id="features">
+    <h2 class="sec-title wrap">Highlighted Features</h2>
+    <div class="track" id="track">
+      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_material.webp" alt="Material editor recolouring an armchair"></div><h3>Material Editor</h3><p>Customize model colors and materials to match your design vision.</p></article>
+      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_lidar.webp" alt="LiDAR scan of a living room"></div><h3>LiDAR Scanning</h3><p>Create 3D spaces with radar scanning technology.</p></article>
+      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_multi.webp" alt="Floor levels panel"></div><h3>Multi-level</h3><p>Create multi-level floor plans.</p></article>
+      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_freeform.webp" alt="Freeform modelling tools"></div><h3>Freeform modeling</h3><p>Create freeform shapes on the ground, ceiling, and walls as you please.</p></article>
+      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_sun.webp" alt="Sunlight analysis view"></div><h3>Sunlight analysis</h3><p>Simulate sunlight position and projection to visualize interior and surrounding lighting conditions.</p></article>
+      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_photos.webp" alt="Photo notes with laser measure"></div><h3>Photos and notes</h3><p>Record house conditions using photos, notes, and annotations.</p></article>
+    </div>
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <section class="sec" id="make">
+    <div class="wrap">
+      <h2 class="sec-title">What you can Make</h2>
+      <div class="tabs-grid">
+        <div class="tabs-media"><img id="makeImg" src="assets/make1.webp" alt="Area inventory in the JoyPlan app"></div>
+        <div>
+          <p class="make-lede">Generate professional documents and estimate reports with just one click.</p>
+          <div class="rail" id="makes">
+            <button class="tab mk on" data-img="assets/make1.webp">Area inventory</button>
+            <button class="tab mk" data-img="assets/make2.webp">Professional drawings</button>
+            <button class="tab mk" data-img="assets/make3.webp">Estimate</button>
+          </div>
+          <a class="btn line rail-cta" href="#footer">Install App For Free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="render" style="padding-top:20px">
+    <div class="wrap">
+      <div class="render-top">
+        <p>Prepare to be amazed by our stunning visual rendering results.</p>
+        <div class="pills" id="pills">
+          <button class="pill on" data-mode="img">Rendered image</button>
+          <button class="pill" data-mode="pano">720 panorama</button>
+        </div>
+      </div>
+      <div class="viewer"><img loading="lazy" decoding="async" src="assets/render.webp" alt="Living room shown as a white model on the left and fully rendered on the right"><span class="pano-note" id="panoNote" hidden>720° panorama view</span></div>
+    </div>
+  </section>
+
+  <section class="share">
+    <div class="wrap">
+      <h2 class="sec-title">Sharing and Collaboration</h2>
+      <div class="share-grid">
+        <div>
+          <h3>Share your work among<br>different terminals</h3>
+          <a class="btn line" href="#footer">Install App For Free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
+        </div>
+        <img loading="lazy" decoding="async" src="assets/share.webp" alt="JoyPlan on phone, tablet, laptop and desktop with 360 camera and laser measure">
+      </div>
+    </div>
+  </section>
+
+  <section id="learn">
+    <div class="wrap learn">
+      <div class="big"><img loading="lazy" decoding="async" src="assets/learn1.webp" alt="Living room with curved sofa"></div>
+      <div class="learn-r">
+        <h2>Start Learning</h2>
+        <p>JoyPlan offers videos to help you learn design in no time. Easily search for a specific topic or watch our short and to-the-point help videos.</p>
+        <a class="btn fill" href="#learn">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
+        <div class="learn-pics">
+          <img loading="lazy" decoding="async" src="assets/learn2.webp" alt="Sunlit living room">
+          <img loading="lazy" decoding="async" src="assets/learn3.webp" alt="Armchair in a reading corner">
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="footer">
+  <div class="wrap">
+    <div class="f-top">
+      <img src="assets/logo_w.webp" alt="JoyPlan">
+      <div class="family">FAMILY SITE <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="f-cols">
+      <div>
+        <h4>Find US</h4>
+        <address>
+          <span>Company Name: JOYPLAN PTE. LTD.</span>
+          <span>Address: 15 Scotts Road #08-01 15 Scotts Singapore 228218.</span>
+          <span>Email: <a href="#footer">service@joyplan.com.</a></span>
+        </address>
+      </div>
+      <div><h4>ABOUT</h4><ul><li><a href="#footer">Company</a></li></ul></div>
+      <div><h4>HELP</h4><ul><li><a href="#footer">Consulting</a></li><li><a href="#footer">Terms of use</a></li><li><a href="#footer">Privacy Policy</a></li></ul></div>
+      <div><h4>Follow US</h4><div class="social">
+        <span aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M9 7.5v9l7.5-4.5z"/></svg></span>
+        <span aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M14 3h3a4 4 0 0 0 4 4v3a7 7 0 0 1-4-1.3V15a6 6 0 1 1-6-6v3a3 3 0 1 0 3 3z"/></svg></span>
+      </div></div>
+      <div class="store"><h4>DOWNLOAD</h4><div class="b">
+        <a href="#footer"><svg viewBox="0 0 24 24"><path d="M12 2l2 3.5L9.5 13h6l2 3.5H3.5l2-3.5h2L12 5zM17.5 16.5l3 5h-4l-1.5-2.6z"/></svg>App Store</a>
+        <a href="#footer"><svg viewBox="0 0 24 24"><path d="M4 2.5l11 9.5-11 9.5zM16 13l3 2.5-12 6.5zM16 11l-9-9 12 6.5z"/></svg>Google Play</a>
+      </div></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  function tabs(railId,imgId,interval){
+    var rail=document.getElementById(railId),img=document.getElementById(imgId);
+    var items=[].slice.call(rail.querySelectorAll('.tab')),i=0,timer;
+    function go(n){i=n;items.forEach(function(t,k){t.classList.toggle('on',k===n)});img.style.opacity=.2;setTimeout(function(){img.src=items[n].dataset.img;img.style.opacity=1},150)}
+    function loop(){clearInterval(timer);timer=setInterval(function(){go((i+1)%items.length)},interval)}
+    items.forEach(function(t,k){t.addEventListener('click',function(){go(k);loop()})});
+    loop();
+  }
+  tabs('steps','stepImg',4000);
+  tabs('makes','makeImg',4500);
+
+  var track=document.getElementById('track'),dots=document.getElementById('dots'),cards=[].slice.call(track.children),cur=0;
+  cards.forEach(function(c,k){var b=document.createElement('button');b.setAttribute('aria-label','Feature '+(k+1));b.addEventListener('click',function(){show(k)});dots.appendChild(b)});
+  function show(k){cur=k;track.scrollTo({left:cards[k].offsetLeft-cards[0].offsetLeft});mark(k)}
+  function mark(k){[].forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===k)})}
+  track.addEventListener('scroll',function(){var x=track.scrollLeft,best=0,bd=1e9;cards.forEach(function(c,k){var d=Math.abs(c.offsetLeft-cards[0].offsetLeft-x);if(d<bd){bd=d;best=k}});cur=best;mark(best)},{passive:true});
+  mark(0);
+  setInterval(function(){if(!matchMedia('(prefers-reduced-motion: reduce)').matches)show((cur+1)%cards.length)},3500);
+
+  var note=document.getElementById('panoNote');
+  [].forEach.call(document.querySelectorAll('.pill'),function(p){p.addEventListener('click',function(){[].forEach.call(document.querySelectorAll('.pill'),function(q){q.classList.toggle('on',q===p)});note.hidden=p.dataset.mode!=='pano'})});
+
+  var ind=document.getElementById('ind');
+  function pos(){var h=document.documentElement,max=h.scrollHeight-innerHeight;var r=max>0?scrollY/max:0;ind.style.transform='translateY('+(r*(innerHeight-100))+'px)'}
+  addEventListener('scroll',pos,{passive:true});addEventListener('resize',pos);pos();
+})();
+</script>
+
+</body>
+</html>
