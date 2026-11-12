@@ -1,0 +1,9 @@
+# Keep repository tooling off the live site.
+# Hostinger deploys this whole repo into public_html, so block every dot-file and
+# dot-folder (.git, .claude, .mcp.json, .gitignore, .htaccess) and CLAUDE.md.
+# /.well-known/ stays reachable (SSL certificate checks use it).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule (^|/)\.(?!well-known(/|$)) - [R=404,L]
+  RewriteRule ^CLAUDE\.md$ - [R=404,L]
+</IfModule>

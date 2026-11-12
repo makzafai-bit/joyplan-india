@@ -1,0 +1,4 @@
+# Claude tooling scratch output
+.playwright-mcp/
+.taste-skill/
+.claude/settings.local.json
