@@ -1,4 +1,4 @@
-from components import ARR, WA_ICON, btn, tlink, tbc, iso, device, tablet, plan, vis, room_scene, fvis, sofa_screen, elevation, pano_svg
+from components import ARR, WA_ICON, btn, tlink, tbc, device, tablet, img
 from shared import head, seg, pricing_cards, cmp_table, inr
 
 WA = "Hi JoyPlan India, I'd like to book a demo."
@@ -15,13 +15,12 @@ HERO = f'''
       <div class="btns">{btn("Experience JoyPlan", "#ecosystem")}{btn("Book a Free Demo", "/book-a-demo/", "ghost", False)}</div>
       <p class="hero-meta"><span>App Store</span><span>Google Play</span><span>Bengaluru</span><span>Kozhikode</span><span>Free business demo</span></p>
     </div>
-    <div class="hero-vis" data-parallax-vis>
-      {iso(rise=True)}
-      <div class="glass readout float" style="position:absolute;left:4%;top:12%"><p class="t">Living &middot; Wall A</p><p class="v">4.625<small>m</small></p><p class="s">&#9679; Sent to plan</p></div>
-      <div class="tab float d2 hv-tab" style="position:absolute;right:0;top:2%;width:38%;padding:8px;border-radius:16px"><div class="tab-scr" style="grid-template-rows:22px 1fr;border-radius:10px;aspect-ratio:4/3"><div class="tab-bar" style="font-size:8px;padding:0 8px"><span class="fn">Villa_GF.jp</span><span style="color:var(--signal)">&#9679; LIVE</span></div><div class="canvas" style="background-size:10px 10px">{plan("", dims=True, labels=False)}</div></div></div>
+    <div class="hero-vis hv-photo" data-parallax-vis>
+      <figure class="hv-main">{img("living", lazy=False)}<figcaption class="illus">Rendered in JoyPlan</figcaption></figure>
+      <div class="glass readout float" style="position:absolute;left:0;top:14%"><p class="t">Living &middot; Wall A</p><p class="v">4.625<small>m</small></p><p class="s">&#9679; Sent to plan</p></div>
+      <div class="tab float d2 hv-tab"><div class="tab-scr"><div class="tab-bar"><span class="fn">Apartment_3BHK.jp</span><span style="color:var(--signal)">&#9679; LIVE</span></div><div class="canvas lite">{img("appplan", alt="")}</div></div></div>
       <div class="hv-dev"><div class="float d3">{device("4.625")}</div></div>
-      <div class="glass readout float d3" style="position:absolute;right:2%;bottom:14%"><p class="t">Area inventory</p><p class="v">86.4<small>m&sup2;</small></p><div style="display:flex;gap:4px;margin-top:8px"><i style="height:3px;width:34px;background:var(--signal)"></i><i style="height:3px;width:24px;background:var(--amber)"></i><i style="height:3px;width:20px;background:var(--yellow)"></i><i style="height:3px;width:16px;background:#444"></i></div></div>
-      <span class="illus" style="position:absolute;right:0;bottom:0">Illustrative UI &middot; sample values</span>
+      <div class="glass readout float d3" style="position:absolute;right:0;bottom:12%"><p class="t">Area inventory</p><p class="v">86.4<small>m&sup2;</small></p><div style="display:flex;gap:4px;margin-top:8px"><i style="height:3px;width:34px;background:var(--signal)"></i><i style="height:3px;width:24px;background:var(--amber)"></i><i style="height:3px;width:20px;background:var(--yellow)"></i><i style="height:3px;width:16px;background:#444"></i></div></div>
     </div>
   </div>
 </section>
@@ -45,11 +44,8 @@ TRANSFORM = f'''
         </svg>
         <div class="tags l"><span class="tag" style="background:#fff">Traditional</span><span class="tag" style="background:#fff">Tape &middot; paper &middot; second visit</span></div>
       </div>
-      <div class="ba-r" style="background:#0f0f0f">
-        <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="1000" height="500" fill="#0f0f0f"/>
-        <g transform="translate(180 60) scale(.72)" class="plan2d"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/><g class="dl"><path d="M20 -18H580M20 -26V-10M580 -26V-10"/></g><text class="dt" x="300" y="-26" text-anchor="middle">11.200 m</text><rect x="280" y="40" width="100" height="110" fill="#2a2a2a"/><text class="rl" x="40" y="48">BEDROOM 1 &middot; 13.8 m&sup2;</text><text class="rl" x="418" y="48">BEDROOM 2</text><text class="rl" x="40" y="388">LIVING &middot; 22.8 m&sup2;</text></g>
-        <g transform="translate(760 300)"><rect width="190" height="150" rx="6" fill="#1b1b1b" stroke="#333"/><text x="14" y="24" font-family="JetBrains Mono" font-size="11" fill="#A39D94" letter-spacing="1.5">3D PREVIEW</text><path d="M95 60L160 90L95 120L30 90Z" fill="#333"/><path d="M30 90V110L95 140L160 110V90" fill="none" stroke="#555"/><path d="M95 78L128 92L95 106L62 92Z" fill="#FD4100"/></g>
-        </svg>
+      <div class="ba-r">
+        <div class="ba-real">{img("appplan", "ba-plan", alt="The same apartment as a dimensioned floor plan in the JoyPlan app")}<figure class="ba-inset">{img("apt3d", alt="")}<figcaption class="label">3D preview</figcaption></figure></div>
         <div class="tags r"><span class="tag" style="background:#0B0B0B">JoyPlan</span><span class="tag o" style="background:var(--signal);color:var(--ink)">Measured once &middot; plan + 3D on site</span></div>
       </div>
       <input type="range" min="0" max="100" value="50" aria-label="Compare traditional measuring with JoyPlan">
@@ -63,10 +59,11 @@ TRANSFORM = f'''
   </div>
 </section>'''
 
-HOTS = [("Laser aperture", "Point at the wall. The reading targets the spot you see.", "calc(50% - 6px)", "-14px"),
-        ("Live readout", "Distance shown on the device and in the app at the same time.", "calc(100% + 14px)", "34%"),
-        ("One-press measure", "A single button takes the reading. Full specs to be confirmed.", "-26px", "62%"),
-        ("Bluetooth to app", "Pairs with the JoyPlan app so readings land on the plan.", "calc(100% + 14px)", "82%")]
+HOTS = [("Laser aperture", "Point at the wall. The reading targets the spot you see.", "calc(50% - 6px)", "-2%"),
+        ("Built-in levels", "Two bubble levels help you hold the device straight for a true reading.", "calc(100% + 10px)", "27%"),
+        ("Live readout", "Distance shown on the device and in the app at the same time.", "-24px", "36%"),
+        ("Bluetooth to app", "The 50 m model carries a Bluetooth mark and pairs with the JoyPlan app, so readings land on the plan.", "calc(100% + 10px)", "56%"),
+        ("One-press READ key", "The red READ key takes the reading. Accuracy and battery specs to be confirmed.", "-24px", "65%")]
 hot_html = "".join(f'<button type="button" class="hot" style="left:{x};top:{y}" aria-pressed="{"true" if i == 0 else "false"}" data-t="{t}" data-c="{c}" aria-label="{t}"></button>' for i, (t, c, x, y) in enumerate(HOTS))
 
 ECO = f'''
@@ -82,14 +79,14 @@ ECO = f'''
           <div class="dev-wrap"><div data-tilt style="transition:transform .3s var(--ease-out);position:relative">{device("3.480", cycle="3.480,4.625,2.715,11.200,7.600")}{hot_html}</div></div>
           <div class="hcap glass"><p class="t">Laser aperture</p><p>Point at the wall. The reading targets the spot you see.</p></div>
         </div>
-        <dl class="facts"><div><dt>Measurement</dt><dd>Laser distance readings<br>{tbc("Range &amp; accuracy TBC")}</dd></div><div><dt>Function</dt><dd>Aim, press, read: one-handed on site</dd></div><div><dt>Integration</dt><dd>Bluetooth link sends readings to the app</dd></div><div><dt>On site</dt><dd>Wall-by-wall capture as you walk the space</dd></div></dl>
+        <dl class="facts"><div><dt>Measurement</dt><dd>Laser distance, up to 50 m<br>{tbc("Accuracy TBC")}</dd></div><div><dt>Function</dt><dd>Aim, press, read: one-handed on site</dd></div><div><dt>Integration</dt><dd>Bluetooth link sends readings to the app</dd></div><div><dt>On site</dt><dd>Wall-by-wall capture as you walk the space</dd></div></dl>
         {btn("Explore the device", "/products/joyplan-device/", "ghost")}
       </article>
       <article class="panel prod-card rv">
         <div class="prod-top"><span class="tag">Product 02</span><span class="label">Software &middot; iOS &middot; Android &middot; Desktop</span></div>
         <h3 class="h-m">JoyPlan Design Software</h3>
         <div class="prod-vis" style="aspect-ratio:auto;border:0;background:none;padding:6px 0" data-dim-toggle>
-          {tablet("Apartment_3BHK.jp", '<span class="mini-seg"><button type="button" data-dim="2d" aria-pressed="false">2D</button><button type="button" data-dim="3d" aria-pressed="true">3D</button></span>', iso(layers=8, cls="", rooms=True))}
+          {tablet("Apartment_3BHK.jp", '<span class="mini-seg"><button type="button" data-dim="2d" aria-pressed="false">2D</button><button type="button" data-dim="3d" aria-pressed="true">3D</button></span>', '<div class="dimswap">' + img("appplan", "d2") + img("app3d", "d3") + '</div>')}
         </div>
         <dl class="facts"><div><dt>Plan &rarr; 3D</dt><dd>Draw in 2D, view in immersive 3D instantly</dd></div><div><dt>Design</dt><dd>Hard surfaces, furniture, materials</dd></div><div><dt>Present</dt><dd>Rendered images and 720&deg; panoramas</dd></div><div><dt>Document</dt><dd>Drawings, area inventory, estimates, CAD</dd></div></dl>
         {btn("Explore the software", "/software/joyplan-software/", "ghost")}
@@ -109,15 +106,15 @@ WORKFLOW = f'''
     <div class="wf rv" data-workflow>
       <div class="wf-rail" role="tablist" aria-label="Workflow stages">{rail}</div>
       <div class="wf-stage">
-        <div class="wf-scene" id="st0" role="tabpanel" aria-labelledby="stb0">{room_scene(1)}
-          <div class="glass readout" style="position:absolute;right:4%;top:6%"><p class="t">Bluetooth &middot; connected</p><p class="v">4.625<small>m</small></p><p class="s">&rarr; Wall A &middot; Living</p></div>
+        <div class="wf-scene" id="st0" role="tabpanel" aria-labelledby="stb0"><div class="duo">{img("site", "bg", alt="")}{img("site")}</div>
+          <div class="glass readout st0-read"><p class="t">Bluetooth &middot; connected</p><p class="v">4.625<small>m</small></p><p class="s">&rarr; Wall A &middot; Living</p></div>
           <span class="illus stagetag">Stage 01 &middot; on site</span></div>
-        <div class="wf-scene" id="st1" role="tabpanel" aria-labelledby="stb1"><div class="canvas" style="position:absolute;inset:0">{plan("", anim=True, areas=True)}</div><span class="illus stagetag">Stage 02 &middot; 2D plan generated</span></div>
-        <div class="wf-scene" id="st2" role="tabpanel" aria-labelledby="stb2" style="background:#151515">{iso(layers=12, furn=True)}
+        <div class="wf-scene lite" id="st1" role="tabpanel" aria-labelledby="stb1">{img("appplan", "contain")}<span class="illus stagetag">Stage 02 &middot; 2D plan generated</span></div>
+        <div class="wf-scene" id="st2" role="tabpanel" aria-labelledby="stb2" style="background:#151515">{img("apt3d", "contain")}
           <div class="glass" style="position:absolute;right:4%;top:6%"><p class="label">Materials</p><div style="display:flex;gap:6px;margin-top:8px"><i style="width:26px;height:18px;background:#d9cfc0"></i><i style="width:26px;height:18px;background:#8a5a3a"></i><i style="width:26px;height:18px;background:#4b5058"></i><i style="width:26px;height:18px;background:var(--signal)"></i></div></div>
           <span class="illus stagetag">Stage 03 &middot; same plan, now 3D</span></div>
         <div class="wf-scene" id="st3" role="tabpanel" aria-labelledby="stb3" style="background:#151515">
-          <div style="position:absolute;left:8%;top:12%;width:58%"><div class="tab" style="padding:8px;border-radius:16px"><div style="border-radius:10px;overflow:hidden;aspect-ratio:16/10"><img src="/assets/learn2.webp" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div></div></div>
+          <div style="position:absolute;left:8%;top:12%;width:58%"><div class="tab" style="padding:8px;border-radius:16px"><div style="border-radius:10px;overflow:hidden;aspect-ratio:16/10">{img("render", alt="", style="width:100%;height:100%;object-fit:cover")}</div></div></div>
           <div class="glass" style="position:absolute;right:5%;top:18%;max-width:40%"><p class="label">Shared with client</p><p style="font-weight:600;margin-top:6px;font-size:14px">Render + 720&deg; link</p></div>
           <div class="glass" style="position:absolute;right:8%;bottom:20%;max-width:40%"><p class="label">Client</p><p style="font-weight:600;margin-top:6px;font-size:14px;display:flex;gap:8px;align-items:center"><span style="color:var(--signal)">&#10003;</span> Design approved</p></div>
           <span class="illus stagetag">Stage 04 &middot; present &amp; close</span></div>
@@ -132,7 +129,7 @@ FEATS = [
     ("Drawings &amp; Elevations", "Generate professional drawings from the model. Elevation output to be confirmed with JoyPlan.", "Joinery, kitchen and wardrobe detailing.", "drawings"),
     ("720&deg; Panorama", "Publish rendered 720&deg; panoramas the client can look around in from their own phone.", "Remote presentations and approvals.", "pano"),
     ("CAD Export", "One-click export of a CAD drawing set, plus area inventories and estimate reports.", "Handing over to drafting or contractors.", "cad"),
-    ("Furniture &amp; Materials", "Furnish rooms from a large model library and recolour any model with the material editor. Try a swatch below.", "Trying finishes live in front of the client.", "sofa"),
+    ("Furniture &amp; Materials", "Furnish rooms from a large model library and recolour any model with the material editor.", "Trying finishes live in front of the client.", "sofa"),
     ("AI-Assisted Design", "AI image generation and AI-assisted floor plan creation, as listed in the JoyPlan app.", "Fast mood options in early concepts.", "ai"),
     ("LiDAR Scanning", "On supported devices, capture a room with LiDAR scanning to create the 3D space.", "Quick capture of furnished rooms.", "lidar"),
     ("Share &amp; Sync", "Work continues across phone, tablet, laptop and desktop: measure on site, refine at the studio.", "Teams and site-to-studio handover.", "share"),
@@ -140,17 +137,18 @@ FEATS = [
 fx_btns = "".join(f'<button type="button" role="tab" aria-selected="{"true" if i == 0 else "false"}"><span>0{i+1}</span>{t}</button>' for i, (t, *_r) in enumerate(FEATS))
 
 
+FX_IMG = {"plan": ("appplan", "contain lite"), "walk": ("app3d", "contain"), "drawings": ("plan2d", "contain"), "pano": ("render", "cover"), "cad": ("cad", "contain lite"),
+          "sofa": ("material", "cover"), "ai": ("lounge", "cover"), "lidar": ("lidar", "cover"), "share": ("share", "contain lite")}
+
+
 def fx_screen(k):
-    if k == "plan":
-        return plan("", dims=True, labels=False, furn=True)
-    if k == "sofa":
-        return sofa_screen()
-    return fvis(k)
+    key, c = FX_IMG[k]
+    badge = '<span class="illus" style="position:absolute;right:10px;top:10px">720&deg; view</span>' if k == "pano" else ""
+    return img(key, c) + badge
 
 
-fx_scr = "".join(f'<div class="fx-scr" role="tabpanel">{fx_screen(k)}</div>' for (_t, _d, _u, k) in FEATS)
-swatch = '<div class="swatches" data-swatches="sofa-screen" role="group" aria-label="Sofa material"><button type="button" aria-label="Burnt orange" data-c="#F26722" style="background:#F26722" aria-pressed="true"></button><button type="button" aria-label="Linen" data-c="#D9CBB8" style="background:#D9CBB8" aria-pressed="false"></button><button type="button" aria-label="Teal" data-c="#2F6F73" style="background:#2F6F73" aria-pressed="false"></button><button type="button" aria-label="Charcoal" data-c="#4b5058" style="background:#4b5058" aria-pressed="false"></button></div>'
-fx_text = "".join(f'<div class="fx-text fx-info"{" hidden" if i else ""}><p class="mono small" style="color:var(--orange)">0{i+1} / 09</p><h3 class="h-m">{t}</h3><p class="muted">{d}</p>{swatch if k == "sofa" else ""}<div class="usebox"><p class="label">Use it for</p><p class="small">{u}</p></div>{btn("All features", "/features/", "ghost", sm=True)}</div>' for i, (t, d, u, k) in enumerate(FEATS))
+fx_scr = "".join(f'<div class="fx-scr{" lite" if "lite" in FX_IMG[k][1] else ""}" role="tabpanel">{fx_screen(k)}</div>' for (_t, _d, _u, k) in FEATS)
+fx_text = "".join(f'<div class="fx-text fx-info"{" hidden" if i else ""}><p class="mono small" style="color:var(--orange)">0{i+1} / 09</p><h3 class="h-m">{t}</h3><p class="muted">{d}</p><div class="usebox"><p class="label">Use it for</p><p class="small">{u}</p></div>{btn("All features", "/features/", "ghost", sm=True)}</div>' for i, (t, d, u, k) in enumerate(FEATS))
 
 EXPLORER = f'''
 <section class="sec dark grid-bg" aria-labelledby="fx-h">
@@ -164,11 +162,11 @@ EXPLORER = f'''
   </div>
 </section>'''
 
-PROS = [("Interior Designers", "Measure, lay out and present in the same visit.", ["Laser-linked site measurement", "Layouts with furniture &amp; materials", "Renders and 720&deg; for client sign-off"], "designer", "Photo: designer + client, tablet", "interior-designers"),
-        ("Architects", "Accurate as-built plans, across every level.", ["Multi-level floor plans", "Sunlight analysis", "CAD export for the drawing set"], "architect", "Photo: architect on site", "architects"),
-        ("Civil Engineers", "On-site measurement straight into drawings.", ["Photo notes and annotations", "Area inventory for quantities", "Professional drawings to share"], "engineer", "Photo: engineer measuring", "civil-engineers"),
-        ("Modular Kitchen &amp; Furniture", "Wall-accurate layouts your customer can see.", ["Measured walls for modules", "3D kitchen and wardrobe views", "Estimates generated from the design"], "kitchen", "Photo: kitchen fit-out", "modular-kitchen")]
-pro_cards = "".join(f'''<a class="pro rv" href="/solutions/#{slug}"><div class="pro-vis">{vis(v, lab)}</div><div class="pro-b"><span class="n">0{i+1}</span><h3 class="h-s">{t}</h3><p class="small" style="color:var(--text-dark)">{d}</p><ul>{"".join(f"<li>{b}</li>" for b in bs)}</ul><span class="tlink">Explore{ARR}</span></div></a>''' for i, (t, d, bs, v, lab, slug) in enumerate(PROS))
+PROS = [("Interior Designers", "Measure, lay out and present in the same visit.", ["Laser-linked site measurement", "Layouts with furniture &amp; materials", "Renders and 720&deg; for client sign-off"], "living", "Rendered in JoyPlan", "interior-designers"),
+        ("Architects", "Accurate as-built plans, across every level.", ["Multi-level floor plans", "Sunlight analysis", "CAD export for the drawing set"], "villa", "3D cutaway in JoyPlan", "architects"),
+        ("Civil Engineers", "On-site measurement straight into drawings.", ["Photo notes and annotations", "Area inventory for quantities", "Professional drawings to share"], "site", "On-site measuring", "civil-engineers"),
+        ("Modular Kitchen &amp; Furniture", "Wall-accurate layouts your customer can see.", ["Measured walls for modules", "3D kitchen and wardrobe views", "Estimates generated from the design"], "furnlib", "JoyPlan furniture &amp; kitchen library", "modular-kitchen")]
+pro_cards = "".join(f'''<a class="pro rv" href="/solutions/#{slug}"><div class="pro-vis">{img(v, alt="")}<span class="illus">{lab}</span></div><div class="pro-b"><span class="n">0{i+1}</span><h3 class="h-s">{t}</h3><p class="small" style="color:var(--text-dark)">{d}</p><ul>{"".join(f"<li>{b}</li>" for b in bs)}</ul><span class="tlink">Explore{ARR}</span></div></a>''' for i, (t, d, bs, v, lab, slug) in enumerate(PROS))
 
 SOLUTIONS = f'''
 <section class="sec bone" aria-labelledby="pro-h">
@@ -191,26 +189,26 @@ PRICING = f'''
 </section>'''
 
 GALLERY_ITEMS = [
-    ("Living room render", "Residential &middot; Render", "res 3d", '<img src="/assets/learn1.webp" alt="Rendered living room with a curved sofa, designed in JoyPlan" loading="lazy" width="1048" height="1142">'),
-    ("3BHK apartment plan", "Floor plan", "res plan", '<img src="/assets/step1.webp" alt="3BHK apartment floor plan with furniture library in the JoyPlan app" loading="lazy" width="1000" height="740">'),
-    ("Modular kitchen elevation", "Kitchen &middot; Elevation", "kit elev", elevation("kitchen")),
-    ("Bedroom corner render", "Residential &middot; Render", "res 3d", '<img src="/assets/learn3.webp" alt="Rendered reading corner with armchair, designed in JoyPlan" loading="lazy" width="572" height="560">'),
-    ("Caf&eacute; seating layout", "Commercial &middot; Plan", "com plan", elevation("cafe")),
-    ("Villa in 3D", "Residential &middot; 3D", "res 3d", '<img src="/assets/hero.webp" alt="Two-storey villa shown as a 3D cutaway model" loading="lazy" width="1370" height="960">'),
-    ("Living room 720&deg;", "720&deg; panorama", "res pano", f'<div style="aspect-ratio:2/1">{pano_svg().replace("<svg ", "<svg style=\"height:100%\" ", 1)}</div>'),
-    ("Wardrobe elevation", "Elevation", "res elev", elevation("wardrobe")),
-    ("Lounge render", "Residential &middot; Render", "res 3d", '<img src="/assets/learn2.webp" alt="Rendered lounge with a beige sofa, designed in JoyPlan" loading="lazy" width="572" height="560">'),
-    ("House plan with finishes", "Floor plan", "res plan", '<img src="/assets/step2.webp" alt="Floor plan with floor finishes applied in the JoyPlan app" loading="lazy" width="1000" height="733">'),
-    ("Plan to 3D and render", "Residential &middot; 3D", "res 3d", '<img src="/assets/step4.webp" alt="The same project as a 3D model and a rendered view on phone and tablet" loading="lazy" width="1000" height="733">'),
+    ("Living room render", "Interior &middot; Render", "rnd", "living"),
+    ("3BHK apartment in 3D", "Interior &middot; 3D", "3d", "apt3d"),
+    ("Apartment floor plan", "Floor plan", "plan", "appplan"),
+    ("Reading corner", "Interior &middot; Render", "rnd", "armchair"),
+    ("White model to render", "Interior &middot; Render", "rnd", "whiterender"),
+    ("Furnished 3BHK plan", "Floor plan", "plan", "plan2d"),
+    ("Lounge render", "Interior &middot; Render", "rnd", "lounge"),
+    ("Villa cutaway", "Residential &middot; 3D", "3d", "villa"),
+    ("Plan with finishes", "Floor plan", "plan", "appfinish"),
+    ("Living room with sculptural lamps", "Interior &middot; Render", "rnd", "render"),
+    ("Plan as a 3D model", "Interior &middot; 3D", "3d", "app3d"),
 ]
-gal_tiles = "".join(f'<button type="button" class="gt" data-f="{f}"><div class="im">{im}</div><div class="cap"><div><b>{t}</b><i>{c}</i></div><span aria-hidden="true">&#8599;</span></div></button>' for t, c, f, im in GALLERY_ITEMS)
-filters = [("all", "All"), ("res", "Residential"), ("kit", "Kitchen"), ("com", "Commercial"), ("plan", "Floor plans"), ("3d", "3D"), ("elev", "Elevations"), ("pano", "720&deg;")]
+gal_tiles = "".join(f'<button type="button" class="gt" data-f="{f}"><div class="im">{im}</div><div class="cap"><div><b>{t}</b><i>{c}</i></div><span aria-hidden="true">&#8599;</span></div></button>' for t, c, f, k in GALLERY_ITEMS for im in [img(k)])
+filters = [("all", "All"), ("rnd", "Renders"), ("3d", "3D views"), ("plan", "Floor plans")]
 fchips = "".join(f'<button type="button" class="chip" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{v}</button>' for k, v in filters)
 
 GALLERY = f'''
 <section class="sec carbon" aria-labelledby="gal-h">
   <div class="wrap">
-    {head("Project gallery", "Imagine What You Can Create.", "Plans, 3D views and renders made in JoyPlan. Line drawings mark where more real project work will go.", hid="gal-h")}
+    {head("Project gallery", "Imagine What You Can Create.", "Interior renders, 3D views and floor plans made with JoyPlan. Tap any project to see it larger.", hid="gal-h")}
     <div class="chips rv" role="group" aria-label="Filter projects" style="margin-bottom:28px">{fchips}</div>
     <div class="gal" data-gallery>{gal_tiles}</div>
   </div>
