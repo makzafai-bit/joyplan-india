@@ -1,361 +1,281 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="JoyPlan India: create a joyful home design. Generate 3D floor plans, capture photo notes, render, and export quotes.">
-<link rel="icon" type="image/svg+xml" href="assets/joyplan-mark.svg">
-<title>Joyplan India</title>
-<style>
-html,body{margin:0}
-/* Layout: mirrors joyplan.com — white sticky nav, split hero, step tabs, dark feature carousel, document tabs, render viewer, grey sharing band, learning grid, black footer. Single light theme like the original. */
-:root{
-  color-scheme:light;
-  --red:#fd4100;
-  --ink:#000000;
-  --text:#333333;
-  --grey:#999999;
-  --line:#d9d9d9;
-  --bg:#fdfdfd;
-  --band:#f3f3f3;
-  --dark:#181818;
-  --foot:#111111;
-  --serif:"Times New Roman", Times, "Liberation Serif", serif;
-  --max:1288px;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.5}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-h1,h2,h3,p{margin:0}
-.wrap{max-width:var(--max);margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
-@media (max-width:600px){.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+<title>Laser Measuring Device &amp; Interior Design Software | JoyPlan India</title>
+<meta name="description" content="Measure rooms with the JoyPlan device, draw 2D plans, design in 3D and present renders and 720&deg; panoramas: one connected workflow for Indian design professionals.">
+<link rel="canonical" href="https://joyplanindia.com/">
 
-/* buttons */
-.btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 16px;border-radius:25px;font-family:var(--serif);font-weight:700;font-size:16px;border:1.5px solid var(--red);cursor:pointer;white-space:nowrap;transition:filter .15s, background .15s, color .15s}
-.btn svg{width:22px;height:22px;flex:none}
-.btn.fill{background:var(--red);color:#fff}
-.btn.fill:hover{filter:brightness(1.08)}
-.btn.line{background:var(--bg);color:var(--red)}
-.btn.line:hover{background:#fff4ef}
-.btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--red);outline-offset:3px}
-
-/* nav */
-.nav{position:-webkit-sticky;position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg)}
-.nav .wrap{display:flex;align-items:center;height:100px;max-width:1220px}
-.logo{flex:none;width:261px}.logo img{height:34px;width:auto}
-.nav ul{list-style:none;display:flex;gap:40px;margin:0;padding:0;font-weight:700;font-size:17px}
-.nav ul a{color:var(--grey)}
-.nav ul a.on,.nav ul a:hover{color:var(--red)}
-.nav .sp{flex:1}
-.dl{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;margin-right:44px;color:#222}
-.dl svg{width:20px;height:20px}
-.nav .btn{height:40px;padding:0 35px;font-size:15px;border-radius:20px}
-@media (max-width:900px){.logo{width:auto;margin-right:32px}.nav ul{gap:24px}}
-@media (max-width:640px){.logo{margin-right:0}.logo img{height:28px}.nav ul{display:none}.dl{margin-right:12px}.nav .btn{padding:0 18px}.nav .wrap{height:72px}}
-
-/* hero */
-.hero{position:relative;overflow:hidden}
-.hero .wrap{position:relative;padding-block:110px 85px}
-.hero .copy{position:relative;z-index:1;max-width:700px}
-.hero h1{font-size:48px;line-height:1.5;font-weight:700}
-.hero .sub{margin-top:12px;color:#555;font-size:18px;line-height:1.5}
-.hero .ctas{display:flex;gap:16px;flex-wrap:wrap;margin-top:45px}
-.hero .art{position:absolute;top:0;left:calc(50% + 25px);width:685px;max-width:calc(50% - 25px);pointer-events:none}
-.hero .art img{width:100%;height:auto}
-@media (min-width:1441px){.hero .art{max-width:none}}
-@media (max-width:1100px){.hero h1{font-size:40px}.hero .copy{max-width:560px}}
-@media (max-width:900px){.hero .wrap{padding-block:24px 48px}.hero h1{font-size:34px}.hero .art{position:static;width:100%;max-width:592px;margin:28px auto 0;padding:0 16px}}
-
-/* section heads */
-.sec{padding-block:70px}
-.sec-title{font-size:48px;font-weight:700;text-align:center;line-height:1.3}
-@media (max-width:640px){.sec-title{font-size:34px}}
-
-/* tabs shared (steps + make) */
-.tabs-grid{display:grid;grid-template-columns:540px 1fr;gap:56px;align-items:center;margin-top:72px}
-.tabs-media{min-width:0;position:relative}
-.tabs-media img{width:100%;height:auto;transition:opacity .35s}
-.rail{position:relative;padding-left:24px}
-.rail::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:#bfbfbf}
-.tab{display:block;position:relative;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer;font-family:var(--serif);color:var(--grey)}
-.tab::before{content:"";position:absolute;left:-24px;top:0;bottom:0;width:4px;background:transparent;transition:background .2s}
-.tab.on::before{background:linear-gradient(to bottom,var(--red) 0 40%,var(--ink) 40% 100%)}
-.desc{display:none}
-.tab.on .desc{display:block}
-
-.step{display:grid;grid-template-columns:96px 1fr;align-items:baseline;padding-block:6px}
-.step .n{font-size:12px}
-.step .t{font-size:22px}
-.step.on{padding-block:4px 30px}
-.step.on .n{font-size:22px;font-weight:700;color:var(--ink)}
-.step.on .t{font-size:36px;font-weight:700;color:var(--ink);line-height:1.2}
-.step .desc{grid-column:2;font-size:13px;line-height:1.6;color:var(--text);margin-top:10px;max-width:480px}
-.rail-cta{margin-top:24px;margin-left:24px}
-
-.make-lede{font-size:26px;font-weight:700;line-height:1.55;color:#222;max-width:560px;margin-bottom:56px}
-.mk{padding-block:10px;font-size:22px}
-.mk.on{font-size:34px;font-weight:700;color:var(--ink);padding-block:4px 46px;line-height:1.2}
-@media (max-width:980px){.tabs-grid{grid-template-columns:1fr;gap:36px;margin-top:40px}.tabs-media{max-width:560px;margin:0 auto;width:100%}.make-lede{font-size:21px;margin-bottom:28px}.step.on .t{font-size:30px}.mk.on{font-size:28px}}
-
-/* features */
-.feat{background:var(--dark);color:#fff;padding-block:76px 110px}
-.feat .sec-title{color:#fff}
-.track{display:flex;gap:220px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:62px;padding-left:max(24px,calc((100vw - var(--max))/2 + 24px));padding-right:max(24px,env(safe-area-inset-right,0px));scrollbar-width:none;scroll-behavior:smooth;scroll-padding-left:max(24px,calc((100vw - var(--max))/2 + 24px))}
-.track::-webkit-scrollbar{display:none}
-.card{flex:0 0 372px;scroll-snap-align:start;min-width:0}
-.card .pic{height:254px;display:flex;align-items:center}
-.card img{width:100%;height:auto;max-height:254px;object-fit:contain;object-position:left center}
-.card h3{font-size:22px;font-weight:700;margin-top:28px}
-.card p{color:var(--grey);font-size:15px;line-height:1.55;margin-top:6px;max-width:372px}
-.dots{display:flex;gap:8px;justify-content:center;margin-top:40px}
-.dots button{width:8px;height:8px;border-radius:4px;border:0;background:#555;padding:0;cursor:pointer;transition:width .2s,background .2s}
-.dots button.on{width:24px;background:var(--red)}
-@media (max-width:640px){.track{gap:40px}.card{flex-basis:84%}}
-
-/* render */
-.render-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.render-top p{font-size:18px;font-weight:700}
-.pills{display:flex;gap:6px}
-.pill{height:34px;padding:0 12px;border-radius:17px;border:1px solid #222;background:#fff;color:#222;font-family:var(--serif);font-weight:700;font-size:13px;cursor:pointer}
-.pill.on{background:#000;color:#fff}
-.viewer{margin-top:20px;border-radius:8px;overflow:hidden;position:relative;aspect-ratio:2476/914;max-width:100%}
-.viewer img{width:100%;height:100%;object-fit:cover}
-.pano-note{position:absolute;left:16px;bottom:14px;background:rgba(0,0,0,.6);color:#fff;font-size:13px;padding:4px 10px;border-radius:12px}
-
-/* sharing */
-.share{background:var(--band);padding-block:56px 70px}
-.share-grid{display:grid;grid-template-columns:360px 1fr;align-items:center;gap:24px;margin-top:48px}
-.share-grid h3{font-size:22px;font-weight:700;line-height:1.6;color:#222}
-.share-grid .btn{margin-top:36px}
-.share-grid img{width:100%;min-width:0}
-@media (max-width:900px){.share-grid{grid-template-columns:1fr}}
-
-/* learning */
-.learn{display:grid;grid-template-columns:524px 1fr;gap:90px;padding-block:80px 96px}
-.learn .big{border-radius:0 150px 0 30px;overflow:hidden;align-self:end;min-width:0}
-.learn .big img{width:100%;height:auto}
-.learn-r{display:flex;flex-direction:column;min-width:0}
-.learn-r h2{font-size:48px;font-weight:700;line-height:1.2}
-.learn-r p{color:#666;font-size:16px;line-height:1.5;margin-top:44px;max-width:620px}
-.learn-r .btn{align-self:flex-end;margin-top:60px}
-.learn-pics{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:78px}
-.learn-pics img{border-radius:16px;width:100%;aspect-ratio:285/279;object-fit:cover}
-@media (max-width:980px){.learn{grid-template-columns:1fr;gap:40px}.learn-r h2{font-size:36px}.learn-r .btn{align-self:flex-start;margin-top:28px}.learn-pics{gap:16px;margin-top:32px}}
-
-/* footer */
-footer{background:var(--foot);color:#fff}
-footer .wrap{max-width:1220px;padding-block:52px 70px}
-.f-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.f-top img{height:48px;width:auto}
-.family{height:40px;min-width:160px;border:1px solid #fff;background:transparent;color:#fff;font-family:var(--serif);font-size:14px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:16px;letter-spacing:.02em}
-.f-cols{display:grid;grid-template-columns:377px 138px 160px 220px 1fr;margin-top:50px;font-size:13px;line-height:1.4}
-.f-cols h4{font-size:16px;font-weight:700;margin:0 0 18px}
-.f-cols ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.f-cols address{font-style:normal;display:grid;gap:8px;max-width:340px}
-.f-cols address a{text-decoration:underline}
-.social{display:flex;gap:16px}
-.social span{width:26px;height:26px;border:1px solid #fff;border-radius:50%;display:grid;place-items:center}
-.social svg{width:13px;height:13px;fill:#fff}
-.store{align-self:end}
-.store h4{margin-bottom:12px}
-.store .b{display:flex}
-.store a{display:flex;align-items:center;justify-content:center;gap:8px;height:34px;width:132px;border:1px solid #fff;font-size:14px}
-.store a + a{border-left:0}
-.store svg{width:16px;height:16px;fill:#fff}
-@media (max-width:980px){.f-cols{grid-template-columns:1fr 1fr;gap:32px}.f-cols>div:first-child{grid-column:1/-1}.store{grid-column:1/-1}}
-
-/* scroll indicator like the original */
-.scroll-ind{position:fixed;right:env(safe-area-inset-right,0px);top:0;width:6px;height:100px;background:var(--red);border-radius:3px;z-index:70;pointer-events:none}
-@media (max-width:640px){.scroll-ind{display:none}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.track{scroll-behavior:auto}*{transition:none!important}}
-</style>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JoyPlan India">
+<meta property="og:title" content="Laser Measuring Device &amp; Interior Design Software | JoyPlan India">
+<meta property="og:description" content="Measure rooms with the JoyPlan device, draw 2D plans, design in 3D and present renders and 720&deg; panoramas: one connected workflow for Indian design professionals.">
+<meta property="og:url" content="https://joyplanindia.com/">
+<meta property="og:image" content="https://joyplanindia.com/assets/site/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0B0B">
+<link rel="icon" href="/assets/joyplan-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/site/site.css?v=1">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Joyplan India", "url": "https://joyplanindia.com/", "logo": "https://joyplanindia.com/assets/joyplan-india-logo.svg", "email": "service@joyplan.com", "address": [{"@type": "PostalAddress", "streetAddress": "BL Commerce, 7th Cross Road, Dollar Layout, Stage 2", "addressLocality": "Bengaluru", "addressRegion": "Karnataka", "addressCountry": "IN"}, {"@type": "PostalAddress", "streetAddress": "Third Floor, CK Tower, Near Bismi Hypermarket, Kannur Rd, West Nadakkave, Vandipetta, Vellayil", "addressLocality": "Kozhikode", "addressRegion": "Kerala", "postalCode": "673011", "addressCountry": "IN"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "JoyPlan India", "url": "https://joyplanindia.com/"}</script>
 </head>
 <body>
-
-<div class="scroll-ind" id="ind" aria-hidden="true"></div>
-
+<a class="skip" href="#main">Skip to content</a>
+<div class="pwipe" aria-hidden="true"></div>
 <header class="nav">
   <div class="wrap">
-    <a class="logo" href="#top" aria-label="Joyplan India home"><img src="assets/joyplan-india-logo.svg" alt="Joyplan India"></a>
-    <ul>
-      <li><a class="on" href="#top">Home</a></li>
-      <li><a href="#learn">Learn</a></li>
-      <li><a href="#learn">Shop</a></li>
-    </ul>
-    <span class="sp"></span>
-    <a class="dl" href="#footer" aria-label="Download the app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M4 17v3h16v-3"/></svg></a>
-    <a class="btn fill" href="#footer">Get Started</a>
+    <a class="logo" href="/" aria-label="JoyPlan India home"><svg viewBox="0 0 300 300" aria-hidden="true"><defs><linearGradient id="jpWn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD400"/><stop offset=".55" stop-color="#FFC20E"/><stop offset="1" stop-color="#F9A21B"/></linearGradient><linearGradient id="jpLn" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FDB813"/><stop offset="1" stop-color="#F37021"/></linearGradient><linearGradient id="jpRn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FCD29A"/><stop offset=".5" stop-color="#F8953A"/><stop offset="1" stop-color="#F26722"/></linearGradient></defs><rect width="300" height="300" rx="34" fill="#0B0B0B" stroke="rgba(255,255,255,.2)" stroke-width="8"/><g transform="scale(0.9772) translate(-27 -91)"><polygon points="172,130 268,181 268,298 172,248" fill="url(#jpWn)"/><polygon points="72,298 172,248 172,354" fill="url(#jpLn)"/><polygon points="172,248 268,298 172,354" fill="url(#jpRn)"/></g></svg><span class="wm">joyplan</span><span class="in">INDIA</span></a>
+    <nav class="nav-links" aria-label="Main"><a href="/products/joyplan-device/">Device</a><a href="/software/joyplan-software/">Software</a><a href="/features/">Features</a><a href="/solutions/">Solutions</a><a href="/packages/">Packages</a><a href="/contact/">Contact</a></nav>
+    <div class="nav-cta"><a class="btn primary sm" href="/book-a-demo/">Book a Free Demo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a><button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span></button></div>
   </div>
 </header>
+<div class="menu" id="menu" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu-top"><a class="logo" href="/" aria-label="JoyPlan India home"><svg viewBox="0 0 300 300" aria-hidden="true"><defs><linearGradient id="jpWm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD400"/><stop offset=".55" stop-color="#FFC20E"/><stop offset="1" stop-color="#F9A21B"/></linearGradient><linearGradient id="jpLm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FDB813"/><stop offset="1" stop-color="#F37021"/></linearGradient><linearGradient id="jpRm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FCD29A"/><stop offset=".5" stop-color="#F8953A"/><stop offset="1" stop-color="#F26722"/></linearGradient></defs><rect width="300" height="300" rx="34" fill="#0B0B0B" stroke="rgba(255,255,255,.2)" stroke-width="8"/><g transform="scale(0.9772) translate(-27 -91)"><polygon points="172,130 268,181 268,298 172,248" fill="url(#jpWm)"/><polygon points="72,298 172,248 172,354" fill="url(#jpLm)"/><polygon points="172,248 268,298 172,354" fill="url(#jpRm)"/></g></svg><span class="wm">joyplan</span><span class="in">INDIA</span></a><button class="menu-close" type="button" aria-label="Close menu">&times;</button></div>
+  <nav aria-label="Mobile"><a href="/">Home<span aria-hidden="true">&rarr;</span></a><a href="/products/joyplan-device/">Device<span aria-hidden="true">&rarr;</span></a><a href="/software/joyplan-software/">Software<span aria-hidden="true">&rarr;</span></a><a href="/features/">Features<span aria-hidden="true">&rarr;</span></a><a href="/solutions/">Solutions<span aria-hidden="true">&rarr;</span></a><a href="/packages/">Packages<span aria-hidden="true">&rarr;</span></a><a href="/contact/">Contact<span aria-hidden="true">&rarr;</span></a></nav>
+  <a class="btn primary full" href="/book-a-demo/">Book a Free Demo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+  <p class="tiny meta">service@joyplan.com &middot; Bengaluru &middot; Kozhikode</p>
+</div>
+<main id="main">
 
-<main id="top">
-  <section class="hero">
-    <div class="wrap">
-      <div class="copy">
-        <h1>3D Design Create a Joyful Home Design</h1>
-        <p class="sub">Design perfection unleashed!<br>Generate 3D floor plans, capture photo notes, render, and export quotes.</p>
-        <div class="ctas">
-          <a class="btn fill" href="#footer">Install App For Free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
-          <a class="btn line" href="#footer">Business free demo</a>
-        </div>
-      </div>
+<section class="hero dark grid-bg" aria-labelledby="h1">
+  <div class="glow o" style="width:620px;height:620px;right:-160px;top:-120px" data-parallax="70"></div>
+  <div class="glow y" style="width:420px;height:420px;right:22%;bottom:-220px" data-parallax="-60"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy" data-enter data-parallax-copy>
+      <span class="kicker">Laser measurement &times; 2D/3D design software</span>
+      <h1 class="h-xl" id="h1">Measure Smarter.<br>Design Faster.<br><span class="hl-box"><span class="hl">Impress</span></span><br><span class="hl-box"><span class="hl">Better.</span></span></h1>
+      <p class="lead">Transform the way you measure, plan and present spaces with JoyPlan's connected measurement and design ecosystem.</p>
+      <div class="btns"><a class="btn primary" href="#ecosystem" >Experience JoyPlan<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="/book-a-demo/" >Book a Free Demo</a></div>
+      <p class="hero-meta"><span>App Store</span><span>Google Play</span><span>Bengaluru</span><span>Kozhikode</span><span>Free business demo</span></p>
     </div>
-    <div class="art"><img src="assets/hero.webp" alt="3D render of a two-storey home with garden"></div>
-  </section>
-
-  <section class="sec" id="how">
-    <div class="wrap">
-      <h2 class="sec-title">How is Work</h2>
-      <div class="tabs-grid">
-        <div class="tabs-media"><img id="stepImg" src="assets/step1.webp" alt="JoyPlan app on a tablet"></div>
-        <div>
-          <div class="rail" id="steps">
-            <button class="tab step on" data-img="assets/step1.webp"><span class="n">Step1</span><span class="t">Draw</span><span class="desc">Create your 2D floor plan, and we'll present it to you in immersive 3D. Measure walls, place doors and windows – even complex building structures are no problem.</span></button>
-            <button class="tab step" data-img="assets/step2.webp"><span class="n">Step2</span><span class="t">Hard-surface</span><span class="desc">Customize walls, floors, ceilings, and tiles with our extensive library of over 300,000+ models.</span></button>
-            <button class="tab step" data-img="assets/step3.webp"><span class="n">Step3</span><span class="t">Furniture</span><span class="desc">Choose from over 300,000+ models in our library and easily drag and drop furniture and appliances onto your floor plan to decorate your home.</span></button>
-            <button class="tab step" data-img="assets/step4.webp"><span class="n">Step4</span><span class="t">View</span><span class="desc">Choose from over 300,000+ models in our library and easily drag and drop furniture and appliances onto your floor plan to decorate your home.</span></button>
-          </div>
-          <a class="btn line rail-cta" href="#footer">Install App For Free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="feat" id="features">
-    <h2 class="sec-title wrap">Highlighted Features</h2>
-    <div class="track" id="track">
-      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_material.webp" alt="Material editor recolouring an armchair"></div><h3>Material Editor</h3><p>Customize model colors and materials to match your design vision.</p></article>
-      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_lidar.webp" alt="LiDAR scan of a living room"></div><h3>LiDAR Scanning</h3><p>Create 3D spaces with radar scanning technology.</p></article>
-      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_multi.webp" alt="Floor levels panel"></div><h3>Multi-level</h3><p>Create multi-level floor plans.</p></article>
-      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_freeform.webp" alt="Freeform modelling tools"></div><h3>Freeform modeling</h3><p>Create freeform shapes on the ground, ceiling, and walls as you please.</p></article>
-      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_sun.webp" alt="Sunlight analysis view"></div><h3>Sunlight analysis</h3><p>Simulate sunlight position and projection to visualize interior and surrounding lighting conditions.</p></article>
-      <article class="card"><div class="pic"><img loading="lazy" decoding="async" src="assets/f_photos.webp" alt="Photo notes with laser measure"></div><h3>Photos and notes</h3><p>Record house conditions using photos, notes, and annotations.</p></article>
-    </div>
-    <div class="dots" id="dots"></div>
-  </section>
-
-  <section class="sec" id="make">
-    <div class="wrap">
-      <h2 class="sec-title">What you can Make</h2>
-      <div class="tabs-grid">
-        <div class="tabs-media"><img id="makeImg" src="assets/make1.webp" alt="Area inventory in the JoyPlan app"></div>
-        <div>
-          <p class="make-lede">Generate professional documents and estimate reports with just one click.</p>
-          <div class="rail" id="makes">
-            <button class="tab mk on" data-img="assets/make1.webp">Area inventory</button>
-            <button class="tab mk" data-img="assets/make2.webp">Professional drawings</button>
-            <button class="tab mk" data-img="assets/make3.webp">Estimate</button>
-          </div>
-          <a class="btn line rail-cta" href="#footer">Install App For Free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec" id="render" style="padding-top:20px">
-    <div class="wrap">
-      <div class="render-top">
-        <p>Prepare to be amazed by our stunning visual rendering results.</p>
-        <div class="pills" id="pills">
-          <button class="pill on" data-mode="img">Rendered image</button>
-          <button class="pill" data-mode="pano">720 panorama</button>
-        </div>
-      </div>
-      <div class="viewer"><img loading="lazy" decoding="async" src="assets/render.webp" alt="Living room shown as a white model on the left and fully rendered on the right"><span class="pano-note" id="panoNote" hidden>720° panorama view</span></div>
-    </div>
-  </section>
-
-  <section class="share">
-    <div class="wrap">
-      <h2 class="sec-title">Sharing and Collaboration</h2>
-      <div class="share-grid">
-        <div>
-          <h3>Share your work among<br>different terminals</h3>
-          <a class="btn line" href="#footer">Install App For Free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
-        </div>
-        <img loading="lazy" decoding="async" src="assets/share.webp" alt="JoyPlan on phone, tablet, laptop and desktop with 360 camera and laser measure">
-      </div>
-    </div>
-  </section>
-
-  <section id="learn">
-    <div class="wrap learn">
-      <div class="big"><img loading="lazy" decoding="async" src="assets/learn1.webp" alt="Living room with curved sofa"></div>
-      <div class="learn-r">
-        <h2>Start Learning</h2>
-        <p>JoyPlan offers videos to help you learn design in no time. Easily search for a specific topic or watch our short and to-the-point help videos.</p>
-        <a class="btn fill" href="#learn">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
-        <div class="learn-pics">
-          <img loading="lazy" decoding="async" src="assets/learn2.webp" alt="Sunlit living room">
-          <img loading="lazy" decoding="async" src="assets/learn3.webp" alt="Armchair in a reading corner">
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer id="footer">
-  <div class="wrap">
-    <div class="f-top">
-      <img src="assets/joyplan-india-logo-white.svg" alt="Joyplan India">
-      <div class="family">FAMILY SITE <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
-    </div>
-    <div class="f-cols">
-      <div>
-        <h4>Find US</h4>
-        <address>
-          <span>Company Name: Joyplan India</span>
-          <span>Head Office (Karnataka Branch): BL Commerce, 7th Cross Road, Dollar Layout, Stage 2, Bengaluru, Karnataka</span>
-          <span>Kerala Branch: Third Floor, CK Tower, Near Bismi Hypermarket, Kannur Rd, West Nadakkave, Vandipetta, Vellayil, Kozhikode, Kerala 673011</span>
-          <span>Email: <a href="#footer">service@joyplan.com.</a></span>
-        </address>
-      </div>
-      <div><h4>ABOUT</h4><ul><li><a href="#footer">Company</a></li></ul></div>
-      <div><h4>HELP</h4><ul><li><a href="#footer">Consulting</a></li><li><a href="#footer">Terms of use</a></li><li><a href="#footer">Privacy Policy</a></li></ul></div>
-      <div><h4>Follow US</h4><div class="social">
-        <span aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M9 7.5v9l7.5-4.5z"/></svg></span>
-        <span aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M14 3h3a4 4 0 0 0 4 4v3a7 7 0 0 1-4-1.3V15a6 6 0 1 1-6-6v3a3 3 0 1 0 3 3z"/></svg></span>
-      </div></div>
-      <div class="store"><h4>DOWNLOAD</h4><div class="b">
-        <a href="#footer"><svg viewBox="0 0 24 24"><path d="M12 2l2 3.5L9.5 13h6l2 3.5H3.5l2-3.5h2L12 5zM17.5 16.5l3 5h-4l-1.5-2.6z"/></svg>App Store</a>
-        <a href="#footer"><svg viewBox="0 0 24 24"><path d="M4 2.5l11 9.5-11 9.5zM16 13l3 2.5-12 6.5zM16 11l-9-9 12 6.5z"/></svg>Google Play</a>
-      </div></div>
+    <div class="hero-vis" data-parallax-vis>
+      <div class="iso " data-rise aria-hidden="true"><div class="iso-stage"><div class="iso-l base" style="--i:0"><svg viewBox="0 0 600 420"><rect class="fl" x="20" y="20" width="560" height="380"/><rect class="rm" x="270" y="30" width="120" height="210"/><rect class="rm o" x="410" y="260" width="160" height="130"/><rect class="rm p" x="30" y="260" width="360" height="130"/></svg></div><div class="iso-l" style="--i:1"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:2"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:3"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:4"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:5"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:6"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:7"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:8"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:9"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:10"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:11"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l top" style="--i:12"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div></div></div>
+      <div class="glass readout float" style="position:absolute;left:4%;top:12%"><p class="t">Living &middot; Wall A</p><p class="v">4.625<small>m</small></p><p class="s">&#9679; Sent to plan</p></div>
+      <div class="tab float d2 hv-tab" style="position:absolute;right:0;top:2%;width:38%;padding:8px;border-radius:16px"><div class="tab-scr" style="grid-template-rows:22px 1fr;border-radius:10px;aspect-ratio:4/3"><div class="tab-bar" style="font-size:8px;padding:0 8px"><span class="fn">Villa_GF.jp</span><span style="color:var(--signal)">&#9679; LIVE</span></div><div class="canvas" style="background-size:10px 10px"><svg class="plan2d " viewBox="-30 -40 660 490" aria-hidden="true"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/><g class="dl"><path d="M20 -18H580M20 -26V-10M580 -26V-10"/><path d="M-12 20V400M-20 20H-4M-20 400H-4"/></g><text class="dt" x="300" y="-24" text-anchor="middle">11.200 m</text><text class="dt" x="-20" y="214" text-anchor="middle" transform="rotate(-90 -20 210)">7.600 m</text></svg></div></div></div>
+      <div class="hv-dev"><div class="float d3"><div class="dev " aria-hidden="true"><div class="cap"><div class="lens"></div></div><div class="lcd"><i>DIST</i><b>4.625</b><em>m</em></div><div class="key"></div><div class="brand">joyplan</div><div class="pills"><span></span><span></span><span></span></div></div></div></div>
+      <div class="glass readout float d3" style="position:absolute;right:2%;bottom:14%"><p class="t">Area inventory</p><p class="v">86.4<small>m&sup2;</small></p><div style="display:flex;gap:4px;margin-top:8px"><i style="height:3px;width:34px;background:var(--signal)"></i><i style="height:3px;width:24px;background:var(--amber)"></i><i style="height:3px;width:20px;background:var(--yellow)"></i><i style="height:3px;width:16px;background:#444"></i></div></div>
+      <span class="illus" style="position:absolute;right:0;bottom:0">Illustrative UI &middot; sample values</span>
     </div>
   </div>
+</section>
+<div class="strip" aria-hidden="true"><div class="strip-in"><span>Measure</span><span>Create</span><span>Design</span><span>Present</span><span>2D floor plans</span><span>3D design</span><span>Renders</span><span>720&deg; panorama</span><span>CAD export</span><span>Bengaluru</span><span>Kozhikode</span><span>Measure</span><span>Create</span><span>Design</span><span>Present</span><span>2D floor plans</span><span>3D design</span><span>Renders</span><span>720&deg; panorama</span><span>CAD export</span><span>Bengaluru</span><span>Kozhikode</span></div></div>
+
+<section class="sec bone" aria-labelledby="tr-h">
+  <div class="wrap">
+    <div class="head "><span class="kicker">The transformation</span><h2 class="h-l" id="tr-h">From Measurements to Meaningful Designs.</h2><p class="lead">Drag the line. On the left, the way most site visits still end: tape, paper, a second trip. On the right, the same room, measured once and already a plan.</p></div>
+    <div class="ba rv">
+      <div class="ba-l">
+        <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="gp" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#d8cdb8" stroke-width="1"/></pattern></defs><rect width="1000" height="500" fill="#efe6d4"/><rect width="1000" height="500" fill="url(#gp)"/>
+        <path d="M200 90L640 96L636 420L204 414Z M380 92L384 230 M384 262L386 300 M206 300L290 302 M330 302L520 304" fill="none" stroke="#2b2b2b" stroke-width="4" stroke-linecap="round"/>
+        <text x="400" y="70" font-family="Georgia,serif" font-style="italic" font-size="28" fill="#333">11.2 m?</text>
+        <text x="160" y="270" font-family="Georgia,serif" font-style="italic" font-size="24" fill="#333" transform="rotate(-90 160 260)">7.6</text>
+        <text x="470" y="200" font-family="Georgia,serif" font-style="italic" font-size="22" fill="#a33" text-decoration="line-through">kit 3.4</text><text x="470" y="228" font-family="Georgia,serif" font-style="italic" font-size="22" fill="#c2410c">3.48 &#215;</text>
+        <text x="300" y="380" font-family="Georgia,serif" font-style="italic" font-size="22" fill="#333">4.6 x 3.9</text>
+        <g transform="translate(720 120) rotate(4)"><rect width="200" height="150" fill="#FFE27A"/><text x="16" y="44" font-family="Georgia,serif" font-style="italic" font-size="21" fill="#5a4600">re-measure</text><text x="16" y="74" font-family="Georgia,serif" font-style="italic" font-size="21" fill="#5a4600">kitchen wall +</text><text x="16" y="104" font-family="Georgia,serif" font-style="italic" font-size="21" fill="#5a4600">redraw in CAD</text></g>
+        <g transform="translate(120 400) rotate(-20)"><rect x="0" y="0" width="120" height="110" rx="18" fill="#F9A21B"/><circle cx="60" cy="55" r="26" fill="#2b2b2b"/><rect x="118" y="34" width="230" height="30" fill="#FFC20E"/><g stroke="#2b2b2b" stroke-width="2"><path d="M130 34V52"/><path d="M144 34V46"/><path d="M158 34V52"/><path d="M172 34V46"/><path d="M186 34V52"/><path d="M200 34V46"/><path d="M214 34V52"/><path d="M228 34V46"/><path d="M242 34V52"/><path d="M256 34V46"/><path d="M270 34V52"/><path d="M284 34V46"/><path d="M298 34V52"/><path d="M312 34V46"/><path d="M326 34V52"/><path d="M340 34V46"/></g></g>
+        </svg>
+        <div class="tags l"><span class="tag" style="background:#fff">Traditional</span><span class="tag" style="background:#fff">Tape &middot; paper &middot; second visit</span></div>
+      </div>
+      <div class="ba-r" style="background:#0f0f0f">
+        <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="1000" height="500" fill="#0f0f0f"/>
+        <g transform="translate(180 60) scale(.72)" class="plan2d"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/><g class="dl"><path d="M20 -18H580M20 -26V-10M580 -26V-10"/></g><text class="dt" x="300" y="-26" text-anchor="middle">11.200 m</text><rect x="280" y="40" width="100" height="110" fill="#2a2a2a"/><text class="rl" x="40" y="48">BEDROOM 1 &middot; 13.8 m&sup2;</text><text class="rl" x="418" y="48">BEDROOM 2</text><text class="rl" x="40" y="388">LIVING &middot; 22.8 m&sup2;</text></g>
+        <g transform="translate(760 300)"><rect width="190" height="150" rx="6" fill="#1b1b1b" stroke="#333"/><text x="14" y="24" font-family="JetBrains Mono" font-size="11" fill="#A39D94" letter-spacing="1.5">3D PREVIEW</text><path d="M95 60L160 90L95 120L30 90Z" fill="#333"/><path d="M30 90V110L95 140L160 110V90" fill="none" stroke="#555"/><path d="M95 78L128 92L95 106L62 92Z" fill="#FD4100"/></g>
+        </svg>
+        <div class="tags r"><span class="tag" style="background:#0B0B0B">JoyPlan</span><span class="tag o" style="background:var(--signal);color:var(--ink)">Measured once &middot; plan + 3D on site</span></div>
+      </div>
+      <input type="range" min="0" max="100" value="50" aria-label="Compare traditional measuring with JoyPlan">
+      <div class="ba-h"></div>
+    </div>
+    <div class="steps" data-stagger>
+      <div class="rv"><span class="n">01</span><b>Measurement</b><p>Each laser reading lands in the app, against the right wall.</p></div>
+      <div class="rv"><span class="n">02</span><b>2D floor plan</b><p>Walls, doors and windows drawn while you're still in the room.</p></div>
+      <div class="rv"><span class="n">03</span><b>3D visualisation</b><p>The same plan, presented in immersive 3D, with no redrawing.</p></div>
+    </div>
+  </div>
+</section>
+<section class="sec dark" id="ecosystem" aria-labelledby="eco-h">
+  <div class="wrap">
+    <div class="head "><span class="kicker">The ecosystem</span><h2 class="h-l" id="eco-h">One Ecosystem. Endless Design Possibilities.</h2><p class="lead">A measuring device and a design app, built to talk to each other. Use them together on site, or the app on its own anywhere.</p></div>
+    <div class="g2" data-stagger>
+      <article class="panel prod-card rv">
+        <div class="prod-top"><span class="tag">Product 01</span><span class="label">Hardware</span></div>
+        <h3 class="h-m">JoyPlan Measurement Device</h3>
+        <div class="prod-vis devbox grid-bg" data-hotspots data-tilt-area>
+          <div class="glow o" style="width:300px;height:300px;left:50%;top:50%;margin:-150px 0 0 -150px;opacity:.4"></div>
+          <div class="dev-wrap"><div data-tilt style="transition:transform .3s var(--ease-out);position:relative"><div class="dev " aria-hidden="true"><div class="cap"><div class="lens"></div></div><div class="lcd"><i>DIST</i><b data-lcd="3.480,4.625,2.715,11.200,7.600">3.480</b><em>m</em></div><div class="key"></div><div class="brand">joyplan</div><div class="pills"><span></span><span></span><span></span></div></div><button type="button" class="hot" style="left:calc(50% - 6px);top:-14px" aria-pressed="true" data-t="Laser aperture" data-c="Point at the wall. The reading targets the spot you see." aria-label="Laser aperture"></button><button type="button" class="hot" style="left:calc(100% + 14px);top:34%" aria-pressed="false" data-t="Live readout" data-c="Distance shown on the device and in the app at the same time." aria-label="Live readout"></button><button type="button" class="hot" style="left:-26px;top:62%" aria-pressed="false" data-t="One-press measure" data-c="A single button takes the reading. Full specs to be confirmed." aria-label="One-press measure"></button><button type="button" class="hot" style="left:calc(100% + 14px);top:82%" aria-pressed="false" data-t="Bluetooth to app" data-c="Pairs with the JoyPlan app so readings land on the plan." aria-label="Bluetooth to app"></button></div></div>
+          <div class="hcap glass"><p class="t">Laser aperture</p><p>Point at the wall. The reading targets the spot you see.</p></div>
+        </div>
+        <dl class="facts"><div><dt>Measurement</dt><dd>Laser distance readings<br><span class="tbc">[Range &amp; accuracy TBC]</span></dd></div><div><dt>Function</dt><dd>Aim, press, read: one-handed on site</dd></div><div><dt>Integration</dt><dd>Bluetooth link sends readings to the app</dd></div><div><dt>On site</dt><dd>Wall-by-wall capture as you walk the space</dd></div></dl>
+        <a class="btn ghost" href="/products/joyplan-device/" >Explore the device<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+      </article>
+      <article class="panel prod-card rv">
+        <div class="prod-top"><span class="tag">Product 02</span><span class="label">Software &middot; iOS &middot; Android &middot; Desktop</span></div>
+        <h3 class="h-m">JoyPlan Design Software</h3>
+        <div class="prod-vis" style="aspect-ratio:auto;border:0;background:none;padding:6px 0" data-dim-toggle>
+          <div class="tab " ><div class="tab-scr"><div class="tab-bar"><span class="fn">Apartment_3BHK.jp</span><span class="mini-seg"><button type="button" data-dim="2d" aria-pressed="false">2D</button><button type="button" data-dim="3d" aria-pressed="true">3D</button></span></div><div class="tab-body"><div class="rail"><span class="on"></span><span></span><span></span><span></span><span></span></div><div class="canvas"><div class="iso " aria-hidden="true"><div class="iso-stage"><div class="iso-l base" style="--i:0"><svg viewBox="0 0 600 420"><rect class="fl" x="20" y="20" width="560" height="380"/><rect class="rm" x="270" y="30" width="120" height="210"/><rect class="rm o" x="410" y="260" width="160" height="130"/><rect class="rm p" x="30" y="260" width="360" height="130"/></svg></div><div class="iso-l" style="--i:1"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:2"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:3"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:4"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:5"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:6"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:7"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l top" style="--i:8"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div></div></div></div></div></div></div>
+        </div>
+        <dl class="facts"><div><dt>Plan &rarr; 3D</dt><dd>Draw in 2D, view in immersive 3D instantly</dd></div><div><dt>Design</dt><dd>Hard surfaces, furniture, materials</dd></div><div><dt>Present</dt><dd>Rendered images and 720&deg; panoramas</dd></div><div><dt>Document</dt><dd>Drawings, area inventory, estimates, CAD</dd></div></dl>
+        <a class="btn ghost" href="/software/joyplan-software/" >Explore the software<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="sec carbon" aria-labelledby="wf-h">
+  <div class="wrap">
+    <div class="head "><span class="kicker">How JoyPlan works</span><h2 class="h-l" id="wf-h">Your Entire Workflow. <span class="hl-box"><span class="hl">Connected.</span></span></h2></div>
+    <div class="wf rv" data-workflow>
+      <div class="wf-rail" role="tablist" aria-label="Workflow stages"><button type="button" role="tab" aria-selected="true" aria-controls="st0" id="stb0"><i class="bar"></i><span class="n">01</span><span class="t">Measure</span><span class="d">Laser readings flow to the app over Bluetooth.</span></button><button type="button" role="tab" aria-selected="false" aria-controls="st1" id="stb1"><i class="bar"></i><span class="n">02</span><span class="t">Create</span><span class="d">The 2D floor plan builds wall by wall.</span></button><button type="button" role="tab" aria-selected="false" aria-controls="st2" id="stb2"><i class="bar"></i><span class="n">03</span><span class="t">Design</span><span class="d">One tap turns the plan into a 3D interior.</span></button><button type="button" role="tab" aria-selected="false" aria-controls="st3" id="stb3"><i class="bar"></i><span class="n">04</span><span class="t">Present</span><span class="d">Renders and 720&deg; views shared with the client.</span></button></div>
+      <div class="wf-stage">
+        <div class="wf-scene" id="st0" role="tabpanel" aria-labelledby="stb0"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#151515"/><path d="M0 0L240 130H560L800 0Z" fill="#1b1b1b"/><path d="M0 500L240 370H560L800 500Z" fill="#1d1d1d"/><path d="M0 0L240 130V370L0 500Z" fill="#181818"/><path d="M800 0L560 130V370L800 500Z" fill="#181818"/><rect x="240" y="130" width="320" height="240" fill="#222"/><g stroke="rgba(255,255,255,.06)"><path d="M240 400H560M200 430H600M150 465H650"/></g><rect x="350" y="180" width="100" height="90" fill="#3a2f22" stroke="#6b5640"/><path d="M400 180V270M350 225H450" stroke="#6b5640"/><path d="M260 160H540M260 152V168M540 152V168" stroke="#FFC20E" stroke-width="2" class="drawline"/><rect x="362" y="150" width="76" height="20" fill="#0B0B0B"/><text x="400" y="164" fill="#FFC20E" font-family="JetBrains Mono" font-size="12" text-anchor="middle">4.625 m</text><path d="M150 420L520 300" stroke="#FD4100" stroke-width="3"/><path d="M150 420L520 300" stroke="#FD4100" stroke-width="12" opacity=".18"/><circle cx="520" cy="300" r="6" fill="#FD4100"/><g transform="translate(118 390) rotate(-28)"><rect width="34" height="80" rx="9" fill="#222" stroke="#333"/><rect width="34" height="16" rx="8" fill="#FD4100"/><circle cx="17" cy="48" r="8" fill="#FD4100"/></g></svg>
+          <div class="glass readout" style="position:absolute;right:4%;top:6%"><p class="t">Bluetooth &middot; connected</p><p class="v">4.625<small>m</small></p><p class="s">&rarr; Wall A &middot; Living</p></div>
+          <span class="illus stagetag">Stage 01 &middot; on site</span></div>
+        <div class="wf-scene" id="st1" role="tabpanel" aria-labelledby="stb1"><div class="canvas" style="position:absolute;inset:0"><svg class="plan2d anim " viewBox="-30 -40 660 490" aria-hidden="true"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/><g class="dl"><path d="M20 -18H580M20 -26V-10M580 -26V-10"/><path d="M-12 20V400M-20 20H-4M-20 400H-4"/></g><text class="dt" x="300" y="-24" text-anchor="middle">11.200 m</text><text class="dt" x="-20" y="214" text-anchor="middle" transform="rotate(-90 -20 210)">7.600 m</text><text class="rl" x="40" y="48">BEDROOM 1 · 15.2 m²</text><text class="rl" x="278" y="48">KITCHEN</text><text class="rl" x="418" y="48">BEDROOM 2</text><text class="rl" x="40" y="388">LIVING · 22.8 m²</text><text class="rl" x="418" y="388">BATH</text></svg></div><span class="illus stagetag">Stage 02 &middot; 2D plan generated</span></div>
+        <div class="wf-scene" id="st2" role="tabpanel" aria-labelledby="stb2" style="background:#151515"><div class="iso " aria-hidden="true"><div class="iso-stage"><div class="iso-l base" style="--i:0"><svg viewBox="0 0 600 420"><rect class="fl" x="20" y="20" width="560" height="380"/><rect class="rm" x="270" y="30" width="120" height="210"/><rect class="rm o" x="410" y="260" width="160" height="130"/><rect class="rm p" x="30" y="260" width="360" height="130"/><rect x="60" y="60" width="110" height="130" fill="#d9cfc0" opacity=".8"/><rect x="440" y="70" width="100" height="120" fill="#d9cfc0" opacity=".8"/><rect x="90" y="300" width="170" height="54" fill="#FD4100"/></svg></div><div class="iso-l" style="--i:1"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:2"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:3"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:4"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:5"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:6"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:7"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:8"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:9"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:10"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l" style="--i:11"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div><div class="iso-l top" style="--i:12"><svg viewBox="0 0 600 420"><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/></svg></div></div></div>
+          <div class="glass" style="position:absolute;right:4%;top:6%"><p class="label">Materials</p><div style="display:flex;gap:6px;margin-top:8px"><i style="width:26px;height:18px;background:#d9cfc0"></i><i style="width:26px;height:18px;background:#8a5a3a"></i><i style="width:26px;height:18px;background:#4b5058"></i><i style="width:26px;height:18px;background:var(--signal)"></i></div></div>
+          <span class="illus stagetag">Stage 03 &middot; same plan, now 3D</span></div>
+        <div class="wf-scene" id="st3" role="tabpanel" aria-labelledby="stb3" style="background:#151515">
+          <div style="position:absolute;left:8%;top:12%;width:58%"><div class="tab" style="padding:8px;border-radius:16px"><div style="border-radius:10px;overflow:hidden;aspect-ratio:16/10"><img src="/assets/learn2.webp" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div></div></div>
+          <div class="glass" style="position:absolute;right:5%;top:18%;max-width:40%"><p class="label">Shared with client</p><p style="font-weight:600;margin-top:6px;font-size:14px">Render + 720&deg; link</p></div>
+          <div class="glass" style="position:absolute;right:8%;bottom:20%;max-width:40%"><p class="label">Client</p><p style="font-weight:600;margin-top:6px;font-size:14px;display:flex;gap:8px;align-items:center"><span style="color:var(--signal)">&#10003;</span> Design approved</p></div>
+          <span class="illus stagetag">Stage 04 &middot; present &amp; close</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec dark grid-bg" aria-labelledby="fx-h">
+  <div class="wrap">
+    <div class="head "><span class="kicker">Software feature explorer</span><h2 class="h-l" id="fx-h">Everything You Need to Design with Confidence.</h2><p class="lead">Pick a feature and the tablet switches to that tool.</p></div>
+    <div class="fx rv" data-explorer>
+      <div><div class="fx-list" role="tablist" aria-label="Software features"><button type="button" role="tab" aria-selected="true"><span>01</span>2D Floor Plans</button><button type="button" role="tab" aria-selected="false"><span>02</span>3D Visualisation</button><button type="button" role="tab" aria-selected="false"><span>03</span>Drawings &amp; Elevations</button><button type="button" role="tab" aria-selected="false"><span>04</span>720&deg; Panorama</button><button type="button" role="tab" aria-selected="false"><span>05</span>CAD Export</button><button type="button" role="tab" aria-selected="false"><span>06</span>Furniture &amp; Materials</button><button type="button" role="tab" aria-selected="false"><span>07</span>AI-Assisted Design</button><button type="button" role="tab" aria-selected="false"><span>08</span>LiDAR Scanning</button><button type="button" role="tab" aria-selected="false"><span>09</span>Share &amp; Sync</button></div><p class="tiny" style="margin-top:16px">AR perspective will be added once JoyPlan confirms support.</p></div>
+      <div class="tab"><div class="tab-scr"><div class="tab-bar"><span class="fn">Apartment_3BHK.jp</span><span class="mono">JoyPlan</span></div><div class="tab-body"><div class="rail"><span class="on"></span><span></span><span></span><span></span><span></span></div><div class="canvas"><div class="fx-scr" role="tabpanel"><svg class="plan2d " viewBox="-30 -40 660 490" aria-hidden="true"><rect class="furn" x="60" y="60" width="110" height="130" rx="4"/><rect class="furn" x="430" y="60" width="110" height="130" rx="4"/><rect class="furn" x="80" y="300" width="170" height="60" rx="6"/><rect class="furn" x="290" y="40" width="80" height="40"/><path class="w" d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580"/><g class="dl"><path d="M20 -18H580M20 -26V-10M580 -26V-10"/><path d="M-12 20V400M-20 20H-4M-20 400H-4"/></g><text class="dt" x="300" y="-24" text-anchor="middle">11.200 m</text><text class="dt" x="-20" y="214" text-anchor="middle" transform="rotate(-90 -20 210)">7.600 m</text></svg></div><div class="fx-scr" role="tabpanel"><svg viewBox="0 0 400 260" aria-hidden="true"><rect width="400" height="260" fill="#161616"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><path d="M200 70L310 120L200 170L90 120Z" fill="none" stroke="#F4F1EC" stroke-width="2.5"/><path d="M90 120V160L200 210L310 160V120" fill="none" stroke="#F4F1EC" stroke-width="2"/><rect x="170" y="125" width="60" height="30" fill="#FD4100" opacity=".25"/><path d="M200 110V180" stroke="#FD4100" stroke-width="2"/><text x="200" y="244" fill="#FFC20E" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" text-anchor="middle">ORBIT · WALK</text></svg></div><div class="fx-scr" role="tabpanel"><svg viewBox="0 0 400 260" aria-hidden="true"><rect width="400" height="260" fill="#161616"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><rect x="100" y="60" width="200" height="150" fill="#EDE6DA"/><rect x="115" y="75" width="110" height="80" fill="none" stroke="#333" stroke-width="2"/><rect x="240" y="160" width="45" height="35" fill="none" stroke="#333"/><path d="M115 172H225" stroke="#FD4100" stroke-width="2"/><text x="200" y="244" fill="#FFC20E" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" text-anchor="middle">A-101 · 1:50</text></svg></div><div class="fx-scr" role="tabpanel"><svg viewBox="0 0 400 260" aria-hidden="true"><rect width="400" height="260" fill="#161616"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><rect x="80" y="90" width="240" height="90" fill="#6B4D36"/><path d="M80 150Q200 120 320 150" fill="none" stroke="#F4F1EC" stroke-width="2.5"/><circle cx="200" cy="130" r="14" fill="none" stroke="#FD4100" stroke-width="2.5"/><text x="200" y="244" fill="#FFC20E" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" text-anchor="middle">DRAG TO LOOK AROUND</text></svg></div><div class="fx-scr" role="tabpanel"><svg viewBox="0 0 400 260" aria-hidden="true"><rect width="400" height="260" fill="#161616"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><rect x="90" y="60" width="220" height="150" fill="none" stroke="#F4F1EC" stroke-width="3"/><path d="M200 60V210M90 135H200" stroke="#F4F1EC" stroke-width="2.5"/><path d="M280 180V205M270 195L280 205L290 195" stroke="#FD4100" stroke-width="2.5" fill="none"/><rect x="92" y="62" width="106" height="72" fill="#FD4100" opacity=".12"/><text x="200" y="244" fill="#FFC20E" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" text-anchor="middle">EXPORT · CAD</text></svg></div><div class="fx-scr" role="tabpanel"><svg viewBox="0 0 400 260" aria-hidden="true" id="sofa-screen"><rect width="400" height="260" fill="#1a1a1a"/><rect x="60" y="180" width="280" height="10" fill="#2a2a2a"/><path class="sofa" d="M90 180V125a16 16 0 0 1 16-16h188a16 16 0 0 1 16 16v55z" fill="#F26722"/><rect class="sofa" x="72" y="140" width="256" height="48" rx="12" fill="#F26722" style="filter:brightness(.85)"/><rect x="110" y="188" width="8" height="16" fill="#555"/><rect x="282" y="188" width="8" height="16" fill="#555"/><text x="200" y="232" fill="#FFC20E" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" text-anchor="middle">MATERIAL EDITOR · TAP A SWATCH</text></svg></div><div class="fx-scr" role="tabpanel"><svg viewBox="0 0 400 260" aria-hidden="true"><rect width="400" height="260" fill="#161616"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><rect x="90" y="60" width="220" height="150" fill="none" stroke="#F4F1EC" stroke-width="3"/><path d="M200 60V210M90 135H200" stroke="#F4F1EC" stroke-width="2.5"/><path d="M265 85l7 16 16 7-16 7-7 16-7-16-16-7 16-7z" fill="none" stroke="#FD4100" stroke-width="2"/><rect x="202" y="137" width="106" height="71" fill="#FD4100" opacity=".14"/><text x="200" y="244" fill="#FFC20E" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" text-anchor="middle">AI LAYOUT</text></svg></div><div class="fx-scr" role="tabpanel"><svg viewBox="0 0 400 260" aria-hidden="true"><rect width="400" height="260" fill="#161616"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><path d="M140 70H260L310 200H90Z" fill="#FFC20E" fill-opacity=".08" stroke="#F4F1EC" stroke-width="3"/><path d="M80 140H320" stroke="#FD4100" stroke-width="2.5"/><text x="200" y="244" fill="#FFC20E" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" text-anchor="middle">SCANNING…</text></svg></div><div class="fx-scr" role="tabpanel"><svg viewBox="0 0 400 260" aria-hidden="true"><rect width="400" height="260" fill="#161616"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><rect x="160" y="95" width="80" height="60" fill="none" stroke="#F4F1EC" stroke-width="2.5"/><rect x="100" y="110" width="30" height="45" fill="none" stroke="#F4F1EC" stroke-width="2.5"/><rect x="270" y="80" width="50" height="40" fill="none" stroke="#F4F1EC" stroke-width="2.5"/><path d="M130 130H160M240 120H270" stroke="#FD4100" stroke-width="2" stroke-dasharray="4 4"/><text x="200" y="244" fill="#FFC20E" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" text-anchor="middle">IN SYNC</text></svg></div></div></div></div></div>
+      <div><div class="fx-text fx-info"><p class="mono small" style="color:var(--orange)">01 / 09</p><h3 class="h-m">2D Floor Plans</h3><p class="muted">Draw walls, place doors and windows and handle complex structures, with laser readings dropping straight onto the right wall.</p><div class="usebox"><p class="label">Use it for</p><p class="small">As-built plans on the first site visit.</p></div><a class="btn ghost sm" href="/features/" >All features<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div><div class="fx-text fx-info" hidden><p class="mono small" style="color:var(--orange)">02 / 09</p><h3 class="h-m">3D Visualisation</h3><p class="muted">Your 2D plan is presented in immersive 3D automatically. Walk through it, orbit it, check proportions with the client.</p><div class="usebox"><p class="label">Use it for</p><p class="small">Showing clients the space before work begins.</p></div><a class="btn ghost sm" href="/features/" >All features<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div><div class="fx-text fx-info" hidden><p class="mono small" style="color:var(--orange)">03 / 09</p><h3 class="h-m">Drawings &amp; Elevations</h3><p class="muted">Generate professional drawings from the model. Elevation output to be confirmed with JoyPlan.</p><div class="usebox"><p class="label">Use it for</p><p class="small">Joinery, kitchen and wardrobe detailing.</p></div><a class="btn ghost sm" href="/features/" >All features<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div><div class="fx-text fx-info" hidden><p class="mono small" style="color:var(--orange)">04 / 09</p><h3 class="h-m">720&deg; Panorama</h3><p class="muted">Publish rendered 720&deg; panoramas the client can look around in from their own phone.</p><div class="usebox"><p class="label">Use it for</p><p class="small">Remote presentations and approvals.</p></div><a class="btn ghost sm" href="/features/" >All features<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div><div class="fx-text fx-info" hidden><p class="mono small" style="color:var(--orange)">05 / 09</p><h3 class="h-m">CAD Export</h3><p class="muted">One-click export of a CAD drawing set, plus area inventories and estimate reports.</p><div class="usebox"><p class="label">Use it for</p><p class="small">Handing over to drafting or contractors.</p></div><a class="btn ghost sm" href="/features/" >All features<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div><div class="fx-text fx-info" hidden><p class="mono small" style="color:var(--orange)">06 / 09</p><h3 class="h-m">Furniture &amp; Materials</h3><p class="muted">Furnish rooms from a large model library and recolour any model with the material editor. Try a swatch below.</p><div class="swatches" data-swatches="sofa-screen" role="group" aria-label="Sofa material"><button type="button" aria-label="Burnt orange" data-c="#F26722" style="background:#F26722" aria-pressed="true"></button><button type="button" aria-label="Linen" data-c="#D9CBB8" style="background:#D9CBB8" aria-pressed="false"></button><button type="button" aria-label="Teal" data-c="#2F6F73" style="background:#2F6F73" aria-pressed="false"></button><button type="button" aria-label="Charcoal" data-c="#4b5058" style="background:#4b5058" aria-pressed="false"></button></div><div class="usebox"><p class="label">Use it for</p><p class="small">Trying finishes live in front of the client.</p></div><a class="btn ghost sm" href="/features/" >All features<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div><div class="fx-text fx-info" hidden><p class="mono small" style="color:var(--orange)">07 / 09</p><h3 class="h-m">AI-Assisted Design</h3><p class="muted">AI image generation and AI-assisted floor plan creation, as listed in the JoyPlan app.</p><div class="usebox"><p class="label">Use it for</p><p class="small">Fast mood options in early concepts.</p></div><a class="btn ghost sm" href="/features/" >All features<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div><div class="fx-text fx-info" hidden><p class="mono small" style="color:var(--orange)">08 / 09</p><h3 class="h-m">LiDAR Scanning</h3><p class="muted">On supported devices, capture a room with LiDAR scanning to create the 3D space.</p><div class="usebox"><p class="label">Use it for</p><p class="small">Quick capture of furnished rooms.</p></div><a class="btn ghost sm" href="/features/" >All features<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div><div class="fx-text fx-info" hidden><p class="mono small" style="color:var(--orange)">09 / 09</p><h3 class="h-m">Share &amp; Sync</h3><p class="muted">Work continues across phone, tablet, laptop and desktop: measure on site, refine at the studio.</p><div class="usebox"><p class="label">Use it for</p><p class="small">Teams and site-to-studio handover.</p></div><a class="btn ghost sm" href="/features/" >All features<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div></div>
+    </div>
+  </div>
+</section>
+<section class="sec bone" aria-labelledby="pro-h">
+  <div class="wrap">
+    <div class="head split"><div style="display:grid;gap:24px"><span class="kicker">Solutions by profession</span><h2 class="h-l" id="pro-h">Built for the People Who Build Spaces.</h2></div><div><a class="btn darkb" href="/solutions/" >All solutions<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div></div>
+    <div class="g4" data-stagger><a class="pro rv" href="/solutions/#interior-designers"><div class="pro-vis"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" fill="#121212"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><rect x="70" y="50" width="110" height="140" fill="#C9A27A"/><rect x="195" y="50" width="135" height="60" fill="#4b5058"/><rect x="195" y="122" width="62" height="68" fill="#F26722"/><rect x="268" y="122" width="62" height="68" fill="#E9E1D3"/><rect x="70" y="205" width="260" height="46" rx="8" fill="#2a2a2a" stroke="#3a3a3a"/><path d="M70 268H330M70 262V274M330 262V274" stroke="#FFC20E" stroke-width="1.5"/></svg><span class="illus">Photo: designer + client, tablet</span></div><div class="pro-b"><span class="n">01</span><h3 class="h-s">Interior Designers</h3><p class="small" style="color:var(--text-dark)">Measure, lay out and present in the same visit.</p><ul><li>Laser-linked site measurement</li><li>Layouts with furniture &amp; materials</li><li>Renders and 720&deg; for client sign-off</li></ul><span class="tlink">Explore<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a><a class="pro rv" href="/solutions/#architects"><div class="pro-vis"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" fill="#121212"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><path d="M100 250V140L200 70L300 140V250Z" fill="none" stroke="#F4F1EC" stroke-width="3"/><path d="M100 140H300" stroke="#F4F1EC" stroke-width="1.5" opacity=".5"/><rect x="135" y="160" width="40" height="28" fill="none" stroke="#F26722" stroke-width="2.5"/><rect x="225" y="160" width="40" height="28" fill="none" stroke="#F26722" stroke-width="2.5"/><rect x="185" y="205" width="32" height="45" fill="#FD4100"/><path d="M325 70V250M318 70H332M318 250H332" stroke="#FFC20E" stroke-width="1.5"/><circle cx="320" cy="48" r="14" fill="#FFC20E"/><path d="M308 60L270 100" stroke="#FFC20E" stroke-dasharray="4 4"/></svg><span class="illus">Photo: architect on site</span></div><div class="pro-b"><span class="n">02</span><h3 class="h-s">Architects</h3><p class="small" style="color:var(--text-dark)">Accurate as-built plans, across every level.</p><ul><li>Multi-level floor plans</li><li>Sunlight analysis</li><li>CAD export for the drawing set</li></ul><span class="tlink">Explore<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a><a class="pro rv" href="/solutions/#civil-engineers"><div class="pro-vis"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" fill="#121212"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><g stroke="#F4F1EC" stroke-dasharray="5 5" opacity=".45"><path d="M90 110H330M90 200H330M120 80V240M210 80V240M300 80V240"/></g><g fill="#FD4100"><rect x="114" y="104" width="12" height="12"/><rect x="204" y="104" width="12" height="12"/><rect x="294" y="104" width="12" height="12"/><rect x="114" y="194" width="12" height="12"/><rect x="204" y="194" width="12" height="12"/><rect x="294" y="194" width="12" height="12"/></g><path d="M126 86H204" stroke="#FFC20E" stroke-width="1.5"/><text x="165" y="80" fill="#FFC20E" font-family="JetBrains Mono" font-size="11" text-anchor="middle">4.500</text><text x="70" y="114" fill="#FFC20E" font-family="JetBrains Mono" font-size="11">1</text><text x="70" y="204" fill="#FFC20E" font-family="JetBrains Mono" font-size="11">2</text></svg><span class="illus">Photo: engineer measuring</span></div><div class="pro-b"><span class="n">03</span><h3 class="h-s">Civil Engineers</h3><p class="small" style="color:var(--text-dark)">On-site measurement straight into drawings.</p><ul><li>Photo notes and annotations</li><li>Area inventory for quantities</li><li>Professional drawings to share</li></ul><span class="tlink">Explore<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a><a class="pro rv" href="/solutions/#modular-kitchen"><div class="pro-vis"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" fill="#121212"/><defs><pattern id="g20" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g20)"/><rect x="80" y="60" width="240" height="60" fill="none" stroke="#F4F1EC" stroke-width="2"/><path d="M140 60V120M200 60V120M260 60V120" stroke="#F4F1EC" stroke-width="1.5"/><rect x="175" y="135" width="50" height="10" fill="#666"/><rect x="80" y="155" width="240" height="10" fill="#FD4100"/><rect x="80" y="165" width="240" height="70" fill="#2b2b2b" stroke="#F4F1EC" stroke-width="2"/><path d="M160 165V235M240 165V235" stroke="#F4F1EC" stroke-width="1.5"/><path d="M80 252H320M80 246V258M320 246V258" stroke="#FFC20E" stroke-width="1.5"/></svg><span class="illus">Photo: kitchen fit-out</span></div><div class="pro-b"><span class="n">04</span><h3 class="h-s">Modular Kitchen &amp; Furniture</h3><p class="small" style="color:var(--text-dark)">Wall-accurate layouts your customer can see.</p><ul><li>Measured walls for modules</li><li>3D kitchen and wardrobe views</li><li>Estimates generated from the design</li></ul><span class="tlink">Explore<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a></div>
+  </div>
+</section>
+<section class="sec dark" id="pricing" aria-labelledby="pr-h" data-pricing>
+  <div class="glow o" style="width:600px;height:600px;left:30%;bottom:-300px;opacity:.18"></div>
+  <div class="wrap">
+    <div class="head" style="margin-bottom:32px"><span class="kicker">Packages &amp; pricing</span><h2 class="h-l" id="pr-h">Find Your Perfect JoyPlan Package.</h2></div>
+    <div class="price-head"><div style="display:grid;gap:10px"><span class="label">Subscription length</span><div class="seg" role="group" aria-label="Subscription length"><button type="button" data-term="1" aria-pressed="false">1 mo</button><button type="button" data-term="3" aria-pressed="false">3 mo</button><button type="button" data-term="6" aria-pressed="false">6 mo</button><button type="button" data-term="12" aria-pressed="true">12 mo</button></div></div></div>
+    <div class="g3" data-stagger>
+  <article class="pcard rv">
+    <span class="tag" style="align-self:flex-start">Starter</span>
+    <p class="aud">For individual professionals</p>
+    <p class="price" data-price="app">&#8377;9,500</p>
+    <p class="term" data-term-label="App subscription">App subscription &middot; 12 months</p>
+    <ul><li class="no">Device not included (device-only price &#8377;8,474)</li><li>JoyPlan app: 2D, 3D, renders, drawings</li><li>Rendering / AI credits <span class="tbc">[TBC]</span></li><li>Training &amp; support <span class="tbc">[TBC]</span></li><li>Renewal <span class="tbc">[Terms TBC]</span></li></ul>
+    <a class="btn ghost" href="/book-a-demo/?package=starter" data-pkg-link="app">Get started</a>
+  </article>
+  <article class="pcard rec rv">
+    <span class="ribbon">RECOMMENDED</span>
+    <span class="tag o" style="align-self:flex-start">Professional</span>
+    <p class="aud">For active interior designers &amp; architects</p>
+    <p class="price" data-price="dev">&#8377;15,000</p>
+    <p class="term" data-term-label="Device + app subscription">Device + app subscription &middot; 12 months</p>
+    <ul><li><b>JoyPlan measuring device included</b></li><li>Full app: measure-to-plan on site</li><li>Rendering / AI credits <span class="tbc">[TBC]</span></li><li>Onboarding training <span class="tbc">[TBC]</span></li><li>Renewal <span class="tbc">[Terms TBC]</span></li></ul>
+    <a class="btn primary" href="/book-a-demo/?package=professional" data-pkg-link="device">Get started<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+  </article>
+  <article class="pcard rv">
+    <span class="tag" style="align-self:flex-start">Business</span>
+    <p class="aud">For design studios &amp; teams</p>
+    <p class="price tbd">[Price to be confirmed]</p>
+    <p class="term">Multi-seat &middot; custom term</p>
+    <ul><li>Devices for the team <span class="tbc">[Qty TBC]</span></li><li>Shared projects across devices</li><li>Seats &amp; credits <span class="tbc">[TBC]</span></li><li>Team training &amp; priority support <span class="tbc">[TBC]</span></li><li>Free business demo (offered today)</li></ul>
+    <a class="btn ghost" href="/book-a-demo/?package=business">Talk to sales</a>
+  </article>
+</div>
+    <div class="price-head" style="margin:28px 0 0;align-items:center"><p class="tiny" style="max-width:520px">INR, per JoyPlan India's shared price list. Current prices, GST and inclusions to be confirmed before launch.</p><div class="btns"><button class="btn ghost sm" type="button" data-toggle="cmp-inline">Compare packages</button><a class="btn ghost sm" href="/packages/" >Packages page<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div></div>
+    <div id="cmp-inline" class="on-bone bone" hidden style="margin-top:24px;padding:24px;border-radius:4px"><div class="tbl-wrap"><table class="cmp"><caption class="sr-only">Feature comparison by package</caption><thead><tr><th scope="col">Included</th><th scope="col">Starter</th><th scope="col" class="rec">Professional &#9733;</th><th scope="col">Business</th></tr></thead><tbody><tr><th scope="row">JoyPlan measuring device</th><td>&mdash; (&#8377;8,474 separately)</td><td class="rec">Included</td><td><span class="tbc">[TBC]</span></td></tr><tr><th scope="row">Subscription length</th><td>1 / 3 / 6 / 12 mo</td><td class="rec">1 / 3 / 6 / 12 mo</td><td>Custom</td></tr><tr><th scope="row">2D floor plans &amp; multi-level</th><td>&#10003;*</td><td class="rec">&#10003;*</td><td>&#10003;*</td></tr><tr><th scope="row">3D view &amp; walkthrough</th><td>&#10003;*</td><td class="rec">&#10003;*</td><td>&#10003;*</td></tr><tr><th scope="row">Hard surfaces, furniture, materials</th><td>&#10003;*</td><td class="rec">&#10003;*</td><td>&#10003;*</td></tr><tr><th scope="row">Laser-linked measurement</th><td>With compatible device</td><td class="rec">&#10003;*</td><td>&#10003;*</td></tr><tr><th scope="row">Rendered images</th><td><span class="tbc">[TBC]</span></td><td class="rec"><span class="tbc">[TBC]</span></td><td><span class="tbc">[TBC]</span></td></tr><tr><th scope="row">720&deg; panoramas</th><td><span class="tbc">[TBC]</span></td><td class="rec"><span class="tbc">[TBC]</span></td><td><span class="tbc">[TBC]</span></td></tr><tr><th scope="row">AI image generation credits</th><td><span class="tbc">[TBC]</span></td><td class="rec"><span class="tbc">[TBC]</span></td><td><span class="tbc">[TBC]</span></td></tr><tr><th scope="row">Drawings, area inventory, estimates</th><td>&#10003;*</td><td class="rec">&#10003;*</td><td>&#10003;*</td></tr><tr><th scope="row">CAD export</th><td><span class="tbc">[TBC]</span></td><td class="rec"><span class="tbc">[TBC]</span></td><td><span class="tbc">[TBC]</span></td></tr><tr><th scope="row">Seats</th><td>1</td><td class="rec">1</td><td><span class="tbc">[TBC]</span></td></tr><tr><th scope="row">Onboarding training</th><td>Help videos</td><td class="rec"><span class="tbc">[TBC]</span></td><td><span class="tbc">[TBC]</span></td></tr><tr><th scope="row">Support</th><td><span class="tbc">[TBC]</span></td><td class="rec"><span class="tbc">[TBC]</span></td><td><span class="tbc">[TBC]</span></td></tr><tr><th scope="row">Renewal</th><td><span class="tbc">[TBC]</span></td><td class="rec"><span class="tbc">[TBC]</span></td><td><span class="tbc">[TBC]</span></td></tr></tbody></table></div>
+<p class="tiny" style="margin-top:12px">* Feature exists in the JoyPlan app today; availability per package to be confirmed. [TBC] = commercial detail awaiting JoyPlan sign-off.</p></div>
+  </div>
+</section>
+<section class="sec carbon" aria-labelledby="gal-h">
+  <div class="wrap">
+    <div class="head "><span class="kicker">Project gallery</span><h2 class="h-l" id="gal-h">Imagine What You Can Create.</h2><p class="lead">Plans, 3D views and renders made in JoyPlan. Line drawings mark where more real project work will go.</p></div>
+    <div class="chips rv" role="group" aria-label="Filter projects" style="margin-bottom:28px"><button type="button" class="chip" data-filter="all" aria-pressed="true">All</button><button type="button" class="chip" data-filter="res" aria-pressed="false">Residential</button><button type="button" class="chip" data-filter="kit" aria-pressed="false">Kitchen</button><button type="button" class="chip" data-filter="com" aria-pressed="false">Commercial</button><button type="button" class="chip" data-filter="plan" aria-pressed="false">Floor plans</button><button type="button" class="chip" data-filter="3d" aria-pressed="false">3D</button><button type="button" class="chip" data-filter="elev" aria-pressed="false">Elevations</button><button type="button" class="chip" data-filter="pano" aria-pressed="false">720&deg;</button></div>
+    <div class="gal" data-gallery><button type="button" class="gt" data-f="res 3d"><div class="im"><img src="/assets/learn1.webp" alt="Rendered living room with a curved sofa, designed in JoyPlan" loading="lazy" width="1048" height="1142"></div><div class="cap"><div><b>Living room render</b><i>Residential &middot; Render</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="res plan"><div class="im"><img src="/assets/step1.webp" alt="3BHK apartment floor plan with furniture library in the JoyPlan app" loading="lazy" width="1000" height="740"></div><div class="cap"><div><b>3BHK apartment plan</b><i>Floor plan</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="kit elev"><div class="im"><svg viewBox="0 0 400 300" aria-hidden="true"><rect width="400" height="300" fill="#F4F1EC"/><rect x="60" y="40" width="280" height="80" fill="none" stroke="#111" stroke-width="2"/><rect x="60" y="150" width="280" height="90" fill="#F6DDB5" stroke="#111" stroke-width="2"/><path d="M130 150V240M200 150V240M270 150V240M130 40V120M200 40V120M270 40V120" stroke="#111" stroke-width="1.5"/><path d="M60 262H340M60 256V268M340 256V268" stroke="#C2410C" stroke-width="1.5"/><text x="200" y="282" font-family="JetBrains Mono" font-size="11" fill="#C2410C" text-anchor="middle">3.480 m</text></svg></div><div class="cap"><div><b>Modular kitchen elevation</b><i>Kitchen &middot; Elevation</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="res 3d"><div class="im"><img src="/assets/learn3.webp" alt="Rendered reading corner with armchair, designed in JoyPlan" loading="lazy" width="572" height="560"></div><div class="cap"><div><b>Bedroom corner render</b><i>Residential &middot; Render</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="com plan"><div class="im"><svg viewBox="0 0 400 300" aria-hidden="true"><rect width="400" height="300" fill="#111"/><rect x="50" y="30" width="300" height="240" fill="none" stroke="#F4F1EC" stroke-width="3"/><path d="M150 30V150M50 150H150" stroke="#F4F1EC" stroke-width="2"/><rect x="65" y="45" width="70" height="30" fill="#C8961E"/><g fill="#3a3a3a"><rect x="180" y="55" width="30" height="22"/><rect x="235" y="55" width="30" height="22"/><rect x="290" y="55" width="30" height="22"/><rect x="180" y="110" width="30" height="22"/><rect x="235" y="110" width="30" height="22"/><rect x="290" y="110" width="30" height="22"/><rect x="180" y="165" width="30" height="22"/><rect x="235" y="165" width="30" height="22"/><rect x="290" y="165" width="30" height="22"/><rect x="180" y="220" width="30" height="22"/><rect x="235" y="220" width="30" height="22"/><rect x="290" y="220" width="30" height="22"/></g><circle cx="95" cy="225" r="20" fill="#2a2a2a"/></svg></div><div class="cap"><div><b>Caf&eacute; seating layout</b><i>Commercial &middot; Plan</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="res 3d"><div class="im"><img src="/assets/hero.webp" alt="Two-storey villa shown as a 3D cutaway model" loading="lazy" width="1370" height="960"></div><div class="cap"><div><b>Villa in 3D</b><i>Residential &middot; 3D</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="res pano"><div class="im"><div style="aspect-ratio:2/1"><svg style="height:100%" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="pw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8B6A4E"/><stop offset=".62" stop-color="#6B4D36"/><stop offset=".62" stop-color="#4A3424"/><stop offset="1" stop-color="#3A291C"/></linearGradient></defs><rect width="1200" height="400" fill="url(#pw)"/><path d="M0 250Q300 210 600 250T1200 250V400H0Z" fill="#3A291C"/><rect x="180" y="110" width="160" height="110" fill="#EADBC0"/><rect x="560" y="240" width="190" height="70" rx="10" fill="#3d3d3d"/><rect x="590" y="215" width="70" height="36" rx="8" fill="#F26722"/><ellipse cx="460" cy="270" rx="70" ry="30" fill="#6F8F55"/><rect x="900" y="120" width="120" height="170" fill="#2a2a2a" opacity=".6"/><rect x="40" y="160" width="60" height="150" fill="#1d1d1d" opacity=".7"/></svg></div></div><div class="cap"><div><b>Living room 720&deg;</b><i>720&deg; panorama</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="res elev"><div class="im"><svg viewBox="0 0 400 300" aria-hidden="true"><rect width="400" height="300" fill="#F4F1EC"/><rect x="80" y="30" width="240" height="220" fill="none" stroke="#111" stroke-width="2"/><rect x="80" y="160" width="240" height="90" fill="#D9CBB8"/><path d="M140 30V250M200 30V250M260 30V250" stroke="#111" stroke-width="1.5"/><path d="M80 268H320M80 262V274M320 262V274" stroke="#C2410C" stroke-width="1.5"/><text x="200" y="288" font-family="JetBrains Mono" font-size="11" fill="#C2410C" text-anchor="middle">2.400 m</text></svg></div><div class="cap"><div><b>Wardrobe elevation</b><i>Elevation</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="res 3d"><div class="im"><img src="/assets/learn2.webp" alt="Rendered lounge with a beige sofa, designed in JoyPlan" loading="lazy" width="572" height="560"></div><div class="cap"><div><b>Lounge render</b><i>Residential &middot; Render</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="res plan"><div class="im"><img src="/assets/step2.webp" alt="Floor plan with floor finishes applied in the JoyPlan app" loading="lazy" width="1000" height="733"></div><div class="cap"><div><b>House plan with finishes</b><i>Floor plan</i></div><span aria-hidden="true">&#8599;</span></div></button><button type="button" class="gt" data-f="res 3d"><div class="im"><img src="/assets/step4.webp" alt="The same project as a 3D model and a rendered view on phone and tablet" loading="lazy" width="1000" height="733"></div><div class="cap"><div><b>Plan to 3D and render</b><i>Residential &middot; 3D</i></div><span aria-hidden="true">&#8599;</span></div></button></div>
+  </div>
+</section>
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Project preview" aria-hidden="true">
+  <button class="lb-x" type="button" aria-label="Close preview">&times;</button>
+  <div class="lb-in"><div class="im"></div><div class="lb-foot"><div><p class="h-s lb-t"></p><p class="label lb-c" style="margin-top:6px"></p></div><a class="btn primary" href="/book-a-demo/" >Design like this: book a demo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div></div>
+</div>
+<section class="sec bone" aria-labelledby="ben-h">
+  <div class="wrap">
+    <div class="head "><span class="kicker">Benefits</span><h2 class="h-l" id="ben-h">More Than a Measuring Device. A Better Way to Work.</h2></div>
+    <div class="ben"><div class="ben-row"><span class="n">01</span><h3>Faster workflows</h3><p>Measuring and drawing happen in one pass, so the plan exists before you leave the site.</p></div><div class="ben-row"><span class="n">02</span><h3>Better visualisation</h3><p>Plans become 3D, renders and 720&deg; views without redrawing in another tool.</p></div><div class="ben-row"><span class="n">03</span><h3>Professional presentations</h3><p>Clients see a finished-looking design early, not a sketch and a promise.</p></div><div class="ben-row"><span class="n">04</span><h3>Connected process</h3><p>Device, phone, tablet and desktop work on the same project.</p></div><div class="ben-row"><span class="n">05</span><h3>Clearer communication</h3><p>Photo notes, drawings, area inventories and estimates come from one source of truth.</p></div></div>
+  </div>
+</section>
+<section class="sec dark tight" aria-labelledby="tst-h">
+  <div class="wrap">
+    <div class="price-head"><div style="display:grid;gap:14px"><span class="kicker">Trusted on site</span><h2 class="h-m" id="tst-h">What professionals say</h2></div><span class="tbc">[Testimonials to be collected with written consent]</span></div>
+    <div class="g3" data-stagger>
+      <figure class="panel quote rv" style="margin:0"><span class="q" aria-hidden="true">&ldquo;</span><blockquote style="margin:0"><p>[Testimonial from an interior designer: quote to be supplied]</p></blockquote><figcaption class="who"><span class="av">?</span><span><b>[Name]</b><span class="tiny">Interior designer &middot; [City]</span></span></figcaption></figure>
+      <figure class="panel quote rv" style="margin:0"><span class="q" aria-hidden="true">&ldquo;</span><blockquote style="margin:0"><p>[Testimonial from an architect: quote to be supplied]</p></blockquote><figcaption class="who"><span class="av">?</span><span><b>[Name]</b><span class="tiny">Architect &middot; [Firm, City]</span></span></figcaption></figure>
+      <figure class="panel quote rv" style="margin:0"><span class="q" aria-hidden="true">&ldquo;</span><blockquote style="margin:0"><p>[Testimonial from a modular kitchen business: quote to be supplied]</p></blockquote><figcaption class="who"><span class="av">?</span><span><b>[Name]</b><span class="tiny">Kitchen studio &middot; [City]</span></span></figcaption></figure>
+    </div>
+    <div class="trust rv"><div><span class="label">Available on</span><b>App Store &middot; Google Play</b></div><div><span class="label">Head office</span><b>Bengaluru, Karnataka</b></div><div><span class="label">Branch</span><b>Kozhikode, Kerala</b></div><div><span class="label">Learning</span><b>Short how-to video library</b></div></div>
+  </div>
+</section>
+<section class="conv" id="form" aria-labelledby="cv-h">
+  <div class="conv-l">
+    <svg class="plan-deco" viewBox="0 0 600 420" aria-hidden="true"><path d="M20 20H580V400H20Z M260 20V160 M260 210V250 M400 20V110 M400 160V300 M400 350V400 M20 250H90 M140 250H300 M350 250H580" fill="none" stroke="#0B0B0B" stroke-width="8"/></svg>
+    <div class="in rv">
+      <span class="kick">Free &middot; live &middot; no obligation</span>
+      <h2 class="h-l" id="cv-h">Your Next Project Deserves a Smarter Workflow.</h2>
+      <p style="font-size:17px;max-width:460px">Discover how JoyPlan can transform the way you measure, design and present your projects.</p>
+      <div class="btns"><a class="btn darkb" href="#enquiry" >Book a Free Demo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a><a class="btn ghost ink" href="#" data-wa="Hi JoyPlan India, I'd like to book a demo.">Talk to a JoyPlan Expert</a></div>
+    </div>
+  </div>
+  <div class="conv-r">
+    <div class="in">
+      <form class="form" id="enquiry" action="/lead.php" method="post" data-lead data-thanks="enq-thanks" novalidate>
+        <input type="hidden" name="form" value="enquiry"><input type="hidden" name="nearest_team" value=""><input type="hidden" name="consent" value="yes">
+        <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="field"><label for="e-name">Full name</label><input id="e-name" name="full_name" autocomplete="name" required><span class="err">Please enter your name.</span></div>
+        <div class="field"><label for="e-mob">Mobile number</label><input id="e-mob" name="mobile" type="tel" inputmode="tel" placeholder="+91" autocomplete="tel" required><span class="err">Enter a 10-digit Indian mobile number.</span></div>
+        <div class="field"><label for="e-pro">Profession</label><select id="e-pro" name="profession" required><option value="">Select&hellip;</option><option>Interior designer</option><option>Architect</option><option>Civil engineer</option><option>Modular kitchen / furniture</option><option>Other</option></select><span class="err">Please choose your profession.</span></div>
+        <div class="field"><label for="e-city">City</label><input id="e-city" name="city" placeholder="e.g. Bengaluru" autocomplete="address-level2" required><span class="err">Please enter your city.</span></div>
+        <div class="field full"><label for="e-prod">Interested product</label><select id="e-prod" name="product"><option>Device + Software (Professional)</option><option>Software only (Starter)</option><option>Device only</option><option>Business / studio package</option></select></div>
+        <div class="field full"><label for="e-msg">Message (optional)</label><textarea id="e-msg" name="message"></textarea></div>
+        <div class="form-actions full"><button class="btn primary" type="submit">Book my free demo<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button><a class="btn wa" href="#" data-wa="Hi JoyPlan India, I'd like to book a demo.">Or enquire on WhatsApp</a></div>
+        <p class="form-msg full" role="alert"></p>
+        <p class="tiny full">No spam. We use these details only to arrange your demo. <a href="/privacy/" style="text-decoration:underline">Privacy</a></p>
+      </form>
+      <div class="thanks" id="enq-thanks" role="status">
+        <span class="kicker">Request received</span>
+        <h3 class="h-m">Thank you, <span data-first></span>. Your demo request is in.</h3>
+        <p class="muted">A JoyPlan specialist from the <span data-sum="nearest_team"></span> will call you to fix a time. Prefer to talk now? Message us on WhatsApp.</p>
+        <div class="btns"><a class="btn primary" href="#" data-wa="Hi JoyPlan India, I'd like to book a demo.">Continue on WhatsApp</a><button class="btn ghost" type="button" data-reset="enquiry">Send another enquiry</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a class="logo" href="/" aria-label="JoyPlan India home"><svg viewBox="0 0 300 300" aria-hidden="true"><defs><linearGradient id="jpWf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD400"/><stop offset=".55" stop-color="#FFC20E"/><stop offset="1" stop-color="#F9A21B"/></linearGradient><linearGradient id="jpLf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FDB813"/><stop offset="1" stop-color="#F37021"/></linearGradient><linearGradient id="jpRf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FCD29A"/><stop offset=".5" stop-color="#F8953A"/><stop offset="1" stop-color="#F26722"/></linearGradient></defs><rect width="300" height="300" rx="34" fill="#0B0B0B" stroke="rgba(255,255,255,.2)" stroke-width="8"/><g transform="scale(0.9772) translate(-27 -91)"><polygon points="172,130 268,181 268,298 172,248" fill="url(#jpWf)"/><polygon points="72,298 172,248 172,354" fill="url(#jpLf)"/><polygon points="172,248 268,298 172,354" fill="url(#jpRf)"/></g></svg><span class="wm">joyplan</span><span class="in">INDIA</span></a><p class="blurb">Laser measurement and 2D/3D design software for interior designers, architects and builders across India.</p><a class="mono small" href="mailto:service@joyplan.com">service@joyplan.com</a>
+        <div class="apps"><span class="tag">App Store</span><span class="tag">Google Play</span></div></div>
+      <div><h4>Product</h4><ul><li><a href="/products/joyplan-device/">JoyPlan Device</a></li><li><a href="/software/joyplan-software/">JoyPlan Software</a></li><li><a href="/features/">Features</a></li><li><a href="/packages/">Packages</a></li><li><a href="/book-a-demo/">Book a demo</a></li></ul></div>
+      <div><h4>Solutions</h4><ul><li><a href="/solutions/#interior-designers">Interior designers</a></li><li><a href="/solutions/#architects">Architects</a></li><li><a href="/solutions/#civil-engineers">Civil engineers</a></li><li><a href="/solutions/#modular-kitchen">Modular kitchens</a></li><li><a href="/solutions/#furniture-designers">Furniture designers</a></li></ul></div>
+      <div><h4>Offices</h4><address><span><b class="label">Head office</b><br>BL Commerce, 7th Cross Road, Dollar Layout, Stage 2, Bengaluru, Karnataka</span><span><b class="label">Kerala branch</b><br>Third Floor, CK Tower, Kannur Rd, West Nadakkave, Kozhikode, Kerala 673011</span></address></div>
+    </div>
+    <div class="giant" aria-hidden="true">joyplan</div>
+    <div class="foot-base"><span>&copy; 2026 JoyPlan India</span><span><a href="/privacy/">Privacy</a> &middot; <a href="/contact/">Contact</a></span></div>
+  </div>
 </footer>
-
-<script>
-(function(){
-  function tabs(railId,imgId,interval){
-    var rail=document.getElementById(railId),img=document.getElementById(imgId);
-    var items=[].slice.call(rail.querySelectorAll('.tab')),i=0,timer;
-    function go(n){i=n;items.forEach(function(t,k){t.classList.toggle('on',k===n)});img.style.opacity=.2;setTimeout(function(){img.src=items[n].dataset.img;img.style.opacity=1},150)}
-    function loop(){clearInterval(timer);timer=setInterval(function(){go((i+1)%items.length)},interval)}
-    items.forEach(function(t,k){t.addEventListener('click',function(){go(k);loop()})});
-    loop();
-  }
-  tabs('steps','stepImg',4000);
-  tabs('makes','makeImg',4500);
-
-  var track=document.getElementById('track'),dots=document.getElementById('dots'),cards=[].slice.call(track.children),cur=0;
-  cards.forEach(function(c,k){var b=document.createElement('button');b.setAttribute('aria-label','Feature '+(k+1));b.addEventListener('click',function(){show(k)});dots.appendChild(b)});
-  function show(k){cur=k;track.scrollTo({left:cards[k].offsetLeft-cards[0].offsetLeft});mark(k)}
-  function mark(k){[].forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===k)})}
-  track.addEventListener('scroll',function(){var x=track.scrollLeft,best=0,bd=1e9;cards.forEach(function(c,k){var d=Math.abs(c.offsetLeft-cards[0].offsetLeft-x);if(d<bd){bd=d;best=k}});cur=best;mark(best)},{passive:true});
-  mark(0);
-  setInterval(function(){if(!matchMedia('(prefers-reduced-motion: reduce)').matches)show((cur+1)%cards.length)},3500);
-
-  var note=document.getElementById('panoNote');
-  [].forEach.call(document.querySelectorAll('.pill'),function(p){p.addEventListener('click',function(){[].forEach.call(document.querySelectorAll('.pill'),function(q){q.classList.toggle('on',q===p)});note.hidden=p.dataset.mode!=='pano'})});
-
-  var ind=document.getElementById('ind');
-  function pos(){var h=document.documentElement,max=h.scrollHeight-innerHeight;var r=max>0?scrollY/max:0;ind.style.transform='translateY('+(r*(innerHeight-100))+'px)'}
-  addEventListener('scroll',pos,{passive:true});addEventListener('resize',pos);pos();
-})();
-</script>
-
+<a class="wa-float" href="#" data-wa="Hi JoyPlan India, I'd like to book a demo." aria-label="WhatsApp us"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 8.6c.2 2.9 2.6 5.6 5.6 6.2l1.2-1.4-1.9-1-1 .8c-1-.4-1.9-1.3-2.3-2.3l.8-1-1-1.9z"/></svg></i><span>WhatsApp us</span></a>
+<div class="mbar"><a class="btn primary" href="/book-a-demo/">Book a Free Demo</a><a class="btn wa" href="#" data-wa="Hi JoyPlan India, I'd like to book a demo.">WhatsApp</a></div>
+<script src="/assets/site/site.js?v=1" defer></script>
 </body>
 </html>

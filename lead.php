@@ -1,6 +1,6 @@
 <?php
 /*
- * Lead handler for the landing pages (/demo, /masterclass, /partner).
+ * Lead handler for the landing pages (/demo, /masterclass, /partner) and the main site forms (enquiry, book).
  *
  * Saves every lead as a row in a CSV file, one file per form:
  *   ../joyplan-leads/leads-demo.csv   (the folder next to public_html, not web-visible)
@@ -25,6 +25,18 @@ $FORMS = [
         'thanks' => '/masterclass/thank-you/',
         'fields' => ['full_name', 'mobile', 'email', 'city', 'profession', 'firm_name', 'years_practice', 'owns_device', 'batch', 'consent'],
         'required' => ['full_name', 'mobile', 'email', 'city', 'profession', 'owns_device', 'batch', 'consent'],
+    ],
+    'enquiry' => [   // main site: homepage enquiry form
+        'tag'    => 'Website enquiry',
+        'thanks' => '/book-a-demo/thank-you/',
+        'fields' => ['full_name', 'mobile', 'profession', 'city', 'product', 'message', 'nearest_team', 'consent'],
+        'required' => ['full_name', 'mobile', 'profession', 'city'],
+    ],
+    'book' => [      // main site: /book-a-demo/ and /contact/
+        'tag'    => 'Website demo booking',
+        'thanks' => '/book-a-demo/thank-you/',
+        'fields' => ['interest', 'profession', 'full_name', 'mobile', 'city', 'demo_format', 'message', 'package', 'nearest_team', 'consent'],
+        'required' => ['full_name', 'mobile', 'city'],
     ],
     'partner' => [
         'tag'    => 'Partner',
@@ -85,7 +97,7 @@ foreach ($cfg['required'] as $f) {
         respond(false, 'Please fill in all required fields.', '', 422);
     }
 }
-if (!filter_var($row['email'], FILTER_VALIDATE_EMAIL)) {
+if (isset($row['email']) && ($row['email'] !== '' || in_array('email', $cfg['required'], true)) && !filter_var($row['email'], FILTER_VALIDATE_EMAIL)) {
     respond(false, 'Please enter a valid email address.', '', 422);
 }
 $digits = preg_replace('/\D/', '', $row['mobile']);
@@ -146,7 +158,7 @@ if (NOTIFY_EMAIL !== '') {
     }
     $subject = 'New ' . $cfg['tag'] . ' lead: ' . preg_replace('/[\r\n]+/', ' ', $row['full_name']);
     $headers = 'From: Joyplan India <' . MAIL_FROM . ">\r\n"
-             . 'Reply-To: ' . preg_replace('/[\r\n]+/', '', $row['email']) . "\r\n"
+             . (($row['email'] ?? '') !== '' ? 'Reply-To: ' . preg_replace('/[\r\n]+/', '', $row['email']) . "\r\n" : '')
              . "Content-Type: text/plain; charset=utf-8\r\n";
     @mail(NOTIFY_EMAIL, '=?UTF-8?B?' . base64_encode($subject) . '?=', implode("\n", $lines), $headers);
 }
