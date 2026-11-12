@@ -1,4 +1,4 @@
-from components import ARR, btn, tbc, iso, device, plan, fvis, render_scene, pano_svg
+from components import ARR, btn, tbc, device, img
 from shared import head, band, faq, faq_ld
 
 WA = "Hi JoyPlan India, I'd like a demo of the JoyPlan design software."
@@ -21,17 +21,17 @@ props = ('<p class="label" style="font-size:9px">Selected &middot; wall</p><div 
          '<p class="label" style="font-size:9px;margin-top:8px">Material</p><div class="sw"><i style="background:#EDE6DA"></i><i style="background:#C9A27A"></i><i style="background:#4b5058"></i><i style="background:#F26722"></i></div>'
          '<p class="label" style="font-size:9px;margin-top:8px">Room</p><div class="r"><span>Area</span><b>22.8 m&sup2;</b></div><div class="r"><span>Perimeter</span><b>19.6 m</b></div>')
 
-STEPS = [("Draw", "Draw the plan", "Create your 2D floor plan and JoyPlan presents it in immersive 3D. Measure walls, place doors and windows, complex structures included.", "plan2d"),
-         ("Hard-surface", "Finish every surface", "Apply flooring, wall finishes and ceilings. Freeform modelling lets you shape the floor, ceiling and walls as you please.", "hard"),
-         ("Furniture", "Furnish and recolour", "Place furniture from the model library and recolour anything in the material editor to match your design vision.", "furn"),
-         ("View", "Walk through and present", "Walk through in 3D, render images and publish 720&deg; panoramas. Sunlight analysis shows how light falls through the day.", "walk")]
+STEPS = [("Draw", "Draw the plan", "Create your 2D floor plan and JoyPlan presents it in immersive 3D. Measure walls, place doors and windows, complex structures included.", "appplan"),
+         ("Hard-surface", "Finish every surface", "Apply flooring, wall finishes and ceilings. Freeform modelling lets you shape the floor, ceiling and walls as you please.", "appfinish"),
+         ("Furniture", "Furnish and recolour", "Place furniture from the model library and recolour anything in the material editor to match your design vision.", "furnlib"),
+         ("View", "Walk through and present", "Walk through in 3D, render images and publish 720&deg; panoramas. Sunlight analysis shows how light falls through the day.", "render")]
 st_tabs = "".join(f'<button type="button" role="tab" aria-selected="{"true" if i == 0 else "false"}" style="text-align:left;padding:16px 0;border-top:2px solid var(--line)"><span class="label" style="color:var(--orange)">Step 0{i+1}</span><span class="h-s" style="display:block;margin-top:6px">{t}</span></button>' for i, (t, *_r) in enumerate(STEPS))
-st_panels = "".join(f'<div role="tabpanel" class="split stp" style="margin-top:40px"><div><h3 class="h-m">{h}</h3><p class="muted" style="margin-top:14px;max-width:460px">{d}</p></div><div class="fvis"><div class="scr">{fvis(k)}</div></div></div>' for (_t, h, d, k) in STEPS)
+st_panels = "".join(f'<div role="tabpanel" class="split stp" style="margin-top:40px"><div><h3 class="h-m">{h}</h3><p class="muted" style="margin-top:14px;max-width:460px">{d}</p></div><div class="fvis"><div class="scr{" lite" if k.startswith("app") or k == "furnlib" else ""}">{img(k)}</div></div></div>' for (_t, h, d, k) in STEPS)
 
-DOCS = [("CAD drawing set", "CAD", "One-click export of plans for your drafting workflow.", "cad"), ("Professional drawings", "PDF", "Clean, dimensioned drawings ready to share.", "drawings"),
-        ("Area inventory", "Report", "Room-by-room areas generated automatically.", "area"), ("Estimate report", "Report", "Estimates produced from the design in one click.", "estimate"),
-        ("Rendered images", "Image", "Photo-style renders of any view.", "render"), ("720&deg; panorama", "Link", "Immersive panoramas clients open on their phone.", "pano")]
-docs = "".join(f'<article class="panel lift rv"><div class="thumb" style="width:100%;padding:0;overflow:hidden">{fvis(k)}</div><div class="row"><b>{t}</b><span class="tag">{tg}</span></div><p>{d}</p></article>' for t, tg, d, k in DOCS)
+DOCS = [("CAD drawing set", "CAD", "One-click export of plans for your drafting workflow.", "cad"), ("Professional drawings", "PDF", "Clean, dimensioned drawings ready to share.", "plan2d"),
+        ("Area inventory", "Report", "Room-by-room areas generated automatically.", "areas"), ("Estimate report", "Report", "Estimates produced from the design in one click.", "estimate"),
+        ("Rendered images", "Image", "Photo-style renders of any view.", "render"), ("720&deg; panorama", "Link", "Immersive panoramas clients open on their phone.", "lounge")]
+docs = "".join(f'<article class="panel lift rv"><div class="thumb{" lite" if k in ("cad", "areas", "estimate") else ""}" style="width:100%;padding:0;overflow:hidden">{img(k, alt="")}</div><div class="row"><b>{t}</b><span class="tag">{tg}</span></div><p>{d}</p></article>' for t, tg, d, k in DOCS)
 
 BODY = f'''
 <section class="hero center dark grid-bg" aria-labelledby="h1" style="min-height:0;padding-bottom:40px">
@@ -52,9 +52,9 @@ BODY = f'''
     <h2 class="sr-only" id="ui-h">The JoyPlan interface</h2>
     <div class="split ui-split rv">
       <div style="position:relative" id="ui-mock">
-        {"".join([])}<div class="tab"><div class="tab-scr"><div class="tab-bar"><span class="fn">Residence_Kozhikode.jp</span><span class="mini-seg"><span class="on">2D</span><span>3D</span><span>Render</span></span><span style="color:var(--mute)">&#9679; Synced</span></div><div class="tab-body props"><div class="rail"><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div><div class="canvas">{plan("", dims=True, labels=True, sel=True, furn=True, areas=True)}</div><div class="pp">{props}</div></div></div></div>
+        {"".join([])}<div class="tab"><div class="tab-scr"><div class="tab-bar"><span class="fn">Residence_Kozhikode.jp</span><span class="mini-seg"><span class="on">2D</span><span>3D</span><span>Render</span></span><span style="color:var(--mute)">&#9679; Synced</span></div><div class="tab-body props"><div class="rail"><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div><div class="canvas lite">{img("appplan", alt="Dimensioned floor plan open in the JoyPlan app")}</div><div class="pp">{props}</div></div></div></div>
         {cnums}
-        <span class="illus" style="position:absolute;right:14px;bottom:-34px">Interface mockup &middot; sample data</span>
+        <span class="illus" style="position:absolute;right:14px;bottom:-34px">JoyPlan plan view &middot; panel values are sample data</span>
       </div>
       <div><p class="label" style="margin-bottom:12px">The interface &middot; tap a callout</p><div class="callouts" data-callouts="ui-mock">{cbtns}</div></div>
     </div>
@@ -74,22 +74,17 @@ BODY = f'''
     <div class="rv">
       <span class="kicker">2D to 3D</span>
       <h2 class="h-l" id="t3-h" style="margin:20px 0">Drag your plan into the third dimension.</h2>
-      <p class="lead">There's no export and no second program. The plan you drew is already a 3D model. Try it.</p>
-      <div class="rangebox"><label class="label" for="tilt">Plan tilt &middot; <span id="tilt-out">70%</span></label><input class="range" id="tilt" type="range" min="0" max="100" value="70" data-tilt-range="iso-try" data-out="tilt-out"><div class="lbls"><span>2D</span><span>3D</span></div></div>
+      <p class="lead">There's no export and no second program. The plan you drew is already a 3D model. Drag the slider to switch between them.</p>
+      <div class="rangebox"><label class="label" for="tilt">2D plan &rarr; 3D model &middot; <span id="tilt-out">70%</span></label><input class="range" id="tilt" type="range" min="0" max="100" value="70" data-tilt-range="iso-try" data-out="tilt-out"><div class="lbls"><span>2D</span><span>3D</span></div></div>
     </div>
-    <div class="vis-box rv" style="aspect-ratio:1/0.85;background:#121212">{iso("iso-try", layers=12, furn=True)}</div>
+    <div class="vis-box rv" style="aspect-ratio:1/0.85;background:rgb(210,213,223)"><div class="dimswap" id="iso-try">{img("appplan", "d2")}{img("app3d", "d3")}</div></div>
   </div>
 </section>
 
 <section class="sec bone" aria-labelledby="wm-h">
   <div class="wrap">
-    {head("Interior visualisation", "From white model to rendered image.", "Drag to compare. Rendering runs from the app, with no separate visualiser.", cls="split", hid="wm-h")}
-    <div class="ba rv">
-      <div class="ba-l">{render_scene(white=True)}<div class="tags l"><span class="tag" style="background:#fff">White model</span></div></div>
-      <div class="ba-r">{render_scene()}<div class="tags r"><span class="tag o" style="background:var(--signal);color:var(--ink)">Rendered</span></div></div>
-      <input type="range" min="0" max="100" value="50" aria-label="Compare white model with rendered image">
-      <div class="ba-h"></div>
-    </div>
+    {head("Interior visualisation", "From white model to rendered image.", "The same room as a white model and as a finished render. Rendering runs from the app, with no separate visualiser.", cls="split", hid="wm-h")}
+    <figure class="wm rv">{img("whiterender")}<div class="tags l"><span class="tag" style="background:#fff">White model</span></div><div class="tags r"><span class="tag o" style="background:var(--signal);color:var(--ink)">Rendered</span></div></figure>
   </div>
 </section>
 
@@ -102,8 +97,11 @@ BODY = f'''
 
 <section class="sec carbon" aria-labelledby="pano-h">
   <div class="wrap">
-    {head("Panoramic presentation", "Let the client stand in the room.", "720&deg; panoramas your client can explore on their own phone. Drag below to look around.", cls="split", hid="pano-h")}
-    <div class="rv"><div class="pano" tabindex="0" role="img" aria-label="Illustrative 720 degree panorama of a living room. Drag or use arrow keys to look around."><div class="pano-in">{pano_svg()}{pano_svg()}</div><span class="illus" style="position:absolute;left:12px;top:12px">720&deg; panorama &middot; illustrative</span></div><div class="pano-bar"><i></i></div></div>
+    {head("Panoramic presentation", "Let the client stand in the room.", "Panoramas your client explores on their own phone. Drag inside the phone to look around.", cls="split", hid="pano-h")}
+    <div class="split pano-split rv">
+      <div class="ph-pano" tabindex="0" role="img" aria-label="A rendered living room on a phone screen. Drag or use the arrow keys to look around."><div class="ph-scr"><div class="ph-in">{img("render", alt="")}</div><span class="ph-hint">&#8596; Drag to look around</span></div></div>
+      <div><ul class="ticks"><li>Publish 720&deg; panoramas straight from the JoyPlan app</li><li>Share a link the client opens on their own phone</li><li>Approvals without a site visit or a studio meeting</li></ul></div>
+    </div>
     <div class="addon rv"><span class="tag">AR perspective</span><span class="small" style="flex:1;min-width:200px">Space reserved for AR presentation once JoyPlan confirms it is supported in the India release.</span>{tbc("Support to be confirmed")}</div>
   </div>
 </section>
@@ -113,7 +111,7 @@ BODY = f'''
     <div class="vis-box rv" style="aspect-ratio:5/3.6;display:flex;align-items:center;justify-content:center;gap:40px;background:#121212">
       <div style="transform:scale(.8)">{device("2.715")}</div>
       <div style="width:60px;height:2px;background:var(--signal);box-shadow:0 0 12px var(--signal)"></div>
-      <div style="width:120px;height:210px;border-radius:26px;padding:8px;background:linear-gradient(150deg,#2a2a2a,#151515);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)"><div style="height:100%;border-radius:20px;background:#141414;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 60 90" width="60" aria-hidden="true"><path d="M6 6H54V84H6Z M30 6V40 M6 50H30" fill="none" stroke="#F4F1EC" stroke-width="2.5"/><path d="M6 84H54" stroke="#FD4100" stroke-width="3"/></svg></div></div>
+      <div style="width:120px;height:210px;border-radius:26px;padding:8px;background:linear-gradient(150deg,#2a2a2a,#151515);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)"><div style="height:100%;border-radius:20px;background:#fff;overflow:hidden;display:flex;align-items:center">{img("appplan", alt="", style="width:100%")}</div></div>
     </div>
     <div class="rv">
       <span class="kicker">Device integration</span>

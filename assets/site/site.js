@@ -192,7 +192,7 @@ var JPS = {
 
   /* ---------- 2D / 3D toggle on a tablet ---------- */
   $$("[data-dim-toggle]").forEach(function (box) {
-    var iso = $(".iso", box);
+    var iso = $(".iso, .dimswap", box);
     $$("[data-dim]", box).forEach(function (b) {
       b.addEventListener("click", function () {
         $$("[data-dim]", box).forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
@@ -337,6 +337,21 @@ var JPS = {
     p.addEventListener("keydown", function (e) { if (e.key === "ArrowLeft") { x += 40; wrapX(); } if (e.key === "ArrowRight") { x -= 40; wrapX(); } });
     if (!reduce) { var auto = setInterval(function () { if (!down) { x -= 0.4; wrapX(); } }, 30); p.addEventListener("pointerdown", function () { clearInterval(auto); }, { once: true }); }
     wrapX();
+  });
+
+  /* ---------- phone panorama: drag to look around (clamped) ---------- */
+  $$(".ph-pano").forEach(function (p) {
+    var inner = $(".ph-in", p), scr = $(".ph-scr", p), x = 0, sx = 0, startX = 0, down = false, dir = -1, auto = null;
+    function max() { return Math.max(0, inner.offsetWidth - scr.offsetWidth); }
+    function set() { x = Math.min(0, Math.max(-max(), x)); inner.style.transform = "translateX(" + x + "px)"; }
+    function stop() { if (auto) { clearInterval(auto); auto = null; } }
+    p.addEventListener("pointerdown", function (e) { stop(); down = true; startX = e.clientX; sx = x; p.setPointerCapture(e.pointerId); });
+    p.addEventListener("pointermove", function (e) { if (down) { x = sx + (e.clientX - startX); set(); } });
+    p.addEventListener("pointerup", function () { down = false; });
+    p.addEventListener("pointercancel", function () { down = false; });
+    p.addEventListener("keydown", function (e) { if (e.key === "ArrowLeft") { stop(); x += 30; set(); } if (e.key === "ArrowRight") { stop(); x -= 30; set(); } });
+    if (!reduce) auto = setInterval(function () { x += dir * 0.5; if (x <= -max()) dir = 1; if (x >= 0) dir = -1; set(); }, 30);
+    set();
   });
 
   /* ---------- chips (single-select groups bound to hidden inputs) ---------- */

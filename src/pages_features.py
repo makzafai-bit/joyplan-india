@@ -1,4 +1,4 @@
-from components import fvis
+from components import img
 from shared import band
 
 CR = [("Home", "/"), ("Features", "/features/")]
@@ -17,7 +17,7 @@ F = [
     ("Design", "furniture-library", "Furniture library", "Arrange furniture and decor models for interiors and exteriors.", "Living room and wardrobe layouts.", "Clients see real furniture, not boxes.", "furn", ("/assets/step3.webp", "Furniture library open beside a floor plan in JoyPlan"), "Living_Layout.jp"),
     ("Design", "material-editor", "Material editor", "Customise model colours and materials to match your design vision.", "Trying fabrics live with the client.", "Decisions made in the meeting.", "material", ("/assets/f_material.webp", "Material editor recolouring an armchair in JoyPlan"), "Material_Editor.jp"),
     ("Visualise", "3d-walkthrough", "3D walkthrough", "Walk through your 3D interior designs from any viewpoint.", "Client presentations.", "Spatial decisions without guesswork.", "walk", None, "Walkthrough.jp"),
-    ("Visualise", "rendered-images", "Rendered images", "Produce rendered images of any view directly from the app.", "Proposals and social posts.", "Photo-style output without a separate visualiser.", "render", ("/assets/learn2.webp", "A rendered living room produced in JoyPlan"), "Render_01.jp"),
+    ("Visualise", "rendered-images", "Rendered images", "Produce rendered images of any view directly from the app.", "Proposals and social posts.", "Photo-style output without a separate visualiser.", "render", ("/assets/site/img/lounge.webp", "A rendered living room produced in JoyPlan"), "Render_01.jp"),
     ("Visualise", "720-panorama", "720&deg; panorama", "Publish immersive 720&deg; panoramas clients can explore themselves.", "Remote approvals.", "Clients &ldquo;stand in&rdquo; the design anywhere.", "pano", None, "Living_720.jp"),
     ("Visualise", "sunlight-analysis", "Sunlight analysis", "Simulate sunlight position and projection inside and around the space.", "Window placement, west-facing rooms.", "Design for Indian light and heat.", "sun", ("/assets/f_sun.webp", "Sunlight analysis dial over a 3D model in JoyPlan"), "Sun_Study.jp"),
     ("Document", "professional-drawings", "Professional drawings", "Generate professional drawings from the model in one click.", "Drawing sets for execution.", "Consistent drawings without redrafting.", "drawings", None, "Drawings.jp"),
@@ -30,17 +30,24 @@ F = [
 CATS = ["Measure", "Plan", "Design", "Visualise", "Document", "Collaborate"]
 
 
+SUB = {"laser": "site", "plan2d": "appplan", "ai": "lounge", "hard": "appfinish", "walk": "app3d", "pano": "render", "drawings": "plan2d", "learn": "living", "photos": "site"}
+LITE = ("appplan", "appfinish", "cad", "areas", "estimate", "furnlib", "share")
+
+
 def row(i, f):
-    cat, slug, t, d, u, b, k, img, fn = f
-    if img:
-        v = f'<img src="{img[0]}" alt="{img[1]}" loading="lazy">'
-        tag = "App screen"
+    cat, slug, t, d, u, b, k, im, fn = f
+    if im:
+        v = f'<img src="{im[0]}" alt="{im[1]}" loading="lazy">'
+        lite = any(x in im[0] for x in ("make", "share", "step3"))
     else:
-        v = fvis(k)
-        tag = "Illustrative"
+        key = SUB[k]
+        v = img(key, style="object-position:50% 45%" if key == "site" else "")
+        lite = key in LITE
+    tag = "JoyPlan"
+    play = '<span class="play" aria-hidden="true"></span>' if k == "learn" else ""
     return (f'<article class="frow" id="{slug}" data-cat="{cat}"><div class="rv"><div style="display:flex;gap:10px;align-items:center"><span class="mono small" style="color:var(--orange)">{i+1:02d}</span><span class="tag">{cat}</span></div>'
             f'<h2>{t}</h2><p class="muted">{d}</p><div class="boxes"><div class="usebox"><p class="label">Use case</p><p>{u}</p></div><div class="usebox"><p class="label">Professional benefit</p><p>{b}</p></div></div></div>'
-            f'<div class="fvis rv"><div class="bar"><span>{fn}</span><span>{tag}</span></div><div class="scr">{v}</div></div></article>')
+            f'<div class="fvis rv"><div class="bar"><span>{fn}</span><span>{tag}</span></div><div class="scr{" lite" if lite else ""}">{v}{play}</div></div></article>')
 
 
 rows = "".join(row(i, f) for i, f in enumerate(F))
@@ -63,7 +70,7 @@ BODY = f'''
 <div class="sticky-filter"><div class="wrap"><div class="chips" role="group" aria-label="Filter features">{chips}</div></div></div>
 <section class="dark" aria-label="Feature list" data-flib style="padding-bottom:64px">
   <div class="wrap">{rows}
-    <p class="tiny" style="margin-top:40px">Feature list compiled from joyplanindia.com and the JoyPlan app store listing. AR perspective is not listed and is held until JoyPlan confirms support. Screens marked illustrative will be replaced with real app captures.</p>
+    <p class="tiny" style="margin-top:40px">Feature list compiled from joyplanindia.com and the JoyPlan app store listing. AR perspective is not listed and is held until JoyPlan confirms support.</p>
   </div>
 </section>
 {band("See every feature on your own floor plan.", "Compare packages", "/packages/", False)}
