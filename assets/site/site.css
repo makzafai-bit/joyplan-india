@@ -835,7 +835,7 @@ img.contain{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
 .ha-tile{position:absolute;opacity:0;translate:-55% -30%;animation:ha-in 1.6s var(--ease-out) forwards}
 .ha-tile.t1{left:21.4%;top:36%;width:13.8%;animation-delay:.5s}
 .ha-tile.t2{left:36.9%;top:42%;width:13.8%;animation-delay:1.05s}
-.ha-tile.t3{left:53%;top:47%;width:11.8%;animation-delay:1.6s}
+.ha-tile.t3{left:53%;top:50.5%;width:11.8%;animation-delay:1.6s}
 .ha-float{animation:ha-drift 9s ease-in-out infinite alternate}
 .t2 .ha-float{animation-duration:10.5s;animation-delay:-3s}
 .t3 .ha-float{animation-duration:12s;animation-delay:-6s}
@@ -865,7 +865,7 @@ img.contain{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
 .hero-scene .hero-anim{position:absolute;top:50%;left:calc(var(--O) + var(--S)*.22);width:calc(var(--S)*.84);translate:0 -50%;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 95%,transparent),linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 95%,transparent),linear-gradient(180deg,transparent 0,#000 7%,#000 93%,transparent);mask-composite:intersect}
 .hs-shade{position:absolute;inset:0;background:linear-gradient(90deg,#110e0d 0,#110e0d var(--O),rgba(17,14,13,.85) calc(var(--O) + var(--S)*.26),rgba(17,14,13,0) calc(var(--O) + var(--S)*.4));pointer-events:none}
 .hs-copy{position:relative;z-index:2;display:grid;gap:22px;justify-items:start;width:calc(var(--S)*.4);margin-left:max(var(--gut),calc((100vw - 1280px)/2))}
-.hs-copy .h-xl{font-size:calc(var(--S)*.032)}
+.hs-copy .h-xl{font-size:calc(var(--S)*.037);line-height:1.14}
 .hs-copy .lead,.hs-copy .hero-meta{max-width:calc(var(--S)*.31)}
 @media (max-width:1100px){
   .hero.hero-scene{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding:40px 0 0}
