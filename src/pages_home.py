@@ -16,22 +16,15 @@ HERO_ANIM = (
 )
 
 HERO = f'''
-<section class="hero dark grid-bg" aria-labelledby="h1">
-  <div class="glow o" style="width:620px;height:620px;right:-160px;top:-120px" data-parallax="70"></div>
-  <div class="glow y" style="width:420px;height:420px;right:22%;bottom:-220px" data-parallax="-60"></div>
-  <div class="wrap hero-stack">
-    <div class="hero-copy" data-enter>
-      <div class="hc-l">
-        <span class="kicker">Laser measurement &times; 2D/3D design software</span>
-        <h1 class="h-xl" id="h1">Measure Smarter.<br>Design Faster.<br><span class="hl-box"><span class="hl">Impress Better.</span></span></h1>
-      </div>
-      <div class="hc-r">
-        <p class="lead">Transform the way you measure, plan and present spaces with JoyPlan's connected measurement and design ecosystem.</p>
-        <div class="btns">{btn("Experience JoyPlan", "#ecosystem")}{btn("Book a Free Demo", "/book-a-demo/", "ghost", False)}</div>
-        <p class="hero-meta"><span>App Store</span><span>Google Play</span><span>Bengaluru</span><span>Kozhikode</span><span>Free business demo</span></p>
-      </div>
-    </div>
-    <div class="hero-shot">{HERO_ANIM}</div>
+<section class="hero hero-scene dark" aria-labelledby="h1">
+  {HERO_ANIM}
+  <div class="hs-shade" aria-hidden="true"></div>
+  <div class="hs-copy hero-copy" data-enter>
+    <span class="kicker">Laser measurement &times; 2D/3D design software</span>
+    <h1 class="h-xl" id="h1">Measure Smarter.<br>Design Faster.<br><span class="hl-box"><span class="hl">Impress Better.</span></span></h1>
+    <p class="lead">Transform the way you measure, plan and present spaces with JoyPlan's connected measurement and design ecosystem.</p>
+    <div class="btns">{btn("Experience JoyPlan", "#ecosystem")}{btn("Book a Free Demo", "/book-a-demo/", "ghost", False)}</div>
+    <p class="hero-meta"><span>App Store</span><span>Google Play</span><span>Bengaluru</span><span>Kozhikode</span><span>Free business demo</span></p>
   </div>
 </section>
 <div class="strip" aria-hidden="true"><div class="strip-in">{"".join(f"<span>{w}</span>" for w in ["Measure", "Create", "Design", "Present", "2D floor plans", "3D design", "Renders", "720&deg; panorama", "CAD export", "Bengaluru", "Kozhikode"] * 2)}</div></div>
