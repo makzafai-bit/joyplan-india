@@ -68,8 +68,17 @@ def page(p):
 <meta property="og:title" content="{p["title"]}">
 <meta property="og:description" content="{p["desc"]}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{SITE}/assets/site/og.png">
+<meta property="og:image" content="{SITE}/assets/site/og-share.jpg">
+<meta property="og:image:secure_url" content="{SITE}/assets/site/og-share.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="JoyPlan India home page: Measure Smarter. Design Faster. Impress Better.">
+<meta property="og:locale" content="en_IN">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{p["title"]}">
+<meta name="twitter:description" content="{p["desc"]}">
+<meta name="twitter:image" content="{SITE}/assets/site/og-share.jpg">
 <meta name="theme-color" content="#0B0B0B">
 <link rel="icon" href="/assets/joyplan-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
