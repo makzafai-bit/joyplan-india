@@ -1,4 +1,4 @@
-from components import ARR, btn, tbc, device, img, DEV_IMG
+from components import ARR, btn, tbc, device, img, dev_img, frame, fit
 from shared import head, band, faq, inr
 
 WA = "Hi JoyPlan India, I'd like to know more about the JoyPlan measuring device."
@@ -19,12 +19,12 @@ WAYS = [("Device only", "JoyPlan measuring device", 8474, False), ("Device + 1 m
         ("Device + 12 months", "Device + 12-month app subscription &middot; Professional", 15000, True)]
 ways_rows = "".join(f'<tr{" class=hi" if hi else ""}><td>{o}</td><td>{inc}</td><td class="p">{inr(p)}</td><td>{btn("Get started" if hi else "Enquire", "/book-a-demo/?package=" + ("professional" if hi else "device"), "primary" if hi else "ghost", hi, sm=True)}</td></tr>' for o, inc, p, hi in WAYS)
 
-USES = [("site", "On site", "Empty-room survey", "Aim, press READ, and the reading lands on the wall you selected."),
-        ("appplan", "In the app", "Apartment handover", "Capture an as-built plan room by room before you leave."),
+USES = [("measure", "On site", "Empty-room survey", "Aim, press READ, and the reading lands on the wall you selected."),
+        ("f2d", "In the app", "Apartment handover", "Capture an as-built plan room by room before you leave."),
         ("villa", "3D cutaway", "Villa renovation", "Multi-level homes measured floor by floor."),
         ("living", "Render", "Living room redesign", "Measured walls become a rendered interior for the client.")]
 
-uses = "".join(f'<article class="panel rv" style="padding:0;overflow:hidden"><div class="use-im">{img(k, alt="")}<span class="illus" style="position:absolute;left:10px;top:10px">{s}</span></div><div style="padding:18px"><b class="h-s" style="font-size:16px">{t}</b><p class="small muted" style="margin-top:6px">{d}</p></div></article>' for k, s, t, d in USES)
+uses = "".join(f'<article class="panel rv" style="padding:0;overflow:hidden"><div class="use-im">{fit(k, alt="", sizes="(max-width: 720px) 100vw, 320px")}<span class="illus" style="position:absolute;left:10px;top:10px">{s}</span></div><div style="padding:18px"><b class="h-s" style="font-size:16px">{t}</b><p class="small muted" style="margin-top:6px">{d}</p></div></article>' for k, s, t, d in USES)
 
 BODY = f'''
 <section class="hero dark grid-bg" aria-labelledby="h1">
@@ -40,7 +40,7 @@ BODY = f'''
     </div>
     <div class="hero-vis dev-hero" data-tilt-area data-parallax-vis>
       <svg viewBox="0 0 600 560" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true"><g fill="none" stroke="rgba(253,65,0,.35)"><circle cx="300" cy="290" r="170"><animateTransform attributeName="transform" type="rotate" from="0 300 290" to="360 300 290" dur="40s" repeatCount="indefinite"/></circle><circle cx="300" cy="290" r="240" stroke-dasharray="4 10"><animateTransform attributeName="transform" type="rotate" from="360 300 290" to="0 300 290" dur="60s" repeatCount="indefinite"/></circle></g><path d="M300 20V150" stroke="#FD4100" stroke-width="2"/><circle cx="300" cy="80" r="4" fill="#FD4100"/></svg>
-      <div style="position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);perspective:900px"><div data-tilt style="transition:transform .3s var(--ease-out)">{device("3.480", cycle="3.480,4.625,2.715,11.200,7.600", cls="lg", style="--s:1.8")}</div></div>
+      <div style="position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);perspective:900px"><div data-tilt style="transition:transform .3s var(--ease-out)">{device("3.480", cycle="3.480,4.625,2.715,11.200,7.600", cls="lg", style="--s:1.5")}</div></div>
       <div class="glass float" style="position:absolute;left:2%;top:24%"><p class="label">Connection</p><p style="font-weight:600;font-size:14px;margin-top:4px;display:flex;gap:8px;align-items:center"><i class="livedot"></i>Bluetooth &rarr; JoyPlan app</p></div>
       <div class="glass float d2" style="position:absolute;right:0;top:46%"><p class="label">Range</p><p style="font-weight:600;font-size:15px;margin-top:4px">Up to 50 m</p></div>
       <div class="glass float d3" style="position:absolute;left:4%;bottom:12%"><p class="label">Accuracy</p><p style="margin-top:6px">{tbc()}</p></div>
@@ -60,9 +60,17 @@ BODY = f'''
   <div class="wrap split" style="align-items:start">
     <div>
       {head("Specifications", "Technical sheet", "Specifications will be published from JoyPlan's official product data. Placeholders are marked until then.", hid="spec-h")}
-      <figure class="spec-dev"><img src="{DEV_IMG}" alt="Front of the JoyPlan laser measure with its LCD screen and red READ key" width="357" height="678" loading="lazy"><span class="dim h">H {tbc("TBC")}</span><span class="dim w">W {tbc("TBC")}</span></figure>
+      <figure class="spec-shot">{img("devangled", sizes="(max-width: 720px) 80vw, 420px")}</figure>
     </div>
     <div class="tbl-wrap rv"><table class="spec"><caption class="sr-only">Device specifications</caption><tbody>{spec_rows}</tbody></table></div>
+  </div>
+</section>
+
+<section class="sec bone tight" aria-labelledby="views-h" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="sr-only" id="views-h">The device from every side</h2>
+    <div class="rv">{frame("devviews", "white-card", sizes="(max-width: 720px) 100vw, 1280px")}</div>
+    <p class="tiny" style="margin-top:12px">JoyPlan SW-TB50: front, angled, side, back label, laser window and base.</p>
   </div>
 </section>
 
@@ -70,9 +78,9 @@ BODY = f'''
   <div class="wrap">
     {head("How the device works", "Pair. Point. Done.", hid="ppd-h")}
     <div class="g3" data-stagger>
-      <article class="panel lift rv"><span class="label" style="color:var(--orange)">01 &middot; Pair</span><div class="ppd-im pair"><img src="{DEV_IMG}" alt="" width="357" height="678" loading="lazy"><i class="beam"></i><div class="phone">{img("appplan", alt="")}</div></div><h3 class="h-s">Connect to the app</h3><p class="small muted" style="margin-top:8px">Pair the device with JoyPlan on your phone or tablet over Bluetooth.</p></article>
-      <article class="panel lift rv"><span class="label" style="color:var(--orange)">02 &middot; Point &amp; press</span><div class="ppd-im">{img("site", alt="The laser measure aimed across an empty room", style="object-position:50% 40%")}<span class="glass readout" style="position:absolute;right:10px;bottom:10px;padding:6px 10px"><span class="v" style="font-size:18px">3.480<small>m</small></span></span></div><h3 class="h-s">Measure the wall</h3><p class="small muted" style="margin-top:8px">Aim at the surface and press READ. The reading appears on the device and in the app.</p></article>
-      <article class="panel lift rv"><span class="label" style="color:var(--orange)">03 &middot; Watch it build</span><div class="ppd-im lite">{img("appplan", alt="Floor plan built from the readings in the JoyPlan app", style="object-fit:contain")}</div><h3 class="h-s">The plan draws itself</h3><p class="small muted" style="margin-top:8px">Each value snaps to the selected wall, so the 2D plan grows as you walk the space.</p></article>
+      <article class="panel lift rv"><span class="label" style="color:var(--orange)">01 &middot; Pair</span><div class="ppd-im pair">{dev_img()}<i class="beam"></i><div class="phone">{img("f2d", alt="", sizes="120px")}</div></div><h3 class="h-s">Connect to the app</h3><p class="small muted" style="margin-top:8px">Pair the device with JoyPlan on your phone or tablet over Bluetooth.</p></article>
+      <article class="panel lift rv"><span class="label" style="color:var(--orange)">02 &middot; Point &amp; press</span><div class="ppd-im">{fit("measure", alt="A site engineer aiming the JoyPlan laser across an empty room", sizes="(max-width: 720px) 100vw, 400px")}</div><h3 class="h-s">Measure the wall</h3></div><h3 class="h-s">Measure the wall</h3><p class="small muted" style="margin-top:8px">Aim at the surface and press READ. The reading appears on the device and in the app.</p></article>
+      <article class="panel lift rv"><span class="label" style="color:var(--orange)">03 &middot; Watch it build</span><div class="ppd-im">{fit("f2d", alt="Floor plan built from the readings in JoyPlan", sizes="(max-width: 720px) 100vw, 400px")}</div><h3 class="h-s">The plan draws itself</h3></div><h3 class="h-s">The plan draws itself</h3><p class="small muted" style="margin-top:8px">Each value snaps to the selected wall, so the 2D plan grows as you walk the space.</p></article>
     </div>
   </div>
 </section>
@@ -88,7 +96,7 @@ BODY = f'''
   <div class="wrap">
     {head("Device &times; software connectivity", "One reading. Every screen.", cls="center", hid="con-h")}
     <div class="diagram rv">
-      <div class="node"><img src="{DEV_IMG}" alt="" width="357" height="678" loading="lazy" style="height:96px;width:auto"><b>JoyPlan device</b></div>
+      <div class="node">{dev_img("height:110px;width:auto")}<b>JoyPlan device</b></div>
       <div class="link"><b>BLUETOOTH</b></div>
       <div class="node"><svg viewBox="0 0 110 80" width="110" aria-hidden="true"><rect x="2" y="2" width="106" height="76" rx="8" fill="none" stroke="#F4F1EC" stroke-width="2.5"/><path d="M20 18H90V62H20Z M55 18V40" fill="none" stroke="#FD4100" stroke-width="2"/></svg><b>JoyPlan app &middot; phone / tablet</b></div>
       <div class="link"><b>SHARE ACROSS DEVICES</b></div>

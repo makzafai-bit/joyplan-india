@@ -1,3 +1,5 @@
+import os
+
 """Shared visual components for the JoyPlan India site (rendered into static HTML by build.py)."""
 
 
@@ -13,54 +15,95 @@ def logo(uid="a", href="/"):
     return f'<a class="logo" href="{href}" aria-label="JoyPlan India home">{logo_mark(uid)}<span class="wm">joyplan</span><span class="in">INDIA</span></a>'
 
 
-DEV_IMG = "/assets/site/img/joyplan-laser-device.webp"
+DEV_IMG = "/assets/site/img/device-front-cutout.webp"
+DEV_W, DEV_H = 687, 1458
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets", "site", "img")
 
 
 def device(val="3.480", cycle=None, cls="", style=""):
-    """The real JoyPlan laser measure (photo cut-out) with a live reading laid over its LCD."""
+    """The JoyPlan SW-TB50 laser measure (product render, background removed) with a live reading on its LCD."""
     c = f' data-lcd="{cycle}"' if cycle else ""
     st = f' style="{style}"' if style else ""
-    return (f'<div class="dev {cls}"{st} aria-hidden="true"><img src="{DEV_IMG}" alt="" width="357" height="678" loading="lazy" decoding="async">'
+    return (f'<div class="dev {cls}"{st} aria-hidden="true"><img src="{DEV_IMG}" alt="" width="{DEV_W}" height="{DEV_H}" loading="lazy" decoding="async">'
             f'<div class="lcd"><i>DIST</i><b{c}>{val}</b><em>m</em></div></div>')
 
 
-def pic(src, alt="", cls="", style="", w=None, h=None, lazy=True):
-    """A real image (render, app screen or photo)."""
+def dev_img(style="", alt=""):
+    return f'<img src="{DEV_IMG}" alt="{alt}" width="{DEV_W}" height="{DEV_H}" loading="lazy" decoding="async"{f' style="{style}"' if style else ""}>'
+
+
+def pic(src, alt="", cls="", style="", w=None, h=None, lazy=True, sizes=None):
+    """A real image. If a 960px-wide copy exists next to it (name-960.webp) it is offered to phones via srcset."""
     wh = f' width="{w}" height="{h}"' if w and h else ""
     c = f' class="{cls}"' if cls else ""
     st = f' style="{style}"' if style else ""
     ld = ' loading="lazy"' if lazy else ' fetchpriority="high"'
-    return f'<img src="{src}" alt="{alt}"{c}{st}{wh}{ld} decoding="async">'
+    ss = ""
+    if src.startswith("/assets/site/img/") and w and w > 1100:
+        small = src[:-5] + "-960.webp"
+        if os.path.exists(os.path.join(IMG_DIR, os.path.basename(small))):
+            ss = f' srcset="{small} 960w, {src} {w}w" sizes="{sizes or "(max-width: 720px) 100vw, 60vw"}"'
+    return f'<img src="{src}"{ss} alt="{alt}"{c}{st}{wh}{ld} decoding="async">'
 
 
-# Real imagery: JoyPlan renders and app screens, plus crops of JoyPlan India's own ad creative.
+# Every photo, render and app screen on the site, registered once. Point a key at a new file to swap it everywhere.
+I = "/assets/site/img/"
 IMG = {
-    "living": ("/assets/site/img/living.webp", 1040, 1134, "Living room with a curved sofa and pendant light, rendered in JoyPlan"),
-    "lounge": ("/assets/site/img/lounge.webp", 504, 492, "Beige sofa and side table in a sunlit lounge, rendered in JoyPlan"),
-    "armchair": ("/assets/site/img/armchair.webp", 504, 492, "Reading corner with an oak armchair, rendered in JoyPlan"),
+    # JoyPlan India's own images (Nov 2026 set, full frame, never cropped)
+    "hero": (I + "hero-measure-to-design.webp", 1870, 841, "The JoyPlan laser measure reading 4.625 m beside a 2D plan turning into a 3D design and a finished render"),
+    "trad": (I + "transform-traditional.webp", 1438, 1094, "A designer redrawing a plan by hand with a tape measure, calculator and a site-revisit checklist"),
+    "jp": (I + "transform-joyplan.webp", 1672, 941, "The same apartment in JoyPlan on a laptop, as a measured 2D plan and a furnished 3D model side by side"),
+    "measure": (I + "workflow-measure.webp", 1670, 941, "A site engineer measuring an empty room with the JoyPlan laser measure"),
+    "f2d": (I + "feature-2d-plan.webp", 1506, 1044, "Dimensioned 2D floor plan of a 3BHK apartment in JoyPlan, with room areas"),
+    "f3d": (I + "feature-3d.webp", 1506, 1044, "The same 3BHK apartment as a furnished 3D model in JoyPlan"),
+    "f720": (I + "feature-720.webp", 1672, 941, "720 degree panorama of a living room open in JoyPlan"),
+    "f720tour": (I + "feature-720-tour.webp", 1671, 941, "720 degree panorama tour of a living and dining room"),
+    "fcad": (I + "feature-cad-export.webp", 1671, 941, "CAD and export options in JoyPlan: DWG/DXF, PDF drawings and 3D models"),
+    "felev": (I + "feature-elevations.webp", 1670, 941, "Bedroom key plan with bed-wall and wardrobe-wall elevations in JoyPlan"),
+    "fsync": (I + "feature-sync.webp", 1671, 941, "A JoyPlan project syncing between phone, CAD on a desktop and a 3D model on a laptop"),
+    "flidar": (I + "feature-lidar.webp", 1671, 941, "LiDAR scan of a living room captured as a 3D point model"),
+    "fai": (I + "feature-ai-living.webp", 1672, 941, "Warm, neutral contemporary living room designed with AI assistance"),
+    "ffurn": (I + "feature-furniture-materials.webp", 1670, 941, "Furniture and materials panel recolouring an armchair's upholstery and frame finish"),
+    "devfront": (I + "device-front.webp", 1024, 1536, "Front of the JoyPlan SW-TB50 laser measure with its LCD, READ key and bubble levels"),
+    "devangled": (I + "device-angled.webp", 1024, 1536, "The JoyPlan SW-TB50 laser measure showing area, volume and a 12.560 m reading"),
+    "devviews": (I + "device-views.webp", 1536, 1024, "The JoyPlan SW-TB50 from six sides: front, angled, side, back label, laser window and base"),
+    # Earlier JoyPlan renders and app screens
+    "living": (I + "living.webp", 1040, 1134, "Living room with a curved sofa and pendant light, rendered in JoyPlan"),
+    "lounge": (I + "lounge.webp", 504, 492, "Beige sofa and side table in a sunlit lounge, rendered in JoyPlan"),
+    "armchair": (I + "armchair.webp", 504, 492, "Reading corner with an oak armchair, rendered in JoyPlan"),
     "villa": ("/assets/hero.webp", 1370, 960, "Two-storey home shown as a 3D cutaway with furnished interiors"),
-    "whiterender": ("/assets/site/img/white-to-render.webp", 2372, 858, "The same living room as a white model on the left and a finished render on the right"),
-    "render": ("/assets/site/img/render-final.webp", 1136, 858, "Rendered living room with modular sofa and sculptural lamps"),
-    "apt3d": ("/assets/site/img/apartment-3d.webp", 632, 756, "Furnished apartment shown as a 3D cutaway: living, dining, bedrooms and kitchen"),
-    "plan2d": ("/assets/site/img/plan-2d-dark.webp", 556, 714, "Furnished 2D floor plan of a three-bedroom apartment"),
-    "site": ("/assets/site/img/site-measure.webp", 535, 960, "The JoyPlan laser measure taking a reading across an empty room"),
-    "appplan": ("/assets/site/img/app-plan.webp", 600, 530, "Dimensioned 2D floor plan in the JoyPlan app"),
-    "appfinish": ("/assets/site/img/app-plan-finishes.webp", 560, 530, "Floor plan with wood, tile and lawn finishes applied in the JoyPlan app"),
-    "app3d": ("/assets/site/img/app-3d.webp", 620, 610, "The same plan as a furnished 3D model in the JoyPlan app"),
+    "whiterender": (I + "white-to-render.webp", 2372, 858, "The same living room as a white model on the left and a finished render on the right"),
+    "render": (I + "render-final.webp", 1136, 858, "Rendered living room with modular sofa and sculptural lamps"),
+    "appfinish": (I + "app-plan-finishes.webp", 560, 530, "Floor plan with wood, tile and lawn finishes applied in the JoyPlan app"),
     "furnlib": ("/assets/step3.webp", 1000, 733, "Furniture library open beside a furnished plan in the JoyPlan app"),
-    "material": ("/assets/f_material.webp", 740, 504, "Material editor recolouring an armchair in JoyPlan"),
-    "lidar": ("/assets/f_lidar.webp", 734, 504, "A room captured as a 3D scan in JoyPlan"),
     "share": ("/assets/share.webp", 1500, 597, "The same JoyPlan project open on phone, tablet and laptop"),
-    "cad": ("/assets/make3.webp", 1000, 1058, "Files and sharing screen with CAD export options in JoyPlan"),
     "areas": ("/assets/make1.webp", 836, 924, "Room area and perimeter details listed in JoyPlan"),
     "estimate": ("/assets/make2.webp", 840, 934, "Estimate broken down by trade in JoyPlan"),
     "sun": ("/assets/f_sun.webp", 712, 504, "Sunlight analysis dial over a 3D model in JoyPlan"),
 }
 
 
-def img(key, cls="", style="", alt=None, lazy=True):
+def img(key, cls="", style="", alt=None, lazy=True, sizes=None):
     src, w, h, a = IMG[key]
-    return pic(src, a if alt is None else alt, cls, style, w, h, lazy)
+    return pic(src, a if alt is None else alt, cls, style, w, h, lazy, sizes)
+
+
+def ratio(key):
+    _s, w, h, _a = IMG[key]
+    return f"{w}/{h}"
+
+
+def frame(key, cls="", alt=None, lazy=True, sizes=None, extra=""):
+    """Show an image whole (never cropped) in a box that takes the image's own aspect ratio."""
+    return f'<figure class="frame {cls}" style="aspect-ratio:{ratio(key)}">{img(key, alt=alt, lazy=lazy, sizes=sizes)}{extra}</figure>'
+
+
+def fit(key, cls="", alt=None, sizes=None):
+    """Show an image whole inside a fixed box: contained, with a blurred copy of itself filling any spare space."""
+    src = IMG[key][0]
+    small = src[:-5] + "-960.webp"
+    bg = small if os.path.exists(os.path.join(IMG_DIR, os.path.basename(small))) and src.startswith(I) else src
+    return f'<div class="fit {cls}"><span class="fit-bg" style="background-image:url({bg})"></span>{img(key, alt=alt, sizes=sizes)}</div>'
 
 
 def tablet(fname, right_html, screen, props=None, cls="", attrs=""):

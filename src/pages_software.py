@@ -1,4 +1,4 @@
-from components import ARR, btn, tbc, device, img
+from components import ARR, btn, tbc, device, img, frame, fit
 from shared import head, band, faq, faq_ld
 
 WA = "Hi JoyPlan India, I'd like a demo of the JoyPlan design software."
@@ -10,28 +10,28 @@ FAQS = [("Which devices does JoyPlan run on?", "JoyPlan is available on the App 
         ("Does it support multi-storey buildings?", "Yes. Multi-level floor plans keep every floor of a duplex or villa in one aligned project."),
         ("How are renders and panoramas billed?", f"Rendering and AI credit details {tbc()}.")]
 
-CALLS = [("Design modes", "Switch between 2D plan, 3D and render in one tap.", "50%", "6%"),
-         ("Tool rail", "Walls, doors and windows, hard surfaces, furniture, annotations.", "4%", "36%"),
-         ("Laser-linked wall", "The selected wall takes the next device reading.", "40%", "78%"),
-         ("Properties panel", "Exact lengths, heights and materials for anything selected.", "86%", "30%"),
-         ("Live area", "Room areas and perimeters update as you draw.", "30%", "64%")]
+CALLS = [("Design modes", "Switch between 2D plan, 3D and render in one tap.", "9.5%", "14%"),
+         ("Tool rail", "Walls, doors and windows, hard surfaces, furniture, annotations.", "9.5%", "40%"),
+         ("Measured dimensions", "Wall lengths from the laser, chained along every side of the plan.", "44%", "13%"),
+         ("Room labels", "Every room carries its name, ceiling height and area.", "64.5%", "33.5%"),
+         ("Live area", "Room areas update as you draw, ready for the area inventory.", "55%", "62%")]
 cnums = "".join(f'<span class="cnum{" on" if i == 0 else ""}" style="left:{x};top:{y}">{i+1}</span>' for i, (_t, _d, x, y) in enumerate(CALLS))
 cbtns = "".join(f'<button type="button" aria-pressed="{"true" if i == 0 else "false"}"><span>{i+1}</span><b>{t}</b><em>{d}</em></button>' for i, (t, d, *_r) in enumerate(CALLS))
 props = ('<p class="label" style="font-size:9px">Selected &middot; wall</p><div class="r"><span>Length</span><b>7.400 m</b></div><div class="r"><span>Height</span><b>2.850 m</b></div><div class="r"><span>Thickness</span><b>0.230 m</b></div>'
          '<p class="label" style="font-size:9px;margin-top:8px">Material</p><div class="sw"><i style="background:#EDE6DA"></i><i style="background:#C9A27A"></i><i style="background:#4b5058"></i><i style="background:#F26722"></i></div>'
          '<p class="label" style="font-size:9px;margin-top:8px">Room</p><div class="r"><span>Area</span><b>22.8 m&sup2;</b></div><div class="r"><span>Perimeter</span><b>19.6 m</b></div>')
 
-STEPS = [("Draw", "Draw the plan", "Create your 2D floor plan and JoyPlan presents it in immersive 3D. Measure walls, place doors and windows, complex structures included.", "appplan"),
+STEPS = [("Draw", "Draw the plan", "Create your 2D floor plan and JoyPlan presents it in immersive 3D. Measure walls, place doors and windows, complex structures included.", "f2d"),
          ("Hard-surface", "Finish every surface", "Apply flooring, wall finishes and ceilings. Freeform modelling lets you shape the floor, ceiling and walls as you please.", "appfinish"),
-         ("Furniture", "Furnish and recolour", "Place furniture from the model library and recolour anything in the material editor to match your design vision.", "furnlib"),
-         ("View", "Walk through and present", "Walk through in 3D, render images and publish 720&deg; panoramas. Sunlight analysis shows how light falls through the day.", "render")]
+         ("Furniture", "Furnish and recolour", "Place furniture from the model library and recolour anything in the material editor to match your design vision.", "ffurn"),
+         ("View", "Walk through and present", "Walk through in 3D, render images and publish 720&deg; panoramas. Sunlight analysis shows how light falls through the day.", "f720tour")]
 st_tabs = "".join(f'<button type="button" role="tab" aria-selected="{"true" if i == 0 else "false"}" style="text-align:left;padding:16px 0;border-top:2px solid var(--line)"><span class="label" style="color:var(--orange)">Step 0{i+1}</span><span class="h-s" style="display:block;margin-top:6px">{t}</span></button>' for i, (t, *_r) in enumerate(STEPS))
-st_panels = "".join(f'<div role="tabpanel" class="split stp" style="margin-top:40px"><div><h3 class="h-m">{h}</h3><p class="muted" style="margin-top:14px;max-width:460px">{d}</p></div><div class="fvis"><div class="scr{" lite" if k.startswith("app") or k == "furnlib" else ""}">{img(k)}</div></div></div>' for (_t, h, d, k) in STEPS)
+st_panels = "".join(f'<div role="tabpanel" class="split stp" style="margin-top:40px"><div><h3 class="h-m">{h}</h3><p class="muted" style="margin-top:14px;max-width:460px">{d}</p></div><div class="fvis"><div class="scr">{fit(k, sizes="(max-width: 900px) 100vw, 600px")}</div></div></div>' for (_t, h, d, k) in STEPS)
 
-DOCS = [("CAD drawing set", "CAD", "One-click export of plans for your drafting workflow.", "cad"), ("Professional drawings", "PDF", "Clean, dimensioned drawings ready to share.", "plan2d"),
+DOCS = [("CAD drawing set", "CAD", "One-click export of plans for your drafting workflow.", "fcad"), ("Professional drawings", "PDF", "Bedroom key plans and wall elevations, dimensioned and ready to share.", "felev"),
         ("Area inventory", "Report", "Room-by-room areas generated automatically.", "areas"), ("Estimate report", "Report", "Estimates produced from the design in one click.", "estimate"),
-        ("Rendered images", "Image", "Photo-style renders of any view.", "render"), ("720&deg; panorama", "Link", "Immersive panoramas clients open on their phone.", "lounge")]
-docs = "".join(f'<article class="panel lift rv"><div class="thumb{" lite" if k in ("cad", "areas", "estimate") else ""}" style="width:100%;padding:0;overflow:hidden">{img(k, alt="")}</div><div class="row"><b>{t}</b><span class="tag">{tg}</span></div><p>{d}</p></article>' for t, tg, d, k in DOCS)
+        ("Rendered images", "Image", "Photo-style renders of any view.", "render"), ("720&deg; panorama", "Link", "Immersive panoramas clients open on their phone.", "f720")]
+docs = "".join(f'<article class="panel lift rv"><div class="thumb" style="width:100%;padding:0;overflow:hidden">{fit(k, alt="", sizes="(max-width: 720px) 100vw, 400px")}</div><div class="row"></div><div class="row"><b>{t}</b><span class="tag">{tg}</span></div><p>{d}</p></article>' for t, tg, d, k in DOCS)
 
 BODY = f'''
 <section class="hero center dark grid-bg" aria-labelledby="h1" style="min-height:0;padding-bottom:40px">
@@ -52,9 +52,9 @@ BODY = f'''
     <h2 class="sr-only" id="ui-h">The JoyPlan interface</h2>
     <div class="split ui-split rv">
       <div style="position:relative" id="ui-mock">
-        {"".join([])}<div class="tab"><div class="tab-scr"><div class="tab-bar"><span class="fn">Residence_Kozhikode.jp</span><span class="mini-seg"><span class="on">2D</span><span>3D</span><span>Render</span></span><span style="color:var(--mute)">&#9679; Synced</span></div><div class="tab-body props"><div class="rail"><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div><div class="canvas lite">{img("appplan", alt="Dimensioned floor plan open in the JoyPlan app")}</div><div class="pp">{props}</div></div></div></div>
+        {frame("f2d", "ui-shot", lazy=False, sizes="(max-width: 900px) 100vw, 760px")}
         {cnums}
-        <span class="illus" style="position:absolute;right:14px;bottom:-34px">JoyPlan plan view &middot; panel values are sample data</span>
+        <span class="illus" style="position:absolute;right:14px;bottom:-34px">JoyPlan plan view</span>
       </div>
       <div><p class="label" style="margin-bottom:12px">The interface &middot; tap a callout</p><div class="callouts" data-callouts="ui-mock">{cbtns}</div></div>
     </div>
@@ -77,7 +77,7 @@ BODY = f'''
       <p class="lead">There's no export and no second program. The plan you drew is already a 3D model. Drag the slider to switch between them.</p>
       <div class="rangebox"><label class="label" for="tilt">2D plan &rarr; 3D model &middot; <span id="tilt-out">70%</span></label><input class="range" id="tilt" type="range" min="0" max="100" value="70" data-tilt-range="iso-try" data-out="tilt-out"><div class="lbls"><span>2D</span><span>3D</span></div></div>
     </div>
-    <div class="vis-box rv" style="aspect-ratio:1/0.85;background:rgb(210,213,223)"><div class="dimswap" id="iso-try">{img("appplan", "d2")}{img("app3d", "d3")}</div></div>
+    <div class="vis-box rv" style="aspect-ratio:1506/1044;background:#0c0f14"><div class="dimswap" id="iso-try">{img("f2d", "d2", sizes="(max-width: 900px) 100vw, 640px")}{img("f3d", "d3", sizes="(max-width: 900px) 100vw, 640px")}</div></div>
   </div>
 </section>
 
@@ -111,7 +111,7 @@ BODY = f'''
     <div class="vis-box rv" style="aspect-ratio:5/3.6;display:flex;align-items:center;justify-content:center;gap:40px;background:#121212">
       <div style="transform:scale(.8)">{device("2.715")}</div>
       <div style="width:60px;height:2px;background:var(--signal);box-shadow:0 0 12px var(--signal)"></div>
-      <div style="width:120px;height:210px;border-radius:26px;padding:8px;background:linear-gradient(150deg,#2a2a2a,#151515);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)"><div style="height:100%;border-radius:20px;background:#fff;overflow:hidden;display:flex;align-items:center">{img("appplan", alt="", style="width:100%")}</div></div>
+      <div style="width:120px;height:210px;border-radius:26px;padding:8px;background:linear-gradient(150deg,#2a2a2a,#151515);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)"><div style="height:100%;border-radius:20px;background:#fff;overflow:hidden;display:flex;align-items:center">{img("f2d", alt="", style="width:100%", sizes="120px")}</div></div>
     </div>
     <div class="rv">
       <span class="kicker">Device integration</span>
