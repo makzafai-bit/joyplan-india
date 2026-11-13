@@ -542,7 +542,7 @@ tbody th{font-weight:500}
 
 /* ---------- marquee strip ---------- */
 .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:var(--ink)}
-.strip-in{display:flex;gap:48px;width:max-content;padding:18px 0;animation:marq 40s linear infinite;font:400 12px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.strip-in{display:flex;gap:48px;width:max-content;padding:18px 0;animation:marq 66s linear infinite;font:400 12px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
 .strip-in span::after{content:"\25C6";color:var(--signal);margin-left:48px}
 @keyframes marq{to{transform:translateX(-50%)}}
 
