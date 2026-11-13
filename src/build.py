@@ -12,7 +12,7 @@ import pages_home, pages_device, pages_software, pages_features, pages_packages,
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://joyplanindia.com"
-VER = "3"
+VER = "4"
 NAV = [("Device", "/products/joyplan-device/"), ("Software", "/software/joyplan-software/"), ("Features", "/features/"),
        ("Solutions", "/solutions/"), ("Packages", "/packages/"), ("Contact", "/contact/")]
 

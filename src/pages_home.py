@@ -3,6 +3,18 @@ from shared import head, seg, pricing_cards, cmp_table, inr
 
 WA = "Hi JoyPlan India, I'd like to book a demo."
 
+# Animated hero composite. Positions are percentages of the 1870x841 design (JoyPlan's hero image),
+# so the scene scales with the page. Cards slide in along the ribbon, then drift slowly; the device counts up a live reading.
+HERO_TILES = [("f2d", "2D Plan", 1), ("f3d", "3D Design", 2), ("fai", "Render", 3)]
+HERO_ANIM = (
+    '<div class="hero-anim" role="img" aria-label="The JoyPlan laser measure reading 4.625 metres, with a 2D plan, a 3D design and a finished render moving along a ribbon of light">'
+    + img("herobg", "ha-bg", alt="", lazy=False, sizes="(max-width: 720px) 100vw, 1280px")
+    + "".join(f'<div class="ha-tile t{n}"><div class="ha-float"><div class="ha-card">{img(k, alt="", lazy=False, sizes="(max-width: 720px) 30vw, 260px")}</div><span class="ha-lab">{lab}</span></div></div>' for k, lab, n in HERO_TILES)
+    + '<span class="ha-chev c1" aria-hidden="true"></span><span class="ha-chev c2" aria-hidden="true"></span>'
+    + '<div class="ha-dev">' + device("0.000", cls="count", style="", ) + '</div>'
+    + '</div>'
+)
+
 HERO = f'''
 <section class="hero dark grid-bg" aria-labelledby="h1">
   <div class="glow o" style="width:620px;height:620px;right:-160px;top:-120px" data-parallax="70"></div>
@@ -19,7 +31,7 @@ HERO = f'''
         <p class="hero-meta"><span>App Store</span><span>Google Play</span><span>Bengaluru</span><span>Kozhikode</span><span>Free business demo</span></p>
       </div>
     </div>
-    <div class="hero-shot" data-enter>{frame("hero", lazy=False, sizes="(max-width: 720px) 100vw, 1280px")}</div>
+    <div class="hero-shot">{HERO_ANIM}</div>
   </div>
 </section>
 <div class="strip" aria-hidden="true"><div class="strip-in">{"".join(f"<span>{w}</span>" for w in ["Measure", "Create", "Design", "Present", "2D floor plans", "3D design", "Renders", "720&deg; panorama", "CAD export", "Bengaluru", "Kozhikode"] * 2)}</div></div>
