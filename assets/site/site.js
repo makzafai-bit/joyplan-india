@@ -224,6 +224,26 @@ var JPS = {
     setInterval(function () { i = (i + 1) % vals.length; b.textContent = vals[i]; }, 2200);
   });
 
+  /* ---------- hero device: measure, count up to the reading, hold, repeat ---------- */
+  $$(".dev.count .lcd b").forEach(function (b) {
+    var target = 4.625;
+    function show(v) { b.textContent = v.toFixed(3); }
+    if (reduce) { show(target); return; }
+    function measure() {
+      var t0 = null, dur = 1300;
+      b.parentNode.classList.add("busy");
+      function step(ts) {
+        if (!t0) t0 = ts;
+        var k = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+        show(target * e);
+        if (k < 1) requestAnimationFrame(step); else b.parentNode.classList.remove("busy");
+      }
+      show(0); requestAnimationFrame(step);
+    }
+    setTimeout(measure, 900);
+    setInterval(measure, 6000);
+  });
+
   /* ---------- pricing toggle ---------- */
   $$("[data-pricing]").forEach(function (pr) {
     var btns = $$(".seg button", pr);

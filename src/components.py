@@ -25,7 +25,7 @@ def device(val="3.480", cycle=None, cls="", style=""):
     c = f' data-lcd="{cycle}"' if cycle else ""
     st = f' style="{style}"' if style else ""
     return (f'<div class="dev {cls}"{st} aria-hidden="true"><img src="{DEV_IMG}" alt="" width="{DEV_W}" height="{DEV_H}" loading="lazy" decoding="async">'
-            f'<div class="lcd"><i>DIST</i><b{c}>{val}</b><em>m</em></div></div>')
+            f'<div class="lcd"><i>DIST</i><b{c}>{val}</b><em>m</em><s aria-hidden="true"><u></u><u></u><u></u><u></u></s></div></div>')
 
 
 def dev_img(style="", alt=""):
@@ -50,6 +50,7 @@ def pic(src, alt="", cls="", style="", w=None, h=None, lazy=True, sizes=None):
 I = "/assets/site/img/"
 IMG = {
     # JoyPlan India's own images (Nov 2026 set, full frame, never cropped)
+    "herobg": (I + "hero-background.webp", 1870, 841, "Ribbon of orange light with readings for Living wall A, 4.625 m, and an area inventory of 86.4 square metres"),
     "hero": (I + "hero-measure-to-design.webp", 1870, 841, "The JoyPlan laser measure reading 4.625 m beside a 2D plan turning into a 3D design and a finished render"),
     "trad": (I + "transform-traditional.webp", 1438, 1094, "A designer redrawing a plan by hand with a tape measure, calculator and a site-revisit checklist"),
     "jp": (I + "transform-joyplan.webp", 1672, 941, "The same apartment in JoyPlan on a laptop, as a measured 2D plan and a furnished 3D model side by side"),
