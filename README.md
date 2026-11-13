@@ -19,7 +19,7 @@ Built from the Zelto Tech build spec and design template (November 2026).
 - Styles and script: `assets/site/site.css`, `assets/site/site.js`. Colours and fonts are the tokens at the top of `site.css`.
 - WhatsApp number: set `JPS.WHATSAPP` at the top of `assets/site/site.js` (digits with country code). Empty opens WhatsApp with a pre-filled message and no number.
 - Prices: `JPS.PRICES` in `site.js` (used by the duration toggles) and `PRICES` in `src/shared.py` (printed into the pages). Change both.
-- Images: real renders, app screens and the laser device photo live in `assets/site/img/` (plus the older `assets/*.webp`). They are listed once in `IMG` in `src/components.py`; point a key at a new file there to swap a picture everywhere it is used. The device photo is `joyplan-laser-device.webp`; the LCD reading on top of it is live HTML.
+- Images: everything lives in `assets/site/img/` (plus a few older `assets/*.webp`) and is registered once in `IMG` in `src/components.py`; point a key at a new file there to swap a picture everywhere. Images are shown whole, never cropped: `frame()` gives a box the image's own shape, `fit()` contains it in a fixed box with a blurred copy behind. Wide images also have a `-960.webp` copy that phones load via `srcset`. To add one: save as WebP (quality 90) and, if wider than 1100px, a 960px-wide copy at quality 88. The live device on the site is `device-front-cutout.webp` (the JoyPlan SW-TB50 render with its background removed); the LCD reading on top of it is live HTML.
 - Anything not yet confirmed by JoyPlan is shown as a yellow `[To be confirmed]` tag. Search the `src/` files for `tbc(` to find them.
 
 ### Editing pages

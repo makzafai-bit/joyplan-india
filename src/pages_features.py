@@ -1,4 +1,4 @@
-from components import img
+from components import fit
 from shared import band
 
 CR = [("Home", "/"), ("Features", "/features/")]
@@ -30,24 +30,24 @@ F = [
 CATS = ["Measure", "Plan", "Design", "Visualise", "Document", "Collaborate"]
 
 
-SUB = {"laser": "site", "plan2d": "appplan", "ai": "lounge", "hard": "appfinish", "walk": "app3d", "pano": "render", "drawings": "plan2d", "learn": "living", "photos": "site"}
-LITE = ("appplan", "appfinish", "cad", "areas", "estimate", "furnlib", "share")
+ROW_IMG = {"laser-linked-measurement": "measure", "lidar-scanning": "flidar", "photos-and-notes": "measure", "2d-floor-plans": "f2d",
+           "multi-level": None, "ai-assisted-floor-plans": "fai", "hard-surface-design": "appfinish", "freeform-modelling": None,
+           "furniture-library": "furnlib", "material-editor": "ffurn", "3d-walkthrough": "f3d", "rendered-images": "living",
+           "720-panorama": "f720tour", "sunlight-analysis": "sun", "professional-drawings": "felev", "area-inventory": "areas",
+           "estimates": "estimate", "cad-export": "fcad", "share-across-devices": "fsync", "learning-videos": "lounge"}
 
 
 def row(i, f):
     cat, slug, t, d, u, b, k, im, fn = f
-    if im:
-        v = f'<img src="{im[0]}" alt="{im[1]}" loading="lazy">'
-        lite = any(x in im[0] for x in ("make", "share", "step3"))
+    key = ROW_IMG[slug]
+    if key:
+        v = fit(key, sizes="(max-width: 900px) 100vw, 600px")
     else:
-        key = SUB[k]
-        v = img(key, style="object-position:50% 45%" if key == "site" else "")
-        lite = key in LITE
-    tag = "JoyPlan"
+        v = f'<div class="fit"><span class="fit-bg" style="background-image:url({im[0]})"></span><img src="{im[0]}" alt="{im[1]}" loading="lazy" decoding="async"></div>'
     play = '<span class="play" aria-hidden="true"></span>' if k == "learn" else ""
     return (f'<article class="frow" id="{slug}" data-cat="{cat}"><div class="rv"><div style="display:flex;gap:10px;align-items:center"><span class="mono small" style="color:var(--orange)">{i+1:02d}</span><span class="tag">{cat}</span></div>'
             f'<h2>{t}</h2><p class="muted">{d}</p><div class="boxes"><div class="usebox"><p class="label">Use case</p><p>{u}</p></div><div class="usebox"><p class="label">Professional benefit</p><p>{b}</p></div></div></div>'
-            f'<div class="fvis rv"><div class="bar"><span>{fn}</span><span>{tag}</span></div><div class="scr{" lite" if lite else ""}">{v}{play}</div></div></article>')
+            f'<div class="fvis rv"><div class="bar"><span>{fn}</span><span>JoyPlan</span></div><div class="scr">{v}{play}</div></div></article>')
 
 
 rows = "".join(row(i, f) for i, f in enumerate(F))
