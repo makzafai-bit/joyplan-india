@@ -27,7 +27,7 @@ HERO = f'''
     <p class="hero-meta"><span>App Store</span><span>Google Play</span><span>Bengaluru</span><span>Kozhikode</span><span>Free business demo</span></p>
   </div>
 </section>
-<div class="strip" aria-hidden="true"><div class="strip-in">{"".join(f"<span>{w}</span>" for w in ["Measure", "Create", "Design", "Present", "2D floor plans", "3D design", "Renders", "720&deg; panorama", "CAD export", "Bengaluru", "Kozhikode"] * 2)}</div></div>
+<div class="strip" aria-hidden="true"><div class="strip-in">{"".join(f"<span>{w}</span>" for w in ["Measure", "Create", "Design", "Present", "2D floor plans", "3D design", "Renders", "720&deg; panorama", "CAD export"] * 4)}</div></div>
 '''
 
 TRANSFORM = f'''

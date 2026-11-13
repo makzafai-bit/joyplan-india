@@ -542,7 +542,7 @@ tbody th{font-weight:500}
 
 /* ---------- marquee strip ---------- */
 .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:var(--ink)}
-.strip-in{display:flex;gap:48px;width:max-content;padding:18px 0;animation:marq 40s linear infinite;font:400 12px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.strip-in{display:flex;gap:48px;width:max-content;padding:18px 0;animation:marq 66s linear infinite;font:400 12px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
 .strip-in span::after{content:"\25C6";color:var(--signal);margin-left:48px}
 @keyframes marq{to{transform:translateX(-50%)}}
 
@@ -876,3 +876,9 @@ img.contain{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
   .hs-copy .h-xl{font-size:clamp(38px,9vw,64px)}
   .hero-scene .hero-anim{position:relative;top:auto;left:auto;translate:none;width:130%;margin:20px 0 0 -22%;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 14%);-webkit-mask-composite:source-over;mask-image:linear-gradient(180deg,transparent 0,#000 14%);mask-composite:add}
 }
+/* hero fills the screen height on desktop; a soft, blurred copy of the scene fills the space around it */
+@media (min-width:1101px){
+  .hero.hero-scene{min-height:max(calc(var(--S)*.378 + 40px),calc(100vh - var(--nav-h)));min-height:max(calc(var(--S)*.378 + 40px),calc(100svh - var(--nav-h)))}
+  .hero.hero-scene::before{content:"";position:absolute;inset:-80px;background:url(/assets/site/img/hero-background-960.webp) 85% 50%/cover no-repeat;filter:blur(48px) brightness(.38) saturate(1.1);pointer-events:none}
+}
+@media (min-width:1101px) and (prefers-reduced-transparency:reduce){.hero.hero-scene::before{display:none}}
