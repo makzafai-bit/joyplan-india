@@ -177,7 +177,7 @@ GALLERY_ITEMS = [
     ("Furniture &amp; material options", "Interior &middot; Design", "rnd", "ffurn"),
     ("White model to render", "Interior &middot; Render", "rnd", "whiterender"),
     ("Living room 720&deg; view", "720&deg; panorama", "pano rnd", "f720"),
-    ("Villa cutaway", "Residential &middot; 3D", "3d", "villa"),
+    ("Villa cutaway", "Residential &middot; 3D", "3d", "archcut"),
     ("Reading corner", "Interior &middot; Render", "rnd", "armchair"),
     ("LiDAR room scan", "Scan &middot; 3D", "3d", "flidar"),
 ]

@@ -21,7 +21,7 @@ ways_rows = "".join(f'<tr{" class=hi" if hi else ""}><td>{o}</td><td>{inc}</td><
 
 USES = [("measure", "On site", "Empty-room survey", "Aim, press READ, and the reading lands on the wall you selected."),
         ("f2d", "In the app", "Apartment handover", "Capture an as-built plan room by room before you leave."),
-        ("villa", "3D cutaway", "Villa renovation", "Multi-level homes measured floor by floor."),
+        ("archcut", "3D cutaway", "Villa renovation", "Multi-level homes measured floor by floor."),
         ("living", "Render", "Living room redesign", "Measured walls become a rendered interior for the client.")]
 
 uses = "".join(f'<article class="panel rv" style="padding:0;overflow:hidden"><div class="use-im">{fit(k, alt="", sizes="(max-width: 720px) 100vw, 320px")}<span class="illus" style="position:absolute;left:10px;top:10px">{s}</span></div><div style="padding:18px"><b class="h-s" style="font-size:16px">{t}</b><p class="small muted" style="margin-top:6px">{d}</p></div></article>' for k, s, t, d in USES)
