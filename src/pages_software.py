@@ -84,7 +84,7 @@ BODY = f'''
 <section class="sec bone" aria-labelledby="wm-h">
   <div class="wrap">
     {head("Interior visualisation", "From white model to rendered image.", "The same room as a white model and as a finished render. Rendering runs from the app, with no separate visualiser.", cls="split", hid="wm-h")}
-    <figure class="wm rv">{img("whiterender")}<div class="tags l"><span class="tag" style="background:#fff">White model</span></div><div class="tags r"><span class="tag o" style="background:var(--signal);color:var(--ink)">Rendered</span></div></figure>
+    <figure class="wm rv">{img("clayrender", sizes="(max-width: 1360px) 100vw, 1280px")}<div class="tags l"><span class="tag" style="background:#fff">White model</span></div><div class="tags r"><span class="tag o" style="background:var(--signal);color:var(--ink)">Rendered</span></div></figure>
   </div>
 </section>
 
