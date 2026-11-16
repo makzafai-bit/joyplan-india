@@ -142,7 +142,7 @@ EXPLORER = f'''
 </section>'''
 
 PROS = [("Interior Designers", "Measure, lay out and present in the same visit.", ["Laser-linked site measurement", "Layouts with furniture &amp; materials", "Renders and 720&deg; for client sign-off"], "fai", "Designed in JoyPlan", "interior-designers"),
-        ("Architects", "Accurate as-built plans, across every level.", ["Multi-level floor plans", "Sunlight analysis", "CAD export for the drawing set"], "villa", "3D cutaway in JoyPlan", "architects"),
+        ("Architects", "Accurate as-built plans, across every level.", ["Multi-level floor plans", "Sunlight analysis", "CAD export for the drawing set"], "archcut", "3D cutaway in JoyPlan", "architects"),
         ("Civil Engineers", "On-site measurement straight into drawings.", ["Photo notes and annotations", "Area inventory for quantities", "Professional drawings to share"], "measure", "On-site measuring", "civil-engineers"),
         ("Modular Kitchen &amp; Furniture", "Wall-accurate layouts your customer can see.", ["Measured walls for modules", "3D kitchen and wardrobe views", "Estimates generated from the design"], "felev", "Joinery elevations in JoyPlan", "modular-kitchen")]
 pro_cards = "".join(f'''<a class="pro rv" href="/solutions/#{slug}"><div class="pro-vis">{fit(v, alt="", sizes="(max-width: 720px) 100vw, 320px")}<span class="illus">{lab}</span></div><div class="pro-b"><span class="n">0{i+1}</span><h3 class="h-s">{t}</h3><p class="small" style="color:var(--text-dark)">{d}</p><ul>{"".join(f"<li>{b}</li>" for b in bs)}</ul><span class="tlink">Explore{ARR}</span></div></a>''' for i, (t, d, bs, v, lab, slug) in enumerate(PROS))
