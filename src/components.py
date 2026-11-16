@@ -74,6 +74,7 @@ IMG = {
     "armchair": (I + "armchair.webp", 504, 492, "Reading corner with an oak armchair, rendered in JoyPlan"),
     "villa": ("/assets/hero.webp", 1370, 960, "Two-storey home shown as a 3D cutaway with furnished interiors"),
     "whiterender": (I + "white-to-render.webp", 2372, 858, "The same living room as a white model on the left and a finished render on the right"),
+    "clayrender": (I + "interior-clay-to-render.webp", 2038, 771, "The same living room as a grey clay model on the left and a warm, finished render on the right"),
     "render": (I + "render-final.webp", 1136, 858, "Rendered living room with modular sofa and sculptural lamps"),
     "appfinish": (I + "app-plan-finishes.webp", 560, 530, "Floor plan with wood, tile and lawn finishes applied in the JoyPlan app"),
     "furnlib": ("/assets/step3.webp", 1000, 733, "Furniture library open beside a furnished plan in the JoyPlan app"),
