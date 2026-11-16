@@ -31,7 +31,7 @@ st_panels = "".join(f'<div role="tabpanel" class="split stp" style="margin-top:4
 DOCS = [("CAD drawing set", "CAD", "One-click export of plans for your drafting workflow.", "fcad"), ("Professional drawings", "PDF", "Bedroom key plans and wall elevations, dimensioned and ready to share.", "felev"),
         ("Area inventory", "Report", "Room-by-room areas generated automatically.", "areas"), ("Estimate report", "Report", "Estimates produced from the design in one click.", "estimate"),
         ("Rendered images", "Image", "Photo-style renders of any view.", "render"), ("720&deg; panorama", "Link", "Immersive panoramas clients open on their phone.", "f720")]
-docs = "".join(f'<article class="panel lift rv"><div class="thumb" style="width:100%;padding:0;overflow:hidden">{fit(k, alt="", sizes="(max-width: 720px) 100vw, 400px")}</div><div class="row"></div><div class="row"><b>{t}</b><span class="tag">{tg}</span></div><p>{d}</p></article>' for t, tg, d, k in DOCS)
+docs = "".join(f'<article class="panel lift rv"><div class="thumb" style="width:100%;padding:0;overflow:hidden">{fit(k, alt="", sizes="(max-width: 720px) 100vw, 400px")}</div><div class="row"><b>{t}</b><span class="tag">{tg}</span></div><p>{d}</p></article>' for t, tg, d, k in DOCS)
 
 BODY = f'''
 <section class="hero center dark grid-bg" aria-labelledby="h1" style="min-height:0;padding-bottom:40px">
