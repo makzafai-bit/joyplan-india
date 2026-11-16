@@ -14,7 +14,7 @@ P = [
      "Capture existing conditions quickly, build multi-level plans and test daylight before you commit to the drawing set.",
      ["Multi-level floor plans for houses and villas", "Sunlight analysis inside and around the building", "CAD export into your drafting workflow"],
      [("Renovation survey", "Document an existing villa floor by floor with photo notes."), ("Daylight check", "Simulate sun position for a west-facing living room."), ("Hand-off", "Export the CAD set for detailed drawings.")],
-     "Book an architect demo", "villa", "3D cutaway in JoyPlan", "Architect"),
+     "Book an architect demo", "archcut", "3D cutaway in JoyPlan", "Architect"),
     ("civil-engineers", "Civil Engineers", "From site measurement to drawings, without the notebook.",
      "Record measurements, site photos and annotations in one place, then share professional drawings and area schedules with the team.",
      ["Photo notes and annotations pinned to the plan", "Area inventory for quantity estimation", "Shared across phone, tablet and desktop"],
