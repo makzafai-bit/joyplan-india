@@ -3,7 +3,10 @@
    Empty keeps number-less wa.me links that open WhatsApp with the message pre-filled. */
 var JPS = {
   WHATSAPP: "",
-  PRICES: { deviceOnly: 8474, app: { 1: 1000, 3: 2950, 6: 5500, 12: 9500 }, dev: { 1: 6500, 3: 8450, 6: 11000, 12: 15000 } }
+  /* Customer price list, excluding 18% GST. dev = device (8,474) + app. INCL = GST-inclusive final prices.
+     Keep in sync with src/shared.py. */
+  PRICES: { deviceOnly: 8474, app: { 1: 1200, 3: 3300, 6: 6000, 12: 10000 }, dev: { 1: 9674, 3: 11774, 6: 14474, 12: 18474 } },
+  INCL: { deviceOnly: 9999, app: { 1: 1416, 3: 3894, 6: 7080, 12: 11800 }, dev: { 1: 11415, 3: 13893, 6: 17079, 12: 21799 } }
 };
 
 (function () {
@@ -14,6 +17,7 @@ var JPS = {
   var $ = function (s, c) { return (c || d).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || d).querySelectorAll(s)); };
   var inr = function (n) { return "₹" + Number(n).toLocaleString("en-IN"); };
+  var gstLine = function (n) { return "+ 18% GST · " + inr(n) + " incl. GST"; };
 
   /* ---------- WhatsApp links ---------- */
   function waHref(text) {
@@ -254,6 +258,7 @@ var JPS = {
         var span = d.createElement("span"); span.textContent = inr(v); if (user) span.className = "swap";
         el.innerHTML = ""; el.appendChild(span);
       });
+      $$("[data-gst]", pr).forEach(function (el) { el.textContent = gstLine(JPS.INCL[el.getAttribute("data-gst")][term]); });
       $$("[data-term-label]", pr).forEach(function (el) { el.textContent = el.getAttribute("data-term-label") + " · " + term + (term === 1 ? " month" : " months"); });
       $$("[data-pkg-link]", pr).forEach(function (a) { var u = a.getAttribute("data-pkg-link"); a.href = "/book-a-demo/?package=" + u + "-" + term; });
     }
@@ -275,6 +280,7 @@ var JPS = {
         var term = +b.getAttribute("data-term"), kind = b.getAttribute("data-kind");
         $(".sel-name", out).textContent = (kind === "dev" ? "Device + app" : "App only") + " · " + term + (term === 1 ? " month" : " months");
         var v = $(".sel-price", out); v.innerHTML = "<span class=swap>" + inr(JPS.PRICES[kind][term]) + "</span>";
+        var g = $(".sel-gst", out); if (g) g.textContent = gstLine(JPS.INCL[kind][term]);
         $("a", out).href = "/book-a-demo/?package=" + (kind === "dev" ? "device" : "app") + "-" + term;
       });
     });

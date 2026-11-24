@@ -365,6 +365,10 @@ body.locked{overflow:hidden}
 .pcard .price span{display:inline-block}
 .pcard .price span.swap{animation:swap .45s var(--ease-out)}
 @keyframes swap{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+.pcard .gst,.gst{font:400 11px/1.4 var(--f-mono);letter-spacing:.04em;color:var(--mute)}
+.pcard .gst{margin-top:-4px}
+.addon .p .gst,.ways .p .gst{display:block;margin-top:6px;font-size:10px;font-stretch:100%;letter-spacing:.02em}
+.pgrid .term small{display:block;margin-top:5px;font:600 9px/1.2 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--yellow)}
 .pcard .term{font:400 11px var(--f-mono);letter-spacing:.06em;color:var(--mute)}
 .pcard ul{display:grid;gap:10px;margin:8px 0 18px;font-size:14px;line-height:1.4}
 .pcard li{display:flex;gap:10px;align-items:flex-start}
