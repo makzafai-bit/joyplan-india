@@ -162,7 +162,7 @@ PRICING = f'''
     <div class="head" style="margin-bottom:32px"><span class="kicker">Packages &amp; pricing</span><h2 class="h-l" id="pr-h">Find Your Perfect JoyPlan Package.</h2></div>
     <div class="price-head"><div style="display:grid;gap:10px"><span class="label">Subscription length</span>{seg()}</div></div>
     {pricing_cards()}
-    <div class="price-head" style="margin:28px 0 0;align-items:center"><p class="tiny" style="max-width:520px">INR, per JoyPlan India's shared price list. Current prices, GST and inclusions to be confirmed before launch.</p><div class="btns"><button class="btn ghost sm" type="button" data-toggle="cmp-inline">Compare packages</button>{btn("Packages page", "/packages/", "ghost", sm=True)}</div></div>
+    <div class="price-head" style="margin:28px 0 0;align-items:center"><p class="tiny" style="max-width:520px">INR, excluding 18% GST, per JoyPlan India's customer price list. Inclusions to be confirmed.</p><div class="btns"><button class="btn ghost sm" type="button" data-toggle="cmp-inline">Compare packages</button>{btn("Packages page", "/packages/", "ghost", sm=True)}</div></div>
     <div id="cmp-inline" class="on-bone bone" hidden style="margin-top:24px;padding:24px;border-radius:4px">{cmp_table()}</div>
   </div>
 </section>'''

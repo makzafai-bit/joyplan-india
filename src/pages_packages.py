@@ -1,19 +1,20 @@
 from components import btn, tbc
-from shared import head, seg, pricing_cards, cmp_table, band, faq, faq_ld, inr, PRICES
+from shared import head, seg, pricing_cards, cmp_table, band, faq, faq_ld, inr, gst, PRICES, INCL, DEVICE, DEVICE_INCL, TAGS
 
 CR = [("Home", "/"), ("Packages", "/packages/")]
 WA = "Hi JoyPlan India, I have a question about JoyPlan packages and pricing."
 
 FAQS = [("Can I try JoyPlan before paying?", "Yes. The app is free to install, and JoyPlan offers a free business demo with a specialist."),
-        ("Are prices inclusive of GST?", f"GST treatment {tbc()}."),
-        ("Can I start with the app and add the device later?", f"Yes, the device is sold separately at {inr(8474)}. Upgrade paths {tbc()}."),
+        ("Are prices inclusive of GST?", f"No. Prices are shown excluding 18% GST, with the GST-inclusive price under each one. For example, the 12-month app is {inr(PRICES['app'][12])} + {inr(INCL['app'][12] - PRICES['app'][12])} GST = {inr(INCL['app'][12])}."),
+        ("Can I start with the app and add the device later?", f"Yes, the device is sold separately at {inr(DEVICE)} + GST ({inr(DEVICE_INCL)} incl. GST). Upgrade paths {tbc()}."),
         ("What happens when my subscription ends?", f"Renewal and data terms {tbc()}."),
         ("Do you offer studio or team pricing?", "Yes. The Business package is quoted per team. Book a demo or message us to get a quote.")]
 
 grid = '<span class="h">Term</span><span class="h" style="border-left:1px solid var(--line)">App only</span><span class="h" style="border-left:1px solid var(--line)">Device + app</span>'
 for t in (1, 3, 6, 12):
     lab = f"{t} month" + ("s" if t > 1 else "")
-    grid += f'<span class="term">{lab}</span><button type="button" data-kind="app" data-term="{t}" aria-pressed="false" aria-label="App only, {lab}, {inr(PRICES["app"][t]).replace("&#8377;", "Rs ")}">{inr(PRICES["app"][t])}</button><button type="button" data-kind="dev" data-term="{t}" aria-pressed="{"true" if t == 12 else "false"}" aria-label="Device and app, {lab}">{inr(PRICES["dev"][t])}</button>'
+    tag = f'<small>{TAGS[t]}</small>' if t in TAGS else ""
+    grid += f'<span class="term"><span>{lab}{tag}</span></span><button type="button" data-kind="app" data-term="{t}" aria-pressed="false" aria-label="App only, {lab}, {inr(PRICES["app"][t]).replace("&#8377;", "Rs ")}">{inr(PRICES["app"][t])}</button><button type="button" data-kind="dev" data-term="{t}" aria-pressed="{"true" if t == 12 else "false"}" aria-label="Device and app, {lab}, {inr(PRICES["dev"][t]).replace("&#8377;", "Rs ")}">{inr(PRICES["dev"][t])}</button>'
 
 BODY = f'''
 <section class="hero center dark grid-bg" aria-labelledby="h1" style="min-height:0;padding-bottom:var(--sec)" data-pricing>
@@ -27,7 +28,7 @@ BODY = f'''
       <div>{seg()}</div>
     </div>
     {pricing_cards()}
-    <div class="addon rv"><span class="tag">Add-on</span><b style="flex:1;min-width:180px">JoyPlan measuring device only</b><span class="p">{inr(8474)}</span>{btn("About the device", "/products/joyplan-device/", "ghost", sm=True)}</div>
+    <div class="addon rv"><span class="tag">Add-on</span><b style="flex:1;min-width:180px">JoyPlan measuring device only</b><span class="p">{inr(DEVICE)}<small class="gst">{gst(DEVICE_INCL)}</small></span>{btn("About the device", "/products/joyplan-device/", "ghost", sm=True)}</div>
   </div>
 </section>
 
@@ -37,9 +38,9 @@ BODY = f'''
       <span class="kicker">The full price list</span>
       <h2 class="h-l" id="pl-h" style="margin:20px 0">Every combination, side by side.</h2>
       <p class="lead">Tap a price to select it. Your selection carries into the demo booking.</p>
-      <div class="panel" id="psel" style="margin-top:32px"><p class="label">Your selection</p><p class="h-m sel-name" style="margin:10px 0 6px">Device + app &middot; 12 months</p><p class="sel-price" style="font:850 40px/1 var(--f-disp);font-stretch:112%;color:var(--yellow)">{inr(15000)}</p><a class="btn primary" style="margin-top:22px" href="/book-a-demo/?package=device-12">Book a demo with this package</a></div>
+      <div class="panel" id="psel" style="margin-top:32px"><p class="label">Your selection</p><p class="h-m sel-name" style="margin:10px 0 6px">Device + app &middot; 12 months</p><p class="sel-price" style="font:850 40px/1 var(--f-disp);font-stretch:112%;color:var(--yellow)">{inr(PRICES["dev"][12])}</p><p class="gst sel-gst" style="margin-top:8px">{gst(INCL["dev"][12])}</p><a class="btn primary" style="margin-top:22px" href="/book-a-demo/?package=device-12">Book a demo with this package</a></div>
     </div>
-    <div class="rv"><div class="pgrid" data-pgrid="psel" role="group" aria-label="Full price list">{grid}</div><p class="tiny" style="margin-top:14px">Source: JoyPlan India's shared price list. GST, payment terms and any launch offers to be confirmed before publishing.</p></div>
+    <div class="rv"><div class="pgrid" data-pgrid="psel" role="group" aria-label="Full price list">{grid}</div><p class="tiny" style="margin-top:14px">Prices exclude 18% GST, per JoyPlan India's customer price list for individual users. Device + app is the device price plus the app price.</p></div>
   </div>
 </section>
 

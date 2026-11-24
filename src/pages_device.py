@@ -1,5 +1,5 @@
 from components import ARR, btn, tbc, device, img, dev_img, frame, fit
-from shared import head, band, faq, inr
+from shared import head, band, faq, inr, PRICES, INCL, DEVICE, DEVICE_INCL
 
 WA = "Hi JoyPlan India, I'd like to know more about the JoyPlan measuring device."
 CR = [("Home", "/"), ("Products", "/products/joyplan-device/"), ("JoyPlan Device", "/products/joyplan-device/")]
@@ -14,10 +14,10 @@ SPECS = [("Measurement type", "Laser distance"), ("Connectivity", "Bluetooth, pa
          ("Levels", "Two built-in bubble levels"), ("Units", None), ("Display", "LCD screen with a single READ key"), ("Battery &amp; charging", None), ("Dimensions &amp; weight", None), ("In the box", None)]
 spec_rows = "".join(f'<tr><td>{k}</td><td>{v if v else tbc()}</td></tr>' for k, v in SPECS)
 
-WAYS = [("Device only", "JoyPlan measuring device", 8474, False), ("Device + 1 month", "Device + 1-month app subscription", 6500, False),
-        ("Device + 3 months", "Device + 3-month app subscription", 8450, False), ("Device + 6 months", "Device + 6-month app subscription", 11000, False),
-        ("Device + 12 months", "Device + 12-month app subscription &middot; Professional", 15000, True)]
-ways_rows = "".join(f'<tr{" class=hi" if hi else ""}><td>{o}</td><td>{inc}</td><td class="p">{inr(p)}</td><td>{btn("Get started" if hi else "Enquire", "/book-a-demo/?package=" + ("professional" if hi else "device"), "primary" if hi else "ghost", hi, sm=True)}</td></tr>' for o, inc, p, hi in WAYS)
+WAYS = [("Device only", "JoyPlan measuring device", DEVICE, DEVICE_INCL, False)] + [
+    (f"Device + {t} month" + ("s" if t > 1 else ""), f"Device + {t}-month app subscription" + (" &middot; Professional" if t == 12 else ""), PRICES["dev"][t], INCL["dev"][t], t == 12)
+    for t in (1, 3, 6, 12)]
+ways_rows = "".join(f'<tr{" class=hi" if hi else ""}><td>{o}</td><td>{inc}</td><td class="p">{inr(p)}<small class="gst">{inr(pi)} incl. GST</small></td><td>{btn("Get started" if hi else "Enquire", "/book-a-demo/?package=" + ("professional" if hi else "device"), "primary" if hi else "ghost", hi, sm=True)}</td></tr>' for o, inc, p, pi, hi in WAYS)
 
 USES = [("measure", "On site", "Empty-room survey", "Aim, press READ, and the reading lands on the wall you selected."),
         ("f2d", "In the app", "Apartment handover", "Capture an as-built plan room by room before you leave."),
@@ -36,7 +36,7 @@ BODY = f'''
       <h1 class="h-xl" id="h1">The measuring device that <span class="hl-box"><span class="hl">draws</span></span> while you measure.</h1>
       <p class="lead">A laser measuring device built to pair with the JoyPlan app. Every reading lands on the wall you're measuring, so the floor plan exists before you leave the site.</p>
       <div class="btns">{btn("Book a demo", "/book-a-demo/?package=professional")}{btn("Buy with a package", "/packages/", "ghost", False)}</div>
-      <div><div class="stat-chips"><div><span class="label">Device only</span><b>{inr(8474)}</b></div><div><span class="label">Device + 1-month app</span><b>{inr(6500)}</b></div></div><p class="tiny" style="margin-top:10px">Per JoyPlan India's shared price list. Confirm before launch.</p></div>
+      <div><div class="stat-chips"><div><span class="label">Device only</span><b>{inr(DEVICE)}</b></div><div><span class="label">Device + 1-month app</span><b>{inr(PRICES["dev"][1])}</b></div></div><p class="tiny" style="margin-top:10px">Excluding 18% GST. Device {inr(DEVICE_INCL)} incl. GST.</p></div>
     </div>
     <div class="hero-vis dev-hero" data-tilt-area data-parallax-vis>
       <svg viewBox="0 0 600 560" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true"><g fill="none" stroke="rgba(253,65,0,.35)"><circle cx="300" cy="290" r="170"><animateTransform attributeName="transform" type="rotate" from="0 300 290" to="360 300 290" dur="40s" repeatCount="indefinite"/></circle><circle cx="300" cy="290" r="240" stroke-dasharray="4 10"><animateTransform attributeName="transform" type="rotate" from="360 300 290" to="0 300 290" dur="60s" repeatCount="indefinite"/></circle></g><path d="M300 20V150" stroke="#FD4100" stroke-width="2"/><circle cx="300" cy="80" r="4" fill="#FD4100"/></svg>
@@ -122,7 +122,7 @@ BODY = f'''
   <div class="wrap">
     <div class="head split"><div style="display:grid;gap:24px"><span class="kicker">Package compatibility</span><h2 class="h-l" id="ways-h">Ways to get the device</h2></div><div>{btn("Compare all packages", "/packages/", "ghost")}</div></div>
     <div class="tbl-wrap rv"><table class="ways"><caption class="sr-only">Device purchase options in INR</caption><thead><tr><th scope="col">Option</th><th scope="col">Includes</th><th scope="col">Price (INR)</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>{ways_rows}</tbody></table></div>
-    <p class="tiny" style="margin-top:12px">Prices as per JoyPlan India's shared price list. GST, warranty and delivery terms to be confirmed.</p>
+    <p class="tiny" style="margin-top:12px">Prices exclude 18% GST (GST-inclusive price shown under each). Warranty and delivery terms to be confirmed.</p>
   </div>
 </section>
 {faq("FAQs", "Before you buy", FAQS, lead="Still unsure? A specialist can walk you through it in a free demo.", cls="carbon")}

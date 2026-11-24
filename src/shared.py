@@ -1,7 +1,15 @@
 """Blocks reused across pages: pricing, CTA band, FAQ, comparison table."""
 from components import ARR, WA_ICON, btn, tbc
 
-PRICES = {"dev": {1: 6500, 3: 8450, 6: 11000, 12: 15000}, "app": {1: 1000, 3: 2950, 6: 5500, 12: 9500}}
+# Customer price list (Joyplan India poster, Nov 2026). Prices exclude 18% GST.
+# INCL holds the poster's GST-inclusive final prices. The poster sells the device and
+# the app separately, so "Device + app" = device price + app price (no bundle discount).
+DEVICE, DEVICE_INCL = 8474, 9999
+APP = {1: 1200, 3: 3300, 6: 6000, 12: 10000}
+APP_INCL = {1: 1416, 3: 3894, 6: 7080, 12: 11800}
+PRICES = {"dev": {t: DEVICE + p for t, p in APP.items()}, "app": dict(APP)}
+INCL = {"dev": {t: DEVICE_INCL + p for t, p in APP_INCL.items()}, "app": dict(APP_INCL)}
+TAGS = {6: "Most popular", 12: "Best value"}
 
 
 def inr(n):
@@ -15,6 +23,11 @@ def inr(n):
     if head:
         parts.insert(0, head)
     return "&#8377;" + ",".join(parts + [tail])
+
+
+def gst(n):
+    """Small line under a price: GST note plus the GST-inclusive figure."""
+    return f"+ 18% GST &middot; {inr(n)} incl. GST"
 
 
 def head(kicker, title, lead=None, cls="", level=2, hid=None):
@@ -38,16 +51,18 @@ def pricing_cards():
   <article class="pcard rv">
     <span class="tag" style="align-self:flex-start">Starter</span>
     <p class="aud">For individual professionals</p>
-    <p class="price" data-price="app">{inr(9500)}</p>
+    <p class="price" data-price="app">{inr(PRICES["app"][12])}</p>
+    <p class="gst" data-gst="app">{gst(INCL["app"][12])}</p>
     <p class="term" data-term-label="App subscription">App subscription &middot; 12 months</p>
-    <ul><li class="no">Device not included (device-only price {inr(8474)})</li><li>JoyPlan app: 2D, 3D, renders, drawings</li><li>Rendering / AI credits {t("TBC")}</li><li>Training &amp; support {t("TBC")}</li><li>Renewal {t("Terms TBC")}</li></ul>
+    <ul><li class="no">Device not included (device-only price {inr(DEVICE)} + GST)</li><li>JoyPlan app: 2D, 3D, renders, drawings</li><li>Rendering / AI credits {t("TBC")}</li><li>Training &amp; support {t("TBC")}</li><li>Renewal {t("Terms TBC")}</li></ul>
     <a class="btn ghost" href="/book-a-demo/?package=starter" data-pkg-link="app">Get started</a>
   </article>
   <article class="pcard rec rv">
     <span class="ribbon">RECOMMENDED</span>
     <span class="tag o" style="align-self:flex-start">Professional</span>
     <p class="aud">For active interior designers &amp; architects</p>
-    <p class="price" data-price="dev">{inr(15000)}</p>
+    <p class="price" data-price="dev">{inr(PRICES["dev"][12])}</p>
+    <p class="gst" data-gst="dev">{gst(INCL["dev"][12])}</p>
     <p class="term" data-term-label="Device + app subscription">Device + app subscription &middot; 12 months</p>
     <ul><li><b>JoyPlan measuring device included</b></li><li>Full app: measure-to-plan on site</li><li>Rendering / AI credits {t("TBC")}</li><li>Onboarding training {t("TBC")}</li><li>Renewal {t("Terms TBC")}</li></ul>
     <a class="btn primary" href="/book-a-demo/?package=professional" data-pkg-link="device">Get started{ARR}</a>
@@ -64,7 +79,7 @@ def pricing_cards():
 
 
 CMP = [
-    ("JoyPlan measuring device", f"&mdash; ({inr(8474)} separately)", "Included", "[TBC]"),
+    ("JoyPlan measuring device", f"&mdash; ({inr(DEVICE)} + GST separately)", "Included", "[TBC]"),
     ("Subscription length", "1 / 3 / 6 / 12 mo", "1 / 3 / 6 / 12 mo", "Custom"),
     ("2D floor plans &amp; multi-level", "&#10003;*", "&#10003;*", "&#10003;*"),
     ("3D view &amp; walkthrough", "&#10003;*", "&#10003;*", "&#10003;*"),
